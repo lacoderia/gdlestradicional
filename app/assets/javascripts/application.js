@@ -10,7 +10,10 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// CONFIGURAR require google-analytics
+//
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require modernizr-2.6.2.min 
+//= require prefixfree.min
