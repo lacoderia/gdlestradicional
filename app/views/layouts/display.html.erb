@@ -4,9 +4,9 @@
   <title>Rails4AuthorizationAuthentication</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= yield :head_style %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application' %>
   <%= yield :head_script %>
   <%= csrf_meta_tags %>
 </head>
@@ -18,6 +18,8 @@
   </div>
 
   <%= yield %>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlt78s6LGfxsOKjboqZ7FFXcJ4gLwhOlA"type="text/javascript"></script>
+  <%= javascript_include_tag 'scripts/display' %>
 
 </body>
 </html>
