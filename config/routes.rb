@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :users
   resources :roles
 
+  match 'new_photo' => "display#new_photo", :as => :new_photo, via: [:get, :post] 
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
