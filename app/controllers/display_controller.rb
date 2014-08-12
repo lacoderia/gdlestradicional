@@ -10,6 +10,7 @@ class DisplayController < ApplicationController
   	if params['hub.challenge']
   		puts 'challenge ' + params['hub.challenge']
   		render plain: params['hub.challenge']
+  		return
   	end
   	render plain: 'Ok'
   end
