@@ -4,15 +4,16 @@ class DisplayController < ApplicationController
 
   end
 
-  def new_photo
+  def instagram_push
   	puts 'diego'
   	puts params
   	if params['hub.challenge']
   		puts 'challenge ' + params['hub.challenge']
   		render plain: params['hub.challenge']
-  		return
+  	else
+  		Instagram.process_subscription(params[:body]) do |handler|
+  		end
   	end
-  	render plain: 'Ok'
   end
 
 end

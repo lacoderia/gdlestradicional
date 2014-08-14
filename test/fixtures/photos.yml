@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  instagram_id: MyString
+  caption: MyText
+  author_id: MyString
+  author_nickname: MyString
+  tags: MyText
+  lat: 1.5
+  long: 1.5
+  location_id: 1
+  url_low: MyString
+  url_thumb: MyString
+  url_normal: MyString
+  points: 1
+  active: false
+
+two:
+  instagram_id: MyString
+  caption: MyText
+  author_id: MyString
+  author_nickname: MyString
+  tags: MyText
+  lat: 1.5
+  long: 1.5
+  location_id: 1
+  url_low: MyString
+  url_thumb: MyString
+  url_normal: MyString
+  points: 1
+  active: false

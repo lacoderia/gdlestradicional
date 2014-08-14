@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   
   has_and_belongs_to_many :roles
+  has_many :photos
 
   def email_required? 
   	false

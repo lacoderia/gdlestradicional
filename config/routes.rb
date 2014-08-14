@@ -1,5 +1,23 @@
 Rails.application.routes.draw do
   
+  resources :locations do
+    member do
+      get 'gallery'
+    end
+  end
+
+  resources :photos
+
+  resources :roles
+
+  resources :routes do
+    collection do
+      get 'all'
+    end
+  end
+
+  resources :users
+
   devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => 'users/sessions', :omniauth_callbacks => "users/omniauth_callbacks"}
   devise_scope :user do
 	  get 'logout', :to => "devise/sessions#destroy"
@@ -7,10 +25,8 @@ Rails.application.routes.draw do
 	  get 'signup', :to => "devise/registrations#new"
   end
   
-  resources :users
-  resources :roles
 
-  match 'new_photo' => "display#new_photo", :as => :new_photo, via: [:get, :post] 
+  match 'instagram_push' => "display#instagram_push", :as => :instagram_push, via: [:get, :post] 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
