@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Instagram:</strong>
+  <%= @photo.instagram_id %>
+</p>
+
+<p>
+  <strong>Caption:</strong>
+  <%= @photo.caption %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @photo.author_id %>
+</p>
+
+<p>
+  <strong>Author nickname:</strong>
+  <%= @photo.author_nickname %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @photo.lat %>
+</p>
+
+<p>
+  <strong>Long:</strong>
+  <%= @photo.long %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @photo.location_id %>
+</p>
+
+<p>
+  <strong>Url low:</strong>
+  <%= @photo.url_low %>
+</p>
+
+<p>
+  <strong>Url thumb:</strong>
+  <%= @photo.url_thumb %>
+</p>
+
+<p>
+  <strong>Url normal:</strong>
+  <%= @photo.url_normal %>
+</p>
+
+<p>
+  <strong>Points:</strong>
+  <%= @photo.points %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @photo.active %>
+</p>
+
+<%= link_to 'Edit', edit_photo_path(@photo) %> |
+<%= link_to 'Back', photos_path %>

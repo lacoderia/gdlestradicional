@@ -1,0 +1,47 @@
+<h1>Listing photos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Instagram</th>
+      <th>Caption</th>
+      <th>Author</th>
+      <th>Author nickname</th>
+      <th>Lat</th>
+      <th>Long</th>
+      <th>Location</th>
+      <th>Url low</th>
+      <th>Url thumb</th>
+      <th>Url normal</th>
+      <th>Points</th>
+      <th>Active</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @photos.each do |photo| %>
+      <tr>
+        <td><%= photo.instagram_id %></td>
+        <td><%= photo.caption %></td>
+        <td><%= photo.author_id %></td>
+        <td><%= photo.author_nickname %></td>
+        <td><%= photo.lat %></td>
+        <td><%= photo.long %></td>
+        <td><%= photo.location_id %></td>
+        <td><%= photo.url_low %></td>
+        <td><%= photo.url_thumb %></td>
+        <td><%= photo.url_normal %></td>
+        <td><%= photo.points %></td>
+        <td><%= photo.active %></td>
+        <td><%= link_to 'Show', photo %></td>
+        <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
+        <td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Photo', new_photo_path %>
