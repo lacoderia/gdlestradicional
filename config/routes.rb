@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   
 
   match 'instagram_push' => "display#instagram_push", :as => :instagram_push, via: [:get, :post] 
+  get 'test_twitter' => "display#test_twitter", :as => :test_twitter
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
