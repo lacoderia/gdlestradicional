@@ -2,6 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+}
+
 #map-container {
   position: fixed;
   top: 0;
@@ -15,20 +26,79 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 99;
 }
 
 #map-canvas {
   position: absolute;
   width: 100%;
   height: 100%;
+
+  cursor: auto !important;
+}
+
+#marker-content {
+  background-color: red;
+}
+
+.image-marker {
+  background-color: #FFFFFF;
+  height: 80px;
+  width: 80px;
+  padding: 5px;
+
+  img {
+    width: 100%;
+  }
+}
+
+#picture-gallery-container {
+  display: none;
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  text-align: center;
+  z-index: 101;
+  background-color: rgba(0,0,0,0.5);
+}
+
+#picture-gallery-container:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+#picture-gallery {
+  display: inline-block;
+  position:relative;
+  background-color: #FFF;
+  width: 400px;
+  vertical-align: middle;
+
+  text-align: left;
+
+  overflow: hidden;
+
+  img {
+    width: 80%;
+  }
+
+  #panorama {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 #news-feed {
   position: absolute;
   top: 5%;
   right: 5%;
-
 
   width: 200px;
   height: 80%;

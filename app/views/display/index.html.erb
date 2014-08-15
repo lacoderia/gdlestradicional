@@ -1,7 +1,15 @@
 <div id="map_container">
-  <div id="route-number"></div>
+  <div id="overlay"></div>
   <div id="show-all-routes" onclick="showAllRoutes()">MOSTRAR TODAS LAS RUTAS</div>
   <div id="map-canvas"></div>
+  <div id="picture-gallery-container" onclick="hidePictureGallery()">
+    <div id="picture-gallery">
+        <div id="panorama"></div>
+        <div onclick="showPreviousPicture()">Anterior</div>
+        <img src=""/>
+        <div onclick="showNextPicture()">Siguiente</div>
+    </div>
+  </div>
   <div id="news-feed">
     <div>HEADER</div>
     <div>PARTICIPA</div>
@@ -11,4 +19,5 @@
       <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </div>
   </div>
+
 </div>
