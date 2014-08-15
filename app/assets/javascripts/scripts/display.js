@@ -114,13 +114,15 @@ function init() {
                                 };
 
                                 for(var j = 0; j < routes[i].locations.length; j++){
-
+                                    var animationType = undefined;
                                     if (j == 0) {
+                                        animationType = google.maps.Animation.DROP;
                                         var icon = {
                                             url: '/assets/marker_azul_cuadrito.png',
                                             scaledSize: new google.maps.Size(40, 70)
                                         };
                                     } else {
+                                        animationType = undefined;
                                         var icon = {
                                             url: '/assets/cuadrito.png',
                                             scaledSize: new google.maps.Size(16, 16),
@@ -136,6 +138,7 @@ function init() {
                                         optimized: false,
                                         icon: icon,
                                         map: null,
+                                        animation: animationType,
                                         routeIndex: i
                                     });
 
@@ -230,7 +233,9 @@ function showAllRoutes() {
         }
 
         for (var j=0; j<routes[i].markers.length; j++) {
+            var animationType = undefined;
             if (j == 0) {
+                animationType = google.maps.Animation.DROP;
                 var icon = {
                     url: '/assets/marker_azul_cuadrito.png',
                     scaledSize: new google.maps.Size(40, 70)
@@ -251,7 +256,8 @@ function showAllRoutes() {
                 optimized: false,
                 icon: icon,
                 map: null,
-                routeIndex: i
+                routeIndex: i,
+                animation: animationType
             });
 
             marker.setMap(map);
@@ -288,7 +294,7 @@ function showRouteDetail(routeIndex){
                     routes[i].markers[j].setMap(null);
 
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-
+                    var markerId = 'marker_' + i + '_' + j;
                     var marker = new RichMarker({
                         position: routeCoordinate,
                         map: map,
@@ -296,25 +302,29 @@ function showRouteDetail(routeIndex){
                         anchor: RichMarkerPosition.MIDDLE,
                         draggable: false,
                         id: routes[i].locations[j].id,
-                        content: '<div class="image-marker my-marker">' +
+                        jqueryId : markerId,
+                        content: '<div class="image-marker my-marker" id="' + markerId + '">' +
                                     '<img src="' + routes[i].locations[j].recent_photo + '"/>' +
                                  '</div>'
                     });
 
-                    google.maps.event.addListener(marker, 'click', function() {
-                        $.ajax({
-                            type: "GET",
-                            url: "/locations/" + this.id + "/gallery.json",
-                            data: null,
-                            dataType: "json",
-                            success: function(response) {
-                                galleryPictures = response;
+                    google.maps.event.addListener(marker, 'ready', function() {
+                        $('#' + this.jqueryId).draggable();
+                        $('#' + this.jqueryId).click(function(){
+                            $.ajax({
+                                type: "GET",
+                                url: "/locations/" + marker.id + "/gallery.json",
+                                data: null,
+                                dataType: "json",
+                                success: function(response) {
+                                    galleryPictures = response;
 
-                                $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
-                                showPictureGallery(this);
-                            },
-                            error: function(error) {
-                            }
+                                    $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
+                                    showPictureGallery(this);
+                                },
+                                error: function(error) {
+                                }
+                            });
                         });
                     });
 
@@ -341,7 +351,7 @@ function showRouteDetail(routeIndex){
 function showPictureGallery(marker) {
     $('#overlay').show();
 
-    /*var pano;
+    var pano;
     var latlng = new google.maps.LatLng(20.666735, -103.350335);
 
     var panoOptions = {
@@ -360,7 +370,7 @@ function showPictureGallery(marker) {
         var pov = pano.getPov();
         pov.heading += 0.2;
         pano.setPov(pov);
-    }, 10);*/
+    }, 10);
 
     $('#picture-gallery-container').show();
 }
