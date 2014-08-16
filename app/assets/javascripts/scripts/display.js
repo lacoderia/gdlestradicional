@@ -359,7 +359,17 @@ function showPictureGallery(marker) {
         pov: {
             heading: 0,
             pitch: 0
-        }
+        },
+        streetViewControl: false,
+        enableCloseButton: false,
+        linksControl: false,
+        panControl: false,
+        clickToGo: false,
+        scrollwheel: false,
+        addressControl: false,
+        disableDefaultUI: true,
+        disableDoubleClickZoom: false,
+        zoomControl: false
     };
 
     pano = new google.maps.StreetViewPanorama(
