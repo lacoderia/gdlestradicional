@@ -75,6 +75,8 @@
   display: inline-block;
   position:relative;
   background-color: #FFF;
+  border: 6px solid #01BeC7;
+  border-radius: 5px;
   height: 320px;
   width: 600px;
   vertical-align: middle;
@@ -83,10 +85,11 @@
 
   img {
     display: inline-block;
-    margin-right: 5px;
     position: relative;
     vertical-align: top;
-    width: 306px;
+    margin: 0px 8px;
+    top: 14px;
+    width: 290px;
     z-index: 1;
   }
 
@@ -94,8 +97,40 @@
     position: relative;
     display: inline-block;
     vertical-align: top;
+    top: 14px;
+    height: 300px;
+    max-height: 300px;
+    overflow: hidden;
     width: 280px;
     z-index: 1;
+
+    .tw-user{
+      color: #01BeC7;
+      display: block;
+    }
+
+    .arrow{
+      color: white;
+      display: inline-block;
+      width: 47.5%;
+    }
+
+    .arrow-left{
+      text-align: left;
+    }
+
+    .arrow-right{
+      text-align: right;
+    }
+
+    p{
+      background-color: #000000;
+      opacity: 0.6;
+      height: 250px;
+      overflow: hidden;
+      padding: 0px 6px 6px;
+      margin: 0px 0px 1em;
+    }
   }
 
   #panorama-overlay {
