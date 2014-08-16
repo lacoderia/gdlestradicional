@@ -297,10 +297,11 @@ function showRouteDetail(routeIndex){
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
                     var markerId = 'marker_' + i + '_' + j;
                     var marker = new RichMarker({
+                        index: j,
                         position: routeCoordinate,
                         map: map,
                         flat: true,
-                        anchor: RichMarkerPosition.MIDDLE,
+                        anchor: RichMarkerPosition.TOP,
                         draggable: false,
                         id: routes[i].locations[j].id,
                         jqueryId : markerId,
@@ -311,6 +312,9 @@ function showRouteDetail(routeIndex){
 
                     google.maps.event.addListener(marker, 'ready', function() {
                         var richMarker = this;
+                        $('#' + this.jqueryId).hide();
+                        var time = (this.index+1) * 1000;
+                        $('#' + this.jqueryId).fadeIn(time);
                         $('#' + this.jqueryId).draggable();
                         $('#' + this.jqueryId).click(function(){
                             $.ajax({
@@ -319,6 +323,7 @@ function showRouteDetail(routeIndex){
                                 data: null,
                                 dataType: "json",
                                 success: function(response) {
+                                    console.log(response)
                                     galleryPictures = response;
 
                                     $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
@@ -332,6 +337,24 @@ function showRouteDetail(routeIndex){
                     });
 
                     routes[i].markers[j] = marker;
+
+                    var icon = {
+                        url: '/assets/cuadrito.png',
+                        scaledSize: new google.maps.Size(16, 16),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(8, 8)
+                    };
+
+                    var marker_2 = new google.maps.Marker({
+                        position: routeCoordinate,
+                        optimized: false,
+                        icon: icon,
+                        map: null,
+                        routeIndex: i,
+                        animation: google.maps.Animation.DROP
+                    });
+
+                    marker_2.setMap(map);
                 }
             }
         }

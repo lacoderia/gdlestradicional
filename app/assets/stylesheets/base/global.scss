@@ -1,4 +1,12 @@
+@font-face {
+  font-family: 'Venus';
+  src: url("/assets/OPTIVenusLight-Cond.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+}
+
 body {
+  font-family: 'Venus';
   height: 100%;
   margin: 0;
   padding: 0
