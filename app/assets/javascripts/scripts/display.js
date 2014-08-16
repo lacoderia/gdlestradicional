@@ -7,6 +7,7 @@ $(document).ready(
 );
 
 var map = null;
+var pano, panoInterval = null;
 var mapCenter = null;
 var firstLoad = true;
 var showAllRoutesZoom = false;
@@ -309,6 +310,7 @@ function showRouteDetail(routeIndex){
                     });
 
                     google.maps.event.addListener(marker, 'ready', function() {
+                        var richMarker = this;
                         $('#' + this.jqueryId).draggable();
                         $('#' + this.jqueryId).click(function(){
                             $.ajax({
@@ -320,7 +322,8 @@ function showRouteDetail(routeIndex){
                                     galleryPictures = response;
 
                                     $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
-                                    showPictureGallery(this);
+
+                                    showPictureGallery(richMarker);
                                 },
                                 error: function(error) {
                                 }
@@ -350,12 +353,10 @@ function showRouteDetail(routeIndex){
 
 function showPictureGallery(marker) {
     $('#overlay').show();
-
-    var pano;
-    var latlng = new google.maps.LatLng(20.666735, -103.350335);
+    $('#picture-gallery-container').show();
 
     var panoOptions = {
-        position: latlng,
+        position: marker.position,
         pov: {
             heading: 0,
             pitch: 0
@@ -376,18 +377,26 @@ function showPictureGallery(marker) {
         document.getElementById('panorama'),
         panoOptions);
 
-    window.setInterval(function() {
+    panoInterval = window.setInterval(function() {
         var pov = pano.getPov();
-        pov.heading += 0.2;
+        pov.heading += 0.1;
         pano.setPov(pov);
     }, 10);
 
-    $('#picture-gallery-container').show();
 }
 
 function hidePictureGallery() {
     $('#overlay').hide();
     $('#picture-gallery-container').hide();
+
+    pano = null;
+    clearInterval(panoInterval);
+}
+
+function pictureGalleryClick(e) {
+    if (!$(e.target).closest('#picture-gallery').get(0)) {
+        hidePictureGallery();
+    }
 }
 
 function showPreviousPicture() {
