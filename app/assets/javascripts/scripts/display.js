@@ -13,7 +13,7 @@ var firstLoad = true;
 var showAllRoutesZoom = false;
 var paintingRoutes = false;
 var routes = [];
-var galleryPictures = [];
+var galleryPictures = null;
 
 function init() {
 
@@ -313,21 +313,45 @@ function showRouteDetail(routeIndex){
                         var richMarker = this;
                         $('#' + this.jqueryId).draggable();
                         $('#' + this.jqueryId).click(function(){
-                            $.ajax({
-                                type: "GET",
-                                url: "/locations/" + marker.id + "/gallery.json",
-                                data: null,
-                                dataType: "json",
-                                success: function(response) {
-                                    galleryPictures = response;
 
-                                    $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
+                            for (var i=0; i<routes.length; i++) {
+                                for (var j=0; j<routes[i].markers.length; j++) {
+                                    if (routes[i].markers[j].id == richMarker.id) {
+                                        if (routes[i].markers[j].pictures != undefined) {
+                                            galleryPictures = routes[i].markers[j].pictures;
+                                            $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
+                                            $('#current-picture-id').val(richMarker.id);
 
-                                    showPictureGallery(richMarker);
-                                },
-                                error: function(error) {
+                                            showPictureGallery(richMarker);
+                                            break;
+                                        } else {
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "/locations/" + richMarker.id + "/gallery.json",
+                                                data: null,
+                                                dataType: "json",
+                                                success: function(response) {
+                                                    for (var i=0; i<routes.length; i++) {
+                                                        for (var j = 0; j < routes[i].markers.length; j++) {
+                                                            if (routes[i].markers[j].id == richMarker.id) {
+                                                                routes[i].markers[j].pictures = sortGalleryPictures(response);
+                                                                galleryPictures = routes[i].markers[j].pictures;
+                                                                $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
+                                                                $('#current-picture-id').val(richMarker.id);
+
+                                                                showPictureGallery(richMarker);
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                error: function(error) {
+                                                }
+                                            });
+                                        }
+                                    }
                                 }
-                            });
+                            }
+                            
                         });
                     });
 
@@ -399,12 +423,46 @@ function pictureGalleryClick(e) {
     }
 }
 
+function sortGalleryPictures(galleryPictures){
+    galleryPictures.sort(function(a, b) {
+        return a.value - b.value;
+    });
+
+    return galleryPictures;
+}
+
 function showPreviousPicture() {
-    hidePictureGallery();
+    var previousIndex = 0;
+    for (var i=0; i<galleryPictures.length; i++) {
+        if (galleryPictures[i].id == $('#current-picture-id').val()) {
+            if (i-1 >= 0) {
+                previousIndex = i;
+            } else {
+                previousIndex = galleryPictures.length - 1;
+            }
+            break;
+        }
+    }
+
+    $('#picture-gallery img').attr('src', galleryPictures[previousIndex].url_normal);
+    $('#current-picture-id').val(galleryPictures[previousIndex].id);
 }
 
 function showNextPicture() {
-    $('#picture-gallery img').attr('src', galleryPictures[1].url_normal);
+    var nextIndex = 0;
+    for (var i=0; i<galleryPictures.length; i++) {
+        if (galleryPictures[i].id == $('#current-picture-id').val()) {
+            if (i+1 < galleryPictures.length) {
+                nextIndex = i;
+            } else {
+                nextIndex = 0;
+            }
+            break;
+        }
+    }
+
+    $('#picture-gallery img').attr('src', galleryPictures[nextIndex].url_normal);
+    $('#current-picture-id').val(galleryPictures[nextIndex].id)
 }
 
 function getZoomByBounds( map, bounds ){
