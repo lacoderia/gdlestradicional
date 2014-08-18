@@ -2,6 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 #overlay {
   display: none;
   position: absolute;
@@ -103,7 +112,7 @@
     z-index: 1;
   }
 
-  .twitt{
+  .post{
     position: relative;
     display: inline-block;
     vertical-align: top;
@@ -114,7 +123,7 @@
     width: 280px;
     z-index: 1;
 
-    .tw-user{
+    .post-author{
       color: #01BeC7;
       font-size: 24px;
       font-weight: bolder;
@@ -126,18 +135,22 @@
       color: #7A9794;
     }
 
-    .arrow{
+    .navigation {
       color: white;
-      display: inline-block;
-      width: 47.5%;
-    }
 
-    .arrow-left{
-      text-align: left;
-    }
+      .arrow{
+        display: inline-block;
+        width: 47.5%;
+        cursor: pointer;
+      }
 
-    .arrow-right{
-      text-align: right;
+      .arrow-left{
+        text-align: left;
+      }
+
+      .arrow-right{
+        text-align: right;
+      }
     }
 
     .bkg-opacity{
@@ -184,6 +197,7 @@
 }
 
 #news-feed {
+  display: none;
   position: absolute;
   top: 5%;
   right: 5%;

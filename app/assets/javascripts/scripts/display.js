@@ -13,6 +13,7 @@ var firstLoad = true;
 var showAllRoutesZoom = false;
 var paintingRoutes = false;
 var routes = [];
+var tempRoute = [];
 var galleryPictures = null;
 
 function init() {
@@ -123,7 +124,6 @@ function init() {
                                             scaledSize: new google.maps.Size(40, 70)
                                         };
                                     } else {
-                                        animationType = undefined;
                                         var icon = {
                                             url: '/assets/cuadrito.png',
                                             scaledSize: new google.maps.Size(16, 16),
@@ -227,22 +227,30 @@ function paintOneLine(routeIndex, lineIndex) {
 }
 
 function showAllRoutes() {
-    for (var i=0; i<routes.length; i++) {
 
+    for (var i=0; i<tempRoute.length; i++) {
+        tempRoute[i].setMap(null);
+    }
+    tempRoute = [];
+
+    for (var i=0; i<routes.length; i++) {
         for (var j=0; j<routes[i].lines.length; j++) {
             routes[i].lines[j].setMap(map);
         }
 
         for (var j=0; j<routes[i].markers.length; j++) {
+            routes[i].markers[j].setMap(null);
+
             var animationType = undefined;
+            var icon = null;
             if (j == 0) {
                 animationType = google.maps.Animation.DROP;
-                var icon = {
+                icon = {
                     url: '/assets/marker_azul_cuadrito.png',
                     scaledSize: new google.maps.Size(40, 70)
                 };
             } else {
-                var icon = {
+                icon = {
                     url: '/assets/cuadrito.png',
                     scaledSize: new google.maps.Size(16, 16),
                     origin: new google.maps.Point(0, 0),
@@ -256,18 +264,15 @@ function showAllRoutes() {
                 position: routeCoordinate,
                 optimized: false,
                 icon: icon,
-                map: null,
+                map: map,
                 routeIndex: i,
                 animation: animationType
             });
-
-            marker.setMap(map);
 
             google.maps.event.addListener(marker, 'click', function() {
                 showRouteDetail(this.routeIndex);
             });
 
-            routes[i].markers[j].setMap(null);
             routes[i].markers[j] = marker;
         }
     }
@@ -292,7 +297,6 @@ function showRouteDetail(routeIndex){
         for (var i=0; i<routes.length; i++) {
             if (i == routeIndex) {
                 for (var j=0; j<routes[i].markers.length; j++) {
-                    routes[i].markers[j].setMap(null);
 
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
                     var markerId = 'marker_' + i + '_' + j;
@@ -315,17 +319,19 @@ function showRouteDetail(routeIndex){
                         $('#' + this.jqueryId).hide();
                         var time = (this.index+1) * 1000;
                         $('#' + this.jqueryId).fadeIn(time);
-                        $('#' + this.jqueryId).draggable();
+                        $('#' + this.jqueryId).parent().parent().draggable({
+                            stop: function(event, ui) {
+                                $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
+                            }
+                        });
                         $('#' + this.jqueryId).click(function(){
 
                             for (var i=0; i<routes.length; i++) {
                                 for (var j=0; j<routes[i].markers.length; j++) {
-                                    if (routes[i].markers[j].id == richMarker.id) {
-                                        if (routes[i].markers[j].pictures != undefined) {
-                                            galleryPictures = routes[i].markers[j].pictures;
-                                            $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
-                                            $('#current-picture-id').val(richMarker.id);
-
+                                    if (routes[i].locations[j].id == richMarker.id) {
+                                        if (routes[i].locations[j].pictures != undefined) {
+                                            galleryPictures = routes[i].locations[j].pictures;
+                                            updatePictureDetails(galleryPictures[0]);
                                             showPictureGallery(richMarker);
                                             break;
                                         } else {
@@ -337,12 +343,10 @@ function showRouteDetail(routeIndex){
                                                 success: function(response) {
                                                     for (var i=0; i<routes.length; i++) {
                                                         for (var j = 0; j < routes[i].markers.length; j++) {
-                                                            if (routes[i].markers[j].id == richMarker.id) {
-                                                                routes[i].markers[j].pictures = sortGalleryPictures(response);
-                                                                galleryPictures = routes[i].markers[j].pictures;
-                                                                $('#picture-gallery img').attr('src', galleryPictures[0].url_normal);
-                                                                $('#current-picture-id').val(richMarker.id);
-
+                                                            if (routes[i].locations[j].id == richMarker.id) {
+                                                                routes[i].locations[j].pictures = sortGalleryPictures(response);
+                                                                galleryPictures = routes[i].locations[j].pictures;
+                                                                updatePictureDetails(galleryPictures[0]);
                                                                 showPictureGallery(richMarker);
                                                             }
                                                         }
@@ -359,25 +363,7 @@ function showRouteDetail(routeIndex){
                         });
                     });
 
-                    routes[i].markers[j] = marker;
-
-                    var icon = {
-                        url: '/assets/cuadrito.png',
-                        scaledSize: new google.maps.Size(16, 16),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(8, 8)
-                    };
-
-                    var marker_2 = new google.maps.Marker({
-                        position: routeCoordinate,
-                        optimized: false,
-                        icon: icon,
-                        map: null,
-                        routeIndex: i,
-                        animation: google.maps.Animation.DROP
-                    });
-
-                    marker_2.setMap(map);
+                    tempRoute.push(marker);
                 }
             }
         }
@@ -395,6 +381,13 @@ function showRouteDetail(routeIndex){
             }
         }
     }
+}
+
+function updatePictureDetails(post) {
+    $('#picture-gallery .post-author').html(post.author_nickname);
+    $('#picture-gallery p').html(post.caption);
+    $('#marker-picture').attr('src', post.url_normal);
+    $('#current-picture-id').val(post.id);
 }
 
 function showPictureGallery(marker) {
@@ -447,7 +440,7 @@ function pictureGalleryClick(e) {
 
 function sortGalleryPictures(galleryPictures){
     galleryPictures.sort(function(a, b) {
-        return a.value - b.value;
+        return b.id - a.id;
     });
 
     return galleryPictures;
@@ -458,7 +451,7 @@ function showPreviousPicture() {
     for (var i=0; i<galleryPictures.length; i++) {
         if (galleryPictures[i].id == $('#current-picture-id').val()) {
             if (i-1 >= 0) {
-                previousIndex = i;
+                previousIndex = i-1;
             } else {
                 previousIndex = galleryPictures.length - 1;
             }
@@ -466,8 +459,7 @@ function showPreviousPicture() {
         }
     }
 
-    $('#picture-gallery img').attr('src', galleryPictures[previousIndex].url_normal);
-    $('#current-picture-id').val(galleryPictures[previousIndex].id);
+    updatePictureDetails(galleryPictures[previousIndex]);
 }
 
 function showNextPicture() {
@@ -475,7 +467,7 @@ function showNextPicture() {
     for (var i=0; i<galleryPictures.length; i++) {
         if (galleryPictures[i].id == $('#current-picture-id').val()) {
             if (i+1 < galleryPictures.length) {
-                nextIndex = i;
+                nextIndex = i+1;
             } else {
                 nextIndex = 0;
             }
@@ -483,8 +475,7 @@ function showNextPicture() {
         }
     }
 
-    $('#picture-gallery img').attr('src', galleryPictures[nextIndex].url_normal);
-    $('#current-picture-id').val(galleryPictures[nextIndex].id)
+    updatePictureDetails(galleryPictures[nextIndex]);
 }
 
 function getZoomByBounds( map, bounds ){
