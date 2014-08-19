@@ -20,3 +20,5 @@
 //= require lib/jquery.social.stream.1.5.4.js
 
 
+//= require websocket_rails/main
+
