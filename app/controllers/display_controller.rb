@@ -24,9 +24,11 @@ class DisplayController < ApplicationController
       config.access_token_secret   = ENV['ACCESS_SECRET']
     end
 
-    client.filter(:track => 'LuisitoRadio') do |object|
-      puts object.text if object.is_a?(Twitter::Tweet)
-    end
+    var test = {:name => 'Diego', :time => Time.now.to_i}
+    WebsocketRails[:twitter_channel].trigger(:new_tweet, test.to_json)
+    #client.filter(:track => 'foodporn') do |object|
+    #  puts object.text if object.is_a?(Twitter::Tweet)
+    #end
   end
 
 end

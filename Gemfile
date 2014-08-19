@@ -16,6 +16,8 @@ gem 'devise'
 gem 'cancan'
 gem 'omniauth-instagram'
 gem 'instagram'
+gem 'twitter'
+gem 'websocket-rails'
 
 group :development do
   gem 'sqlite3'
