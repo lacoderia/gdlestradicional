@@ -4,6 +4,10 @@ class DisplayController < ApplicationController
 
   end
 
+  def mobile
+    render :layout => 'mobile'
+  end
+
   def instagram_push
   	puts 'diego'
   	puts params

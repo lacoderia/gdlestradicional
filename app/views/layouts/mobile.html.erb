@@ -12,14 +12,14 @@
 </head>
 <body>
 
-  <!--div id='devise_alerts'>
+<!--div id='devise_alerts'>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
   </div-->
 
-  <%= yield %>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlt78s6LGfxsOKjboqZ7FFXcJ4gLwhOlA"></script>
-  <%= javascript_include_tag "lib/richmarker", "scripts/display" %>
+<%= yield %>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlt78s6LGfxsOKjboqZ7FFXcJ4gLwhOlA"></script>
+<%= javascript_include_tag "lib/richmarker", "scripts/mobile", "lib/owl.carousel.min" %>
 
 </body>
 </html>

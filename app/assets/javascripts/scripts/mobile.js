@@ -7,7 +7,6 @@ $(document).ready(
 );
 
 var map = null;
-var pano, panoInterval = null;
 var mapCenter = null;
 var firstLoad = true;
 var showAllRoutesZoom = false;
@@ -17,10 +16,6 @@ var tempRoute = [];
 var galleryPictures = null;
 
 function init() {
-
-    if (screen.width <= 768) {
-        window.location = "/mobile";
-    }
 
     $('#news-feed').draggable();
 
@@ -296,7 +291,7 @@ function showRouteDetail(routeIndex){
         map.fitBounds(bounds);
 
         /*map.setCenter(bounds.getCenter());
-        map.setZoom(getZoomByBounds(map, bounds));*/
+         map.setZoom(getZoomByBounds(map, bounds));*/
 
         for (var i=0; i<routes.length; i++) {
             if (i == routeIndex) {
@@ -314,8 +309,8 @@ function showRouteDetail(routeIndex){
                         id: routes[i].locations[j].id,
                         jqueryId : markerId,
                         content: '<div class="image-marker my-marker" id="' + markerId + '">' +
-                                    '<img src="' + routes[i].locations[j].recent_photo + '"/>' +
-                                 '</div>'
+                            '<img src="' + routes[i].locations[j].recent_photo + '"/>' +
+                            '</div>'
                     });
 
                     google.maps.event.addListener(marker, 'ready', function() {
@@ -335,8 +330,8 @@ function showRouteDetail(routeIndex){
                                     if (routes[i].locations[j].id == richMarker.id) {
                                         if (routes[i].locations[j].pictures != undefined) {
                                             galleryPictures = routes[i].locations[j].pictures;
-                                            updatePictureDetails(galleryPictures[0]);
-                                            showPictureGallery(richMarker);
+                                            //updatePictureDetails(galleryPictures[0]);
+                                            //showPictureGallery(richMarker);
                                             break;
                                         } else {
                                             $.ajax({
@@ -351,7 +346,7 @@ function showRouteDetail(routeIndex){
                                                                 routes[i].locations[j].pictures = sortGalleryPictures(response);
                                                                 galleryPictures = routes[i].locations[j].pictures;
                                                                 updatePictureDetails(galleryPictures[0]);
-                                                                showPictureGallery(richMarker);
+                                                                showPictureGallery(galleryPictures);
                                                             }
                                                         }
                                                     }
@@ -363,7 +358,7 @@ function showRouteDetail(routeIndex){
                                     }
                                 }
                             }
-                            
+
                         });
                     });
 
@@ -388,58 +383,45 @@ function showRouteDetail(routeIndex){
 }
 
 function updatePictureDetails(post) {
-    $('#picture-gallery .post-author').html(post.author_nickname);
+    /*$('#picture-gallery .post-author').html(post.author_nickname);
     $('#picture-gallery p').html(post.caption);
     $('#marker-picture').attr('src', post.url_normal);
-    $('#current-picture-id').val(post.id);
+    $('#current-picture-id').val(post.id);*/
 }
 
-function showPictureGallery(marker) {
-    $('#overlay').show();
-    $('#picture-gallery-container').show();
+function showPictureGallery(galleryPictures) {
+    $('#map-canvas').hide();
+    $('#owl-example').show();
 
-    var panoOptions = {
-        position: marker.position,
-        pov: {
-            heading: 0,
-            pitch: 0
-        },
-        streetViewControl: false,
-        enableCloseButton: false,
-        linksControl: false,
-        panControl: false,
-        clickToGo: false,
-        scrollwheel: false,
-        addressControl: false,
-        disableDefaultUI: true,
-        disableDoubleClickZoom: false,
-        zoomControl: false
-    };
 
-    pano = new google.maps.StreetViewPanorama(
-        document.getElementById('panorama'),
-        panoOptions);
+    var content = '';
+    $("#owl-example").html(content);
 
-    panoInterval = window.setInterval(function() {
-        var pov = pano.getPov();
-        pov.heading += 0.1;
-        pano.setPov(pov);
-    }, 10);
+    for(var itemIndex in galleryPictures){
+
+        var img = galleryPictures[itemIndex].url_normal;
+        var alt = galleryPictures[itemIndex].caption;
+
+        content += "<img src=\"" +img+ "\" alt=\"" +alt+ "\">";
+    }
+
+    $("#owl-example").html(content);
+
+    $("#owl-example").owlCarousel({
+        pagination: true,
+        itemsTablet: [$(window).width(),1], //1 items between device.width and 0
+        itemsMobile : false
+    });
 
 }
 
 function hidePictureGallery() {
-    $('#overlay').hide();
-    $('#picture-gallery-container').hide();
-
-    pano = null;
-    clearInterval(panoInterval);
+    $('#owl-example').hide();
+    $('#map-canvas').show();
 }
 
 function pictureGalleryClick(e) {
-    if (!$(e.target).closest('#picture-gallery').get(0)) {
-        hidePictureGallery();
-    }
+
 }
 
 function sortGalleryPictures(galleryPictures){
@@ -450,37 +432,6 @@ function sortGalleryPictures(galleryPictures){
     return galleryPictures;
 }
 
-function showPreviousPicture() {
-    var previousIndex = 0;
-    for (var i=0; i<galleryPictures.length; i++) {
-        if (galleryPictures[i].id == $('#current-picture-id').val()) {
-            if (i-1 >= 0) {
-                previousIndex = i-1;
-            } else {
-                previousIndex = galleryPictures.length - 1;
-            }
-            break;
-        }
-    }
-
-    updatePictureDetails(galleryPictures[previousIndex]);
-}
-
-function showNextPicture() {
-    var nextIndex = 0;
-    for (var i=0; i<galleryPictures.length; i++) {
-        if (galleryPictures[i].id == $('#current-picture-id').val()) {
-            if (i+1 < galleryPictures.length) {
-                nextIndex = i+1;
-            } else {
-                nextIndex = 0;
-            }
-            break;
-        }
-    }
-
-    updatePictureDetails(galleryPictures[nextIndex]);
-}
 
 function getZoomByBounds( map, bounds ){
     var MAX_ZOOM = map.mapTypes.get( map.getMapTypeId() ).maxZoom || 21 ;
