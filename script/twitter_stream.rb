@@ -14,11 +14,11 @@ end
 
 client.filter(:track => 'foodporn') do |object|
 	if object.is_a?(Twitter::Tweet) && object.attrs[:geo]
-    puts '-----------------------'
-		puts 'id : ' + object.attrs[:id].to_s
-    puts 'tweet: ' + object.text
-    puts object.attrs[:geo]
-		puts object.attrs[:coordinates] 
+    #puts '-----------------------'
+		#puts 'id : ' + object.attrs[:id].to_s
+    #puts 'tweet: ' + object.text
+    #puts object.attrs[:geo]
+		#puts object.attrs[:coordinates] 
     WebsocketRails[:twitter_channel].trigger(:new_tweet, object.attrs[:geo][:coordinates])
   end
 end
