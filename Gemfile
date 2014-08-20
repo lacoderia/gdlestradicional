@@ -17,6 +17,7 @@ gem 'cancan'
 gem 'omniauth-instagram'
 gem 'instagram'
 gem 'twitter'
+gem 'daemons'
 gem 'websocket-rails'
 
 group :development do
