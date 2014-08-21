@@ -15,10 +15,16 @@ var paintingRoutes = false;
 var routes = [];
 var tempRoute = [];
 var galleryPictures = null;
+var dispatcher, channel = null;
 
 function init() {
 
     $('#news-feed').draggable();
+    $('#influencer-picture').draggable({
+        stop: function(event, ui) {
+            $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
+        }
+    });
 
     mapCenter = new google.maps.LatLng(20.666735, -103.350335);
 
@@ -69,7 +75,6 @@ function init() {
         styles: styles
     }
 
-
     try {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
@@ -78,7 +83,7 @@ function init() {
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillColor: '#13435B',
-            fillOpacity: 0.6,
+            fillOpacity: 0.7,
             map: map,
             bounds: new google.maps.LatLngBounds(
                 new google.maps.LatLng(20.751853, -103.483541),
@@ -96,6 +101,26 @@ function init() {
         google.maps.event.addListener(map, 'tilesloaded', function() {
             if (firstLoad) {
 
+                dispatcher = new WebSocketRails('localhost:3000/websocket');
+                channel = dispatcher.subscribe('twitter_channel');
+
+                channel.bind('new_tweet', function(data) {
+                    console.log('channel event received: ' + data);
+
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(data[0], data[1]),
+                        optimized: false,
+                        icon: '/assets/beam.gif',
+                        map: map
+                    });
+
+                    setTimeout(function(){
+                        marker.setMap(null);
+                        marker = null;
+                    }, 2000);
+
+                });
+
                 setTimeout(function(){
                     $.ajax({
                         type: "GET",
@@ -104,8 +129,8 @@ function init() {
                         dataType: "json",
                         success: function(response) {
                             routes = response;
-                            for (var i=0; i < routes.length; i++) {
 
+                            for (var i=0; i < routes.length; i++) {
                                 routes[i].markers = new Array();
                                 routes[i].lines = new Array();
 
@@ -117,12 +142,29 @@ function init() {
 
                                 for(var j = 0; j < routes[i].locations.length; j++){
                                     var animationType = undefined;
+                                    var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
+
                                     if (j == 0) {
-                                        animationType = google.maps.Animation.DROP;
-                                        var icon = {
-                                            url: '/assets/marker_azul_cuadrito.png',
-                                            scaledSize: new google.maps.Size(40, 70)
-                                        };
+                                        var markerId = 'first_marker_' + i + '_' + j;
+                                        var marker = new RichMarker({
+                                            position: routeCoordinate,
+                                            map: map,
+                                            flat: true,
+                                            anchor: new google.maps.Size(-20, -70),
+                                            draggable: false,
+                                            routeIndex: i,
+                                            jqueryId: markerId,
+                                            content: '<div id="' + markerId + '" class="first-marker">' +
+                                                    '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                                                    '<div class="route-name">' + routes[i].name + '</div>' +
+                                                '</div>'
+                                        });
+
+                                        google.maps.event.addListener(marker, 'ready', function() {
+                                            $('#' + this.jqueryId).hide();
+                                            $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                                        });
+
                                     } else {
                                         var icon = {
                                             url: '/assets/cuadrito.png',
@@ -130,18 +172,16 @@ function init() {
                                             origin: new google.maps.Point(0, 0),
                                             anchor: new google.maps.Point(8, 8)
                                         };
+
+                                        var marker = new google.maps.Marker({
+                                            position: routeCoordinate,
+                                            optimized: false,
+                                            icon: icon,
+                                            map: null,
+                                            animation: animationType,
+                                            routeIndex: i
+                                        });
                                     }
-
-                                    var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-
-                                    var marker = new google.maps.Marker({
-                                        position: routeCoordinate,
-                                        optimized: false,
-                                        icon: icon,
-                                        map: null,
-                                        animation: animationType,
-                                        routeIndex: i
-                                    });
 
                                     google.maps.event.addListener(marker, 'click', function() {
                                         showRouteDetail(this.routeIndex);
@@ -257,6 +297,8 @@ function paintOneLine(routeIndex, lineIndex) {
 
 function showAllRoutes() {
 
+    $('#influencer-picture').hide();
+
     for (var i=0; i<tempRoute.length; i++) {
         tempRoute[i].setMap(null);
     }
@@ -270,33 +312,43 @@ function showAllRoutes() {
         for (var j=0; j<routes[i].markers.length; j++) {
             routes[i].markers[j].setMap(null);
 
-            var animationType = undefined;
-            var icon = null;
+            var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
             if (j == 0) {
-                animationType = google.maps.Animation.DROP;
-                icon = {
-                    url: '/assets/marker_azul_cuadrito.png',
-                    scaledSize: new google.maps.Size(40, 70)
-                };
+                var markerId = 'first_marker_' + i + '_' + j;
+                var marker = new RichMarker({
+                    position: routeCoordinate,
+                    map: map,
+                    flat: true,
+                    anchor: new google.maps.Size(-20, -70),
+                    draggable: false,
+                    routeIndex: i,
+                    jqueryId: markerId,
+                    content: '<div id="' + markerId + '" class="first-marker">' +
+                        '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                        '<div class="route-name">' + routes[i].name + '</div>' +
+                        '</div>'
+                });
+
+                google.maps.event.addListener(marker, 'ready', function() {
+                    $('#' + this.jqueryId).hide();
+                    $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                });
             } else {
-                icon = {
+                var icon = {
                     url: '/assets/cuadrito.png',
                     scaledSize: new google.maps.Size(16, 16),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(8, 8)
                 };
+
+                var marker = new google.maps.Marker({
+                    position: routeCoordinate,
+                    optimized: false,
+                    icon: icon,
+                    map: map,
+                    routeIndex: i
+                });
             }
-
-            var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-
-            var marker = new google.maps.Marker({
-                position: routeCoordinate,
-                optimized: false,
-                icon: icon,
-                map: map,
-                routeIndex: i,
-                animation: animationType
-            });
 
             google.maps.event.addListener(marker, 'click', function() {
                 showRouteDetail(this.routeIndex);
@@ -312,6 +364,10 @@ function showAllRoutes() {
 
 function showRouteDetail(routeIndex){
     if (!paintingRoutes){
+
+        $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
+        $('#influencer-picture').fadeIn(1000);
+
         var markers = routes[routeIndex].markers;
         var bounds = new google.maps.LatLngBounds();
         for(i=0;i<markers.length;i++) {
@@ -407,7 +463,12 @@ function showRouteDetail(routeIndex){
                 for (var j=0; j<routes[i].markers.length; j++) {
                     routes[i].markers[j].setMap(null);
                 }
+            } else {
+                for (var j=0; j<routes[i].markers.length; j++) {
+                    google.maps.event.clearListeners(routes[i].markers[j], 'click');
+                }
             }
+
         }
     }
 }
@@ -506,6 +567,25 @@ function showNextPicture() {
     }
 
     updatePictureDetails(galleryPictures[nextIndex]);
+}
+
+/** Influencer **/
+
+function showInfluencerGallery() {
+    $('#overlay').show();
+    $('#influencer-container').show();
+}
+
+function hideInfluencerGallery() {
+    $('#overlay').hide();
+    $('#influencer-container').hide();
+}
+
+function influencerGalleryClick(e) {
+    if (!$(e.target).closest('#influencer-gallery').get(0)) {
+        hideInfluencerGallery();
+        $("#influencer-video").attr('src','');
+    }
 }
 
 function getZoomByBounds( map, bounds ){

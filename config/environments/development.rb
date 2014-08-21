@@ -1,6 +1,11 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  ENV['INSTAGRAM_ID'] = "30bd8eb7c11c4cb29d84755296ea4192"
+  ENV['INSTAGRAM_SECRET'] = "53a6c12a40a445718de8fce72d17b71e"
+  ENV['CONSUMER_TOKEN'] = "Dinc8MViP7jl2aHP4kBiBA"
+  ENV['CONSUMER_SECRET'] = "FAIkX04Od9IpBYrlvcr4QSDtRUGbZa23CLHUppioo"
+  ENV['ACCESS_TOKEN'] = "56761262-P75dEDpTfnti8cX5eD5s6x6kgggTICw4VUoZzCQpu"
+  ENV['ACCESS_SECRET'] = "RlBGwHZGJ9xa8F1QAeBtf9ioVvzBo6LyIhipI5SllUFHu"
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -34,5 +39,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.middleware.delete Rack::Lock
 
 end
