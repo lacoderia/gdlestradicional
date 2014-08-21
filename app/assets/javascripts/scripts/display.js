@@ -114,7 +114,7 @@ function init() {
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(data[0], data[1]),
                         optimized: false,
-                        icon: '/assets/beam.gif',
+                        icon: '/assets/tweet.gif',
                         map: map
                     });
 
