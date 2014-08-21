@@ -101,7 +101,7 @@ function init() {
         google.maps.event.addListener(map, 'tilesloaded', function() {
             if (firstLoad) {
 
-                dispatcher = new WebSocketRails('localhost:3000/websocket');
+                dispatcher = new WebSocketRails('104.130.128.19:3001/websocket');
                 channel = dispatcher.subscribe('twitter_channel');
 
                 channel.bind('new_tweet', function(data) {
