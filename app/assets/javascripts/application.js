@@ -17,5 +17,8 @@
 //= require jquery-ui
 //= require lib/modernizr-2.6.2.min.js
 //= require lib/prefixfree.min.js
+//= require lib/jquery.social.stream.1.5.4.js
 
+
+//= require websocket_rails/main
 

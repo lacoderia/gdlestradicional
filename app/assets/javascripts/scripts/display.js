@@ -184,6 +184,35 @@ function init() {
                     });
                 }, 1000);
 
+                /*$('#social-stream').dcSocialStream({
+                    days: 1000,
+                    limit: 50,
+                    feeds: {
+                        twitter: {
+                            id: '#gdlestradicional',
+                            url: 'http://www.ariza.com.mx/twitter.php',
+                            search: ''
+                        },
+                        instagram: {
+                            id: '#gdlestradicional',
+                            accessToken: '238235014.75e23c3.316bdfe8b6ff4dbbade96a95c7f8d660',
+                            redirectUrl: 'http://localhost',
+                            clientId: '75e23c3095da475cb0c68fa5db4c676f',
+                            comments: 0,
+                            likes: 0,
+                            search: '',
+                            out: 'intro,thumb,text,user,meta'
+                        }
+                    },
+                    height: 400,
+                    rotate: {
+                        direction: 'up',
+                        delay: 8000
+                    },
+                    iconPath: '/assets/feed/dcsns-light/',
+                    imagePath: '/assets/feed/dcsns-light/'
+                });*/
+
                 firstLoad = false;
             }
         });
@@ -390,6 +419,7 @@ function showRouteDetail(routeIndex){
 function updatePictureDetails(post) {
     $('#picture-gallery .post-author').html(post.author_nickname);
     $('#picture-gallery p').html(post.caption);
+    $('#marker-picture').attr('src', "");
     $('#marker-picture').attr('src', post.url_normal);
     $('#current-picture-id').val(post.id);
 }
