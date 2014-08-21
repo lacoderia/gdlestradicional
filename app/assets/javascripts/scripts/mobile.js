@@ -7,6 +7,7 @@ $(document).ready(
 );
 
 var map = null;
+var pano, panoInterval = null;
 var mapCenter = null;
 var firstLoad = true;
 var showAllRoutesZoom = false;
@@ -17,9 +18,28 @@ var galleryPictures = null;
 
 function init() {
 
-    $('#news-feed').draggable();
-
     mapCenter = new google.maps.LatLng(20.666735, -103.350335);
+
+    $('.close-gallery').click(function(){
+       hidePictureGallery();
+    });
+
+    $('#influencer-picture').draggable({
+        stop: function(event, ui) {
+            $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
+        }
+    });
+
+    if(window.DeviceOrientationEvent){
+        window.addEventListener('deviceorientation', devOrientHandler, false);
+    }
+
+    $("#owl-example").owlCarousel({
+        pagination: true,
+        itemsTablet: [$(window).width(),1], //1 items between device.width and 0
+        itemsMobile : [$(window).width(),1],
+        lazyLoad: true
+    });
 
     var styles = [
         {
@@ -116,12 +136,29 @@ function init() {
 
                                 for(var j = 0; j < routes[i].locations.length; j++){
                                     var animationType = undefined;
+                                    var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
+
                                     if (j == 0) {
-                                        animationType = google.maps.Animation.DROP;
-                                        var icon = {
-                                            url: '/assets/marker_azul_cuadrito.png',
-                                            scaledSize: new google.maps.Size(40, 70)
-                                        };
+                                        var markerId = 'first_marker_' + i + '_' + j;
+                                        var marker = new RichMarker({
+                                            position: routeCoordinate,
+                                            map: map,
+                                            flat: true,
+                                            anchor: new google.maps.Size(-20, -70),
+                                            draggable: false,
+                                            routeIndex: i,
+                                            jqueryId: markerId,
+                                            content: '<div id="' + markerId + '" class="first-marker">' +
+                                                '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                                                '<div class="route-name">' + routes[i].name + '</div>' +
+                                                '</div>'
+                                        });
+
+                                        google.maps.event.addListener(marker, 'ready', function() {
+                                            $('#' + this.jqueryId).hide();
+                                            $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                                        });
+
                                     } else {
                                         var icon = {
                                             url: '/assets/cuadrito.png',
@@ -129,18 +166,17 @@ function init() {
                                             origin: new google.maps.Point(0, 0),
                                             anchor: new google.maps.Point(8, 8)
                                         };
+
+                                        var marker = new google.maps.Marker({
+                                            position: routeCoordinate,
+                                            optimized: false,
+                                            icon: icon,
+                                            map: null,
+                                            animation: animationType,
+                                            routeIndex: i
+                                        });
                                     }
 
-                                    var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-
-                                    var marker = new google.maps.Marker({
-                                        position: routeCoordinate,
-                                        optimized: false,
-                                        icon: icon,
-                                        map: null,
-                                        animation: animationType,
-                                        routeIndex: i
-                                    });
 
                                     google.maps.event.addListener(marker, 'click', function() {
                                         showRouteDetail(this.routeIndex);
@@ -179,6 +215,35 @@ function init() {
                     });
                 }, 1000);
 
+                /*$('#social-stream').dcSocialStream({
+                 days: 1000,
+                 limit: 50,
+                 feeds: {
+                 twitter: {
+                 id: '#gdlestradicional',
+                 url: 'http://www.ariza.com.mx/twitter.php',
+                 search: ''
+                 },
+                 instagram: {
+                 id: '#gdlestradicional',
+                 accessToken: '238235014.75e23c3.316bdfe8b6ff4dbbade96a95c7f8d660',
+                 redirectUrl: 'http://localhost',
+                 clientId: '75e23c3095da475cb0c68fa5db4c676f',
+                 comments: 0,
+                 likes: 0,
+                 search: '',
+                 out: 'intro,thumb,text,user,meta'
+                 }
+                 },
+                 height: 400,
+                 rotate: {
+                 direction: 'up',
+                 delay: 8000
+                 },
+                 iconPath: '/assets/feed/dcsns-light/',
+                 imagePath: '/assets/feed/dcsns-light/'
+                 });*/
+
                 firstLoad = false;
             }
         });
@@ -186,6 +251,10 @@ function init() {
     } catch(e) {
         console.log(e);
     }
+}
+
+function devOrientHandler(event){
+
 }
 
 function paintAllRoutes(){
@@ -226,6 +295,8 @@ function paintOneLine(routeIndex, lineIndex) {
 }
 
 function showAllRoutes() {
+
+    $('#influencer-picture').hide();
 
     for (var i=0; i<tempRoute.length; i++) {
         tempRoute[i].setMap(null);
@@ -281,6 +352,10 @@ function showAllRoutes() {
 }
 
 function showRouteDetail(routeIndex){
+
+    $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
+    $('#influencer-picture').fadeIn(1000);
+
     if (!paintingRoutes){
         var markers = routes[routeIndex].markers;
         var bounds = new google.maps.LatLngBounds();
@@ -315,14 +390,6 @@ function showRouteDetail(routeIndex){
 
                     google.maps.event.addListener(marker, 'ready', function() {
                         var richMarker = this;
-                        $('#' + this.jqueryId).hide();
-                        var time = (this.index+1) * 1000;
-                        $('#' + this.jqueryId).fadeIn(time);
-                        $('#' + this.jqueryId).parent().parent().draggable({
-                            stop: function(event, ui) {
-                                $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
-                            }
-                        });
                         $('#' + this.jqueryId).click(function(){
 
                             for (var i=0; i<routes.length; i++) {
@@ -331,7 +398,7 @@ function showRouteDetail(routeIndex){
                                         if (routes[i].locations[j].pictures != undefined) {
                                             galleryPictures = routes[i].locations[j].pictures;
                                             //updatePictureDetails(galleryPictures[0]);
-                                            //showPictureGallery(richMarker);
+                                            showPictureGallery(galleryPictures);
                                             break;
                                         } else {
                                             $.ajax({
@@ -345,7 +412,7 @@ function showRouteDetail(routeIndex){
                                                             if (routes[i].locations[j].id == richMarker.id) {
                                                                 routes[i].locations[j].pictures = sortGalleryPictures(response);
                                                                 galleryPictures = routes[i].locations[j].pictures;
-                                                                updatePictureDetails(galleryPictures[0]);
+                                                                //updatePictureDetails(galleryPictures[0]);
                                                                 showPictureGallery(galleryPictures);
                                                             }
                                                         }
@@ -377,51 +444,52 @@ function showRouteDetail(routeIndex){
                 for (var j=0; j<routes[i].markers.length; j++) {
                     routes[i].markers[j].setMap(null);
                 }
+            } else {
+                for (var j=0; j<routes[i].markers.length; j++) {
+                    google.maps.event.clearListeners(routes[i].markers[j], 'click');
+                }
             }
         }
     }
 }
 
 function updatePictureDetails(post) {
-    /*$('#picture-gallery .post-author').html(post.author_nickname);
+   /* $('#picture-gallery .post-author').html(post.author_nickname);
     $('#picture-gallery p').html(post.caption);
+    $('#marker-picture').attr('src', "");
     $('#marker-picture').attr('src', post.url_normal);
     $('#current-picture-id').val(post.id);*/
 }
 
 function showPictureGallery(galleryPictures) {
-    $('#map-canvas').hide();
-    $('#owl-example').show();
+    $('#gallery').show();
+    $('#map_container').hide();
 
-
-    var content = '';
-    $("#owl-example").html(content);
+    $("#owl-example").html('')
 
     for(var itemIndex in galleryPictures){
 
-        var img = galleryPictures[itemIndex].url_normal;
-        var alt = galleryPictures[itemIndex].caption;
+        var content = '';
 
-        content += "<img src=\"" +img+ "\" alt=\"" +alt+ "\">";
+        var imgURL = galleryPictures[itemIndex].url_normal;
+        var caption = galleryPictures[itemIndex].caption;
+        var author_nickname = galleryPictures[itemIndex].author_nickname;
+
+        content += "<span><img class='lazyOwl' data-src=\"" + imgURL + "\" alt=\"" + caption + "\"><span class='post'><div></div><h3>@" + author_nickname + "</h3><p>" + caption + "</p></span></span>";
+
+        $("#owl-example").data('owlCarousel').addItem(content);
     }
-
-    $("#owl-example").html(content);
-
-    $("#owl-example").owlCarousel({
-        pagination: true,
-        itemsTablet: [$(window).width(),1], //1 items between device.width and 0
-        itemsMobile : false
-    });
-
 }
 
 function hidePictureGallery() {
-    $('#owl-example').hide();
-    $('#map-canvas').show();
+    $('#gallery').hide();
+    $('#map_container').show();
 }
 
 function pictureGalleryClick(e) {
-
+    if (!$(e.target).closest('#picture-gallery').get(0)) {
+        hidePictureGallery();
+    }
 }
 
 function sortGalleryPictures(galleryPictures){
@@ -432,6 +500,24 @@ function sortGalleryPictures(galleryPictures){
     return galleryPictures;
 }
 
+/** Influencer **/
+
+function showInfluencerGallery() {
+    $('#overlay').show();
+    $('#influencer-container').show();
+}
+
+function hideInfluencerGallery() {
+    $('#overlay').hide();
+    $('#influencer-container').hide();
+}
+
+function influencerGalleryClick(e) {
+    if (!$(e.target).closest('#influencer-gallery').get(0)) {
+        hideInfluencerGallery();
+        $("#influencer-video").attr('src','');
+    }
+}
 
 function getZoomByBounds( map, bounds ){
     var MAX_ZOOM = map.mapTypes.get( map.getMapTypeId() ).maxZoom || 21 ;
