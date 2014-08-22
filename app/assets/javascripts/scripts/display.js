@@ -115,17 +115,22 @@ function init() {
                 channel.bind('new_tweet', function(data) {
                     console.log('channel event received: ' + data);
 
-                    var marker = new google.maps.Marker({
+                    var marker = new RichMarker({
                         position: new google.maps.LatLng(data[0], data[1]),
-                        optimized: false,
-                        icon: '/assets/tweet.gif',
-                        map: map
+                        map: map,
+                        flat: true,
+                        anchor: new google.maps.Size(-20, -70),
+                        draggable: false,
+                        content: '<div>' +
+                            '<div class="pin icon-uniE600"></div>' +
+                            '<div class="pulse"></div>'+
+                            '</div>'
                     });
 
                     setTimeout(function(){
                         marker.setMap(null);
                         marker = null;
-                    }, 2000);
+                    }, 3000);
 
                 });
 
