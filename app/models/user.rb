@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   
   has_and_belongs_to_many :roles
-  has_many :photos
+  has_many :photos, foreign_key: 'author_id', primary_key: 'uid'
 
   def email_required? 
   	false

@@ -18,13 +18,18 @@ var dispatcher, channel = null;
 
 function init() {
 
-    if (screen.width <= 768) {
+    /*if (screen.width <= 768) {
         window.location = "/mobile";
-    }
+    }*/
 
     $('#news-feed').draggable({
         containment: "document"
     });
+
+    $('#bottle').draggable({
+        containment: "document"
+    });
+
     $('#influencer-picture').draggable({
         containment: "document",
         stop: function(event, ui) {

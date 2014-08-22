@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   resources :locations do
     member do
       get 'gallery'
@@ -33,8 +35,9 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'display#index'
+  root 'display#home'
   get "mobile" => "display#mobile"
+  get "index" =>"display#index"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

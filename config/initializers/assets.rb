@@ -13,5 +13,6 @@ Rails.application.config.assets.precompile += %w( scripts/display.js )
 Rails.application.config.assets.precompile += %w( scripts/mobile.js )
 Rails.application.config.assets.precompile += %w( lib/jquery.sidr.min.js )
 
+Rails.application.config.assets.precompile += %w( styles/home.css )
 Rails.application.config.assets.precompile += %w( styles/mobile.css )
 Rails.application.config.assets.precompile += %w( styles/jquery.sidr.dark.css )
