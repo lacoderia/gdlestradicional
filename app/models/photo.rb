@@ -1,6 +1,6 @@
 class Photo < ActiveRecord::Base
 	belongs_to :location
-	belongs_to :user, foreign_key: 'author_id'
+	belongs_to :user, foreign_key: 'author_id', primary_key: 'uid' 
 	
 	geocoded_by :address, :latitude  => :lat, :longitude => :long
 

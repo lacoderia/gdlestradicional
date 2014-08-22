@@ -20,6 +20,7 @@ gem 'twitter'
 gem 'daemons'
 gem 'websocket-rails'
 gem 'geocoder'
+gem 'activeadmin', github: 'gregbell/active_admin'
 
 group :development do
   gem 'sqlite3'
