@@ -24,6 +24,13 @@ function init() {
        hidePictureGallery();
     });
 
+
+    $('#simple-menu').sidr();
+    $('#sidr .close-menu').click(function(event){
+        $.sidr('close', 'sidr');
+    });
+
+
     $('#influencer-picture').draggable({
         stop: function(event, ui) {
             $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
@@ -125,6 +132,8 @@ function init() {
                             routes = response;
                             for (var i=0; i < routes.length; i++) {
 
+                                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
+
                                 routes[i].markers = new Array();
                                 routes[i].lines = new Array();
 
@@ -207,6 +216,14 @@ function init() {
                                 }
 
                             }
+
+                            $('#sidr ul li a').click(function(event){
+                                var routeIndex = $(event.target).attr('data-route-index');
+                                if(routeIndex){
+                                    showRouteDetail(routeIndex);
+                                    $.sidr('close', 'sidr');
+                                }
+                            });
 
                             paintAllRoutes(0);
                         },
@@ -311,33 +328,43 @@ function showAllRoutes() {
         for (var j=0; j<routes[i].markers.length; j++) {
             routes[i].markers[j].setMap(null);
 
-            var animationType = undefined;
-            var icon = null;
+            var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
             if (j == 0) {
-                animationType = google.maps.Animation.DROP;
-                icon = {
-                    url: '/assets/marker_azul_cuadrito.png',
-                    scaledSize: new google.maps.Size(40, 70)
-                };
+                var markerId = 'first_marker_' + i + '_' + j;
+                var marker = new RichMarker({
+                    position: routeCoordinate,
+                    map: map,
+                    flat: true,
+                    anchor: new google.maps.Size(-20, -70),
+                    draggable: false,
+                    routeIndex: i,
+                    jqueryId: markerId,
+                    content: '<div id="' + markerId + '" class="first-marker">' +
+                        '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                        '<div class="route-name">' + routes[i].name + '</div>' +
+                        '</div>'
+                });
+
+                google.maps.event.addListener(marker, 'ready', function() {
+                    $('#' + this.jqueryId).hide();
+                    $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                });
             } else {
-                icon = {
+                var icon = {
                     url: '/assets/cuadrito.png',
                     scaledSize: new google.maps.Size(16, 16),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(8, 8)
                 };
+
+                var marker = new google.maps.Marker({
+                    position: routeCoordinate,
+                    optimized: false,
+                    icon: icon,
+                    map: map,
+                    routeIndex: i
+                });
             }
-
-            var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-
-            var marker = new google.maps.Marker({
-                position: routeCoordinate,
-                optimized: false,
-                icon: icon,
-                map: map,
-                routeIndex: i,
-                animation: animationType
-            });
 
             google.maps.event.addListener(marker, 'click', function() {
                 showRouteDetail(this.routeIndex);

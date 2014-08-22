@@ -33,8 +33,8 @@ body {
 #show-all-routes {
   background-color: white;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 1em;
+  right: 1em;
   z-index: 99;
 }
 
@@ -75,6 +75,9 @@ body {
   -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
   box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
 
+  img{
+    width: 100%;
+  }
 }
 
 #picture-gallery-container {
@@ -276,4 +279,55 @@ body {
   width: 250px;
   height: 80%;
   background-color: white;
+}
+
+
+/** marker animado **/
+
+.pin {
+  width: 30px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.pulse {
+  background: #00cae9;
+  border-radius: 50%;
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 11px 0px 0px -12px;
+  transform: rotateX(55deg);
+  z-index: -2;
+}
+.pulse:after {
+  content: "";
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  margin: -13px 0 0 -13px;
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 0;
+  box-shadow: 0 0 1px 2px #00cae9;
+  animation-delay: 0.2s;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.2, 1.2);
+    opacity: 0;
+  }
 }
