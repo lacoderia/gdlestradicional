@@ -15,6 +15,7 @@ var paintingRoutes = true;
 var routes = [];
 var tempRoute = [];
 var galleryPictures = null;
+var dispatcher, channel = null;
 
 function init() {
 
@@ -137,6 +138,35 @@ function init() {
 
         google.maps.event.addListener(map, 'tilesloaded', function() {
             if (firstLoad) {
+
+                dispatcher = new WebSocketRails('104.130.128.19:3001/websocket');
+                channel = dispatcher.subscribe('twitter_channel');
+
+                channel.bind('new_tweet', function(data) {
+                    console.log('channel event received: ' + data);
+
+                    var marker = new RichMarker({
+                        position: new google.maps.LatLng(data[0], data[1]),
+                        map: map,
+                        flat: true,
+                        anchor: new google.maps.Size(-20, -70),
+                        draggable: false,
+                        content: '<div>' +
+                            '<div class="pin icon-uniE600"></div>' +
+                            '<div class="pulse"></div>'+
+                            '</div>'
+                    });
+
+                    setTimeout(function(){
+                        marker.setMap(null);
+                        marker = null;
+                    }, 3000);
+
+                });
+
+                channel.bind('new_picture', function(data) {
+                    console.log('channel event received: ' + data);
+                });
 
                 setTimeout(function(){
                     $.ajax({
