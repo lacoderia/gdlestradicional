@@ -3,6 +3,75 @@
   height: 100%;
 }
 
+#simple-menu{
+
+}
+
+header{
+  background-color: transparent;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  z-index: 101;
+
+  h1{
+    text-align: center;
+  }
+
+  nav{
+    background-color: #002131;
+    border: 1px double #002131;
+    margin: 0em;
+    padding: 0.4em 0em;
+    text-align: center;
+
+    ul{
+      color: white;
+      display: inline-block;
+      font-size: 1.3em !important;
+      margin: 0px;
+      padding: 0px;
+      vertical-align: top;
+
+      li{
+        display: inline-block;
+        margin: 0px 6px;
+        padding: 0px;
+        vertical-align: top;
+      }
+
+      a{
+        color: white;
+        text-decoration: none;
+      }
+    }
+
+    .routes{
+      float: left;
+    }
+  }
+
+  .header-mobile{
+    background: transparent url('/assets/img-bkg-header-mobile.png') repeat-x top left;
+    color: white;
+    height: 50px;
+    margin: 0px auto;
+    padding: 0em;
+
+    h1{
+      font-size: 1.3em;
+      margin: 0em;
+      padding-top: 0.5em;
+      text-align: center;
+    }
+
+    span{
+      color: black;
+    }
+
+  }
+}
+
 #gallery{
 
   background: #002131 url('/assets/img-bkg-gallery-mobile.png') no-repeat top left;
@@ -187,6 +256,16 @@
   #influencer-video {
     border: none;
   }
+}
+
+a.close-menu{
+  color: white;
+  display: block;
+  float: right;
+  text-align: right;
+  text-decoration: none;
+  padding: 0.8em 1em;
+  width: 100px;
 }
 
 @media (min-width: 768px) {
