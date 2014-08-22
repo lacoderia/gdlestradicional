@@ -418,11 +418,16 @@ function showAllRoutes() {
 }
 
 function showRouteDetail(routeIndex){
-
-    $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
-    $('#influencer-picture').fadeIn(1000);
-
     if (!paintingRoutes){
+
+        $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
+        $('#influencer-picture').fadeIn(1000);
+
+        for (var i=0; i<tempRoute.length; i++) {
+            tempRoute[i].setMap(null);
+        }
+        tempRoute = [];
+
         var markers = routes[routeIndex].markers;
         var bounds = new google.maps.LatLngBounds();
         for(i=0;i<markers.length;i++) {
@@ -437,6 +442,11 @@ function showRouteDetail(routeIndex){
         for (var i=0; i<routes.length; i++) {
             if (i == routeIndex) {
                 for (var j=0; j<routes[i].markers.length; j++) {
+
+                    routes[i].markers[j].setMap(map);
+                    if (routes[i].lines[j]) {
+                        routes[i].lines[j].setMap(map);
+                    }
 
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
                     var markerId = 'marker_' + i + '_' + j;
