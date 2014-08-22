@@ -38,13 +38,6 @@ function init() {
         $.sidr('close', 'sidr');
     });
 
-    $('#sidr ul li a').click(function(event){
-        var routeIndex = $(event.target).attr('data-route-index');
-        if(routeIndex){
-            showRouteDetail(routeIndex);
-            $.sidr('close', 'sidr');
-        }
-    });
 
     $('#influencer-picture').draggable({
         stop: function(event, ui) {
@@ -263,6 +256,13 @@ function init() {
 
                             }
 
+                            $('#sidr ul li a').click(function(event){
+                                var routeIndex = $(event.target).attr('data-route-index');
+                                if(routeIndex){
+                                    showRouteDetail(routeIndex);
+                                    $.sidr('close', 'sidr');
+                                }
+                            });
                             paintAllRoutes(0);
                         },
                         error: function(error) {
