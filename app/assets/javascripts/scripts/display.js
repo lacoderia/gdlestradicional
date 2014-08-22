@@ -5,7 +5,6 @@
 $(document).ready(
     init
 );
-
 var map = null;
 var pano, panoInterval = null;
 var mapCenter = null;
@@ -131,6 +130,37 @@ function init() {
                         marker.setMap(null);
                         marker = null;
                     }, 3000);
+
+                });
+
+                channel.bind('new_picture', function(data) {
+                    console.log('channel event received: ' + data);
+
+                    data = JSON.parse(data);
+                    for (var i=0; i<routes.length; i++) {
+                        for (var j = 0; j < routes[i].locations.length; j++) {
+                            if (routes[i].locations[j].id == data.location_id) {
+                                routes[i].locations[j].recent_photo = data.url_thumb;
+
+                                if (routes[i].locations[j].pictures) {
+                                    routes[i].locations[j].pictures.push(data);
+                                    sortGalleryPictures(routes[i].locations[j].pictures);
+                                }
+
+                                var markerId = 'marker_' + i + '_' + j;
+                                for (var l=0; l<tempRoute.length; l++) {
+                                    console.log(tempRoute[l]);
+                                    console.log(tempRoute[l].id);
+                                    if (tempRoute[l].id == data.location_id) {
+                                        $('#' + markerId + ' img').hide();
+                                        $('#' + markerId + ' img').attr('src', data.url_thumb);
+                                        $('#' + markerId + ' img').fadeIn(1000);
+                                    }
+
+                                }
+                            }
+                        }
+                    }
 
                 });
 
@@ -579,6 +609,8 @@ function showNextPicture() {
         }
     }
 
+    console.log(routes);
+
     updatePictureDetails(galleryPictures[nextIndex]);
 }
 
@@ -586,18 +618,19 @@ function showNextPicture() {
 
 function showInfluencerGallery() {
     $('#overlay').show();
+    $("#influencer-video").attr('src','http://www.youtube.com/embed/XGSy3_Czz8k');
     $('#influencer-container').show();
 }
 
 function hideInfluencerGallery() {
     $('#overlay').hide();
+    $("#influencer-video").attr('src','');
     $('#influencer-container').hide();
 }
 
 function influencerGalleryClick(e) {
     if (!$(e.target).closest('#influencer-gallery').get(0)) {
         hideInfluencerGallery();
-        $("#influencer-video").attr('src','');
     }
 }
 
