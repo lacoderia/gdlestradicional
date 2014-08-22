@@ -19,6 +19,7 @@ gem 'instagram'
 gem 'twitter'
 gem 'daemons'
 gem 'websocket-rails'
+gem 'geocoder'
 
 group :development do
   gem 'sqlite3'

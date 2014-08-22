@@ -4,7 +4,7 @@
   <title>Rails4AuthorizationAuthentication</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= stylesheet_link_tag 'application', 'styles/mobile', 'styles/jquery.sidr.dark.css', media: 'all' %>
   <%= yield :head_style %>
   <%= javascript_include_tag 'application' %>
   <%= yield :head_script %>
@@ -12,14 +12,14 @@
 </head>
 <body>
 
-  <!--div id='devise_alerts'>
+<!--div id='devise_alerts'>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
   </div-->
 
-  <%= yield %>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlt78s6LGfxsOKjboqZ7FFXcJ4gLwhOlA"></script>
-  <%= javascript_include_tag "lib/richmarker", "scripts/display" %>
+<%= yield %>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlt78s6LGfxsOKjboqZ7FFXcJ4gLwhOlA"></script>
+<%= javascript_include_tag "lib/richmarker", "scripts/mobile", "lib/owl.carousel.min", "lib/jquery.sidr.min.js" %>
 
 </body>
 </html>
