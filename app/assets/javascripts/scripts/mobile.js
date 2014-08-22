@@ -20,15 +20,17 @@ function init() {
 
     mapCenter = new google.maps.LatLng(20.666735, -103.350335);
 
+    var headerHeight = $('header').outerHeight();
+    var mapHeight = $(window).height() - headerHeight;
+
+    $('#map_container').height(mapHeight);
+    $('#map-canvas').height(mapHeight);
+    $('#gallery').height(mapHeight)
+
     $('.close-gallery').click(function(){
        hidePictureGallery();
     });
 
-
-    $('#simple-menu').sidr();
-    $('#sidr .close-menu').click(function(event){
-        $.sidr('close', 'sidr');
-    });
 
 
     $('#influencer-picture').draggable({
@@ -90,6 +92,7 @@ function init() {
         minZoom: 13,
         maxZoom: 19,
         disableDefaultUI: true,
+        scrollwheel: false,
         disableDoubleClickZoom: true,
         draggable: false,
         styles: styles
@@ -280,6 +283,11 @@ function paintAllRoutes(){
     for (var i=0; i<routes.length; i++) {
         paintOneRoute(i);
     }
+
+    $('#simple-menu').sidr();
+    $('#sidr .close-menu').click(function(event){
+        $.sidr('close', 'sidr');
+    });
 }
 
 function paintOneRoute(routeIndex) {
@@ -376,6 +384,7 @@ function showAllRoutes() {
 
     showAllRoutesZoom = true;
     map.setZoom(13);
+    $.sidr('close', 'sidr');
 }
 
 function showRouteDetail(routeIndex){

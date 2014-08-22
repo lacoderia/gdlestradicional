@@ -1,0 +1,49 @@
+body{
+  background: #002131 url('/assets/img-bkg-gallery-mobile.png') no-repeat top left;
+  background-size: cover;
+
+  a.desktop{
+    display: none;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -24px;
+    position: absolute;
+    top: 50%;
+
+    img{
+      width: 500px;
+    }
+  }
+
+  a.mobile{
+
+    display: inline-block;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -60px;
+    position: absolute;
+    top: 50%;
+
+    img{
+      width: 300px;
+    }
+
+  }
+}
+
+@media (min-width: 768px) {
+
+  body{
+    background: #002131 url('/assets/img-bkg-home-desktop.png') no-repeat top left;
+    background-size: cover;
+  }
+
+  a.desktop{
+    display: inline-block !important;
+  }
+
+  a.mobile{
+    display: none !important;
+  }
+
+}
