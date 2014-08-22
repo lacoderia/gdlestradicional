@@ -23,8 +23,11 @@ function init() {
         window.location = "/mobile";
     }
 
-    $('#news-feed').draggable();
+    $('#news-feed').draggable({
+        containment: "document"
+    });
     $('#influencer-picture').draggable({
+        containment: "document",
         stop: function(event, ui) {
             $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
         }
@@ -75,7 +78,8 @@ function init() {
         maxZoom: 19,
         disableDefaultUI: true,
         disableDoubleClickZoom: true,
-        draggable: false,
+        scrollwheel: false,
+        draggable: true,
         styles: styles
     }
 
@@ -114,7 +118,7 @@ function init() {
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(data[0], data[1]),
                         optimized: false,
-                        icon: '/assets/beam.gif',
+                        icon: '/assets/tweet.gif',
                         map: map
                     });
 
