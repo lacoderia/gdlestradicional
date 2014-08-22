@@ -19,8 +19,11 @@ var dispatcher, channel = null;
 
 function init() {
 
-    $('#news-feed').draggable();
+    $('#news-feed').draggable({
+        containment: "document"
+    });
     $('#influencer-picture').draggable({
+        containment: "document",
         stop: function(event, ui) {
             $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
         }
@@ -71,7 +74,8 @@ function init() {
         maxZoom: 19,
         disableDefaultUI: true,
         disableDoubleClickZoom: true,
-        draggable: false,
+        scrollwheel: false,
+        draggable: true,
         styles: styles
     }
 
