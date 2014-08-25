@@ -35,9 +35,9 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'display#home'
+  root 'display#index'
   get "mobile" => "display#mobile"
-  get "index" =>"display#index"
+  #get "home" =>"display#home"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
