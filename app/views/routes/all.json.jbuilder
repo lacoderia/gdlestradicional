@@ -2,6 +2,6 @@ json.array!(@routes) do |route|
   json.extract! route, :id, :name, :description
   json.locations route.locations do |location|
 		json.extract! location, :id, :name, :description, :lat, :long
-		location.photos.last ? json.recent_photo location.photos.last.url_thumb : ""
+		json.recent_photo (location.photos.last ? location.photos.last.url_thumb : "")
 	end
 end
