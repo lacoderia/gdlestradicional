@@ -23,7 +23,7 @@ begin
   		#puts object.attrs[:coordinates]
       WebsocketRails[:twitter_channel].trigger(:new_tweet, object.attrs[:geo][:coordinates])
     end
-  rescue => e
-    retry
   end
+rescue => e
+  retry
 end
