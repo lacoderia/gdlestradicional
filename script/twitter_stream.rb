@@ -12,13 +12,18 @@ client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret   = ENV['ACCESS_SECRET']
 end
 
-client.filter(:track => 'love') do |object|
-	if object.is_a?(Twitter::Tweet) && object.attrs[:geo]
-    puts '-----------------------'
-		puts 'id : ' + object.attrs[:id].to_s
-    puts 'tweet: ' + object.text
-    puts object.attrs[:geo]
-		puts object.attrs[:coordinates]
-    WebsocketRails[:twitter_channel].trigger(:new_tweet, object.attrs[:geo][:coordinates])
+begin
+  #client.filter(:track => 'love') do |object|
+  client.filter(:locations => "-103.477892,20.615802,-103.257822,20.692261") do |object|
+  	if object.is_a?(Twitter::Tweet) && object.attrs[:geo]
+      #puts '-----------------------'
+  		#puts 'id : ' + object.attrs[:id].to_s
+      #puts 'tweet: ' + object.text
+      #puts object.attrs[:geo]
+  		#puts object.attrs[:coordinates]
+      WebsocketRails[:twitter_channel].trigger(:new_tweet, object.attrs[:geo][:coordinates])
+    end
+  rescue => e
+    retry
   end
 end
