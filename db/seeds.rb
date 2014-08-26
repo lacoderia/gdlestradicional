@@ -7,6 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
+Util.create(next_min_id: '');
+
 ruta1 = Route.create(name:'Ruta 1', description:'Ruta de prueba 1', active:true)
 ruta2 = Route.create(name:'Ruta 2', description:'Ruta de prueba 2', active:true)
 

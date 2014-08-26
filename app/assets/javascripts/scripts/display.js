@@ -84,7 +84,7 @@ function init() {
         disableDefaultUI: true,
         disableDoubleClickZoom: true,
         scrollwheel: false,
-        draggable: true,
+        draggable: false,
         styles: styles
     }
 
