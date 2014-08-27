@@ -650,3 +650,25 @@ function getZoomByBounds( map, bounds ){
     }
     return 0;
 }
+
+var user;
+function login() {
+    $.ajax({
+        beforeSend: function( xhr ) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            if (token) xhr.setRequestHeader('X-CSRF-Token', token);
+        }, 
+        type: "GET",
+        url: "/users/auth/instagram",
+        data: null,
+        dataType: "json",
+        success: function(response) {
+            if (response.success == true)
+                user = response.user;
+            else
+                console.log("pito");
+        },
+        error: function(error) {
+        }
+    });   
+}
