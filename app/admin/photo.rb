@@ -1,5 +1,7 @@
 ActiveAdmin.register Photo do
 
+	actions :all, :except => [:new] 
+
   permit_params :points, :active, :location_id
 
 	controller do
