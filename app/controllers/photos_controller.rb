@@ -61,6 +61,10 @@ class PhotosController < ApplicationController
     end
   end
 
+  def recent
+    @photos = Photo.where('active = ?', true).last(10)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo

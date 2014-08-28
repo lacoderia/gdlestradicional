@@ -2,13 +2,18 @@ Rails.application.routes.draw do
   
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  
   resources :locations do
     member do
       get 'gallery'
     end
   end
 
-  resources :photos
+  resources :photos do
+    collection do
+      get 'recent'
+    end
+  end
 
   resources :roles
 
