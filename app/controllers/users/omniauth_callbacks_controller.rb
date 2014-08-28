@@ -1,11 +1,12 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
+	protect_from_forgery except: :instagram
+
 	def instagram
 		puts auth_hash
 		@user = User.find_for_instagram_oauth(auth_hash, current_user)
 		if @user.persisted?
 			sign_in @user
-			#redirect_to users_path
 			@success = true
 			@results = []
 			instagram = Instagram.client
@@ -13,12 +14,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 			instagram.user_liked_media({:count => 1000}).each do |object|
 				@results.push(object.id) if object.type == 'image'
 			end
+			@response = {:success => @success, :user => {:id => @user.id, :uid => @user.uid, :nickname => @user.nickname, :picture => @user.picture, :likes => @results}}
 		else
 			session["devise.instagram_data"] = auth_hash.except("extra")
-			#redirect_to signup_url(@user)
 			@success = false
+			@response = {:success => @success}
 		end
-		render "login.json"
+		#render "login.json"
+		render :json => @response.to_json, :callback => 'callbackName'
 	end
 
 	def auth_hash

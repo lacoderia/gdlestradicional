@@ -16,6 +16,7 @@ var routes = [];
 var tempRoute = [];
 var galleryPictures = null;
 var dispatcher, channel = null;
+var user;
 
 function init() {
 
@@ -651,7 +652,6 @@ function getZoomByBounds( map, bounds ){
     return 0;
 }
 
-var user;
 function login() {
     $.ajax({
         beforeSend: function( xhr ) {
@@ -660,13 +660,13 @@ function login() {
         }, 
         type: "GET",
         url: "/users/auth/instagram",
-        data: null,
-        dataType: "json",
+        crossDomain: true,
+        dataType: "jsonp",
+        jsonpCallback: "callbackName",
         success: function(response) {
-            if (response.success == true)
+            if (response.success == true) {
                 user = response.user;
-            else
-                console.log("pito");
+            }
         },
         error: function(error) {
         }
