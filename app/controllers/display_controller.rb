@@ -21,12 +21,9 @@ class DisplayController < ApplicationController
       return
   	else
   	  #Instagram.process_subscription(params[:body]) do |handler|
-        puts '------------------------diego'
-        #puts handler.to_yaml
-        #Thread.new do
+        Thread.new do
           fetch_new_photos
-        #end
-        puts 'diego------------------------'
+        end
   	  #end
   	end
     render plain: 'ok'
@@ -39,7 +36,7 @@ class DisplayController < ApplicationController
     results = instagram.tag_recent_media('gdlestradicional', {:min_tag_id => next_min_id})
     if results.size > 0
       results.each do |object|
-        if object.location
+        if object.location && object.type == 'image'
           Photo.create(instagram_id: object.id, caption: object.caption.text, author_id: object.user.id, author_nickname: object.user.username, lat: object.location.latitude, long: object.location.longitude, url_low: object.images.low_resolution.url, url_thumb: object.images.thumbnail.url, url_normal: object.images.standard_resolution.url, points: 2)
         end  
       end
