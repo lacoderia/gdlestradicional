@@ -6,7 +6,7 @@ class DisplayController < ApplicationController
   end
 
   def index
-
+    @user = current_user.get_info if current_user
   end
 
   def mobile

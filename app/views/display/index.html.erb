@@ -34,7 +34,16 @@
 
   <div id="news-feed">
     <div>HEADER</div>
-    <div id="login-div"><a href="#" onclick="login()">PARTICIPA</a></div>
+    <div id="user-div">
+      <div id="login-btn"><a href="#" onclick="login()">PARTICIPA</a></div>
+      <div id="dashboard">
+          <div class="dashboard-element-pic"><img /></div>
+          <div class="dashboard-element"><span id="user-name"/></div><br/>
+          <div class="user-element"><span id="user-points"></span><br/>Puntos</div>
+          <div class="user-element"><span id="user-photos"></span><br/>Fotos</div>
+          <div class="user-element"><span id="user-invites"></span><br/>Invitaciones</div>
+      </div>
+    </div>
     <div>¿Qué dice GDL?</div>
     <a class="twitter-timeline" href="https://twitter.com/hashtag/gdlestradicional" data-widget-id="505100682592919552"></a>
      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
@@ -47,3 +56,5 @@
     <img src="/assets/img-bkg-button.png" alt="Entrar a Guadalajara es tradicional">
   </a>
 </div>
+
+<div id="ruby-values" data-user="<%= @user.to_json%>">

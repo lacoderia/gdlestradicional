@@ -4,24 +4,19 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
 	def instagram
 		puts auth_hash
-		@user = User.find_for_instagram_oauth(auth_hash, current_user)
-		if @user.persisted?
-			sign_in @user
-			@success = true
-			@results = []
-			instagram = Instagram.client
-			instagram.access_token = @user.access_token
-			instagram.user_liked_media({:count => 1000}).each do |object|
-				@results.push(object.id) if object.type == 'image'
-			end
-			@response = {:success => @success, :user => {:id => @user.id, :uid => @user.uid, :nickname => @user.nickname, :picture => @user.picture, :likes => @results}}
+		user = User.find_for_instagram_oauth(auth_hash, current_user)
+		if user.persisted?
+			sign_in user
+			success = true
+			user_info = user.get_info
+			response = {:success => success, :user => user_info}
 		else
 			session["devise.instagram_data"] = auth_hash.except("extra")
-			@success = false
-			@response = {:success => @success}
+			success = false
+			response = {:success => success}
 		end
 		#render "login.json"
-		render :json => @response.to_json, :callback => 'callbackName'
+		render :json => response.to_json, :callback => 'callbackName'
 	end
 
 	def auth_hash

@@ -24,6 +24,11 @@ function init() {
         window.location = "/mobile";
     }
 
+    if ($("#ruby-values").data("user")) {
+        user = $("#ruby-values").data("user");
+        showDashboard();
+    }
+
     $('#news-feed').draggable({
         containment: "document"
     });
@@ -86,6 +91,8 @@ function init() {
         disableDoubleClickZoom: true,
         scrollwheel: false,
         draggable: false,
+        draggableCursor: 'default', 
+        draggingCursor: 'default', 
         styles: styles
     }
 
@@ -98,6 +105,7 @@ function init() {
             strokeWeight: 2,
             fillColor: '#13435B',
             fillOpacity: 0.7,
+            clickable: false,
             map: map,
             bounds: new google.maps.LatLngBounds(
                 new google.maps.LatLng(20.751853, -103.483541),
@@ -666,9 +674,22 @@ function login() {
         success: function(response) {
             if (response.success == true) {
                 user = response.user;
+                showDashboard();
             }
         },
         error: function(error) {
         }
     });   
+}
+
+function showDashboard() {
+    $("#login-btn").css("display", "none");
+    $("#dashboard").css("display", "block");
+    $("#dashboard img").attr("src", user.picture);
+    $("#user-name").text(user.nickname);
+    $("#user-points").text(user.points);
+    $("#user-photos").text(user.photos.length);
+    $("#user-invites").text(0);
+    if (!user.email)
+        console.log("no email");
 }

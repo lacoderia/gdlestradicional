@@ -24,4 +24,19 @@ class User < ActiveRecord::Base
 		return !!self.roles.find_by_name(role)
 	end
 
+	def get_info
+		likes = []
+		instagram = Instagram.client
+		instagram.access_token = self.access_token
+		instagram.user_liked_media({:count => 1000}).each do |object|
+			likes.push(object.id) if object.type == 'image'
+		end
+		points = 0
+		photos = self.photos.where("active = ?", true)
+		photos.each do | photo |
+			points += photo.points
+		end
+		return {:id => self.id, :uid => self.uid, :nickname => self.nickname, :picture => self.picture, :likes => likes, :points => points, :photos => photos}
+	end
+
 end
