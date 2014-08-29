@@ -229,7 +229,7 @@ function addLatestPicture(data) {
 function createLatestPictureMarker(pic, nickname){
 
 		position = Math.floor((Math.random() * 10) + 1)-1;
-		console.log("position " + position);
+		//console.log("position " + position);
 		var marker = new RichMarker({
 				position: latestPicturesPositions[position],
 				map: map,
@@ -246,30 +246,34 @@ function createLatestPictureMarker(pic, nickname){
 
 function showLatestPictures() {
 
-	createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
 	setTimeout(function(){
-  	$('#latest-pic').fadeOut(1000, function(){    
-			$('#latest-pic').remove();
-		});
-	}, 5000);
-	
-	var start = 1;
-	setInterval(function(){
-		try {
-			pic = latestPictures[start].url_low;
-			createLatestPictureMarker(pic, latestPictures[start].author_nickname);
-		} catch(e) {
-			start = 0;
-			pic = latestPictures[start].url_low;
-			createLatestPictureMarker(pic, latestPictures[start].author_nickname);
-		}
+
+		createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
 		setTimeout(function(){
 			$('#latest-pic').fadeOut(1000, function(){    
 				$('#latest-pic').remove();
 			});
 		}, 5000);
-		start++;
-	}, 10000);
+		
+		var start = 1;
+		setInterval(function(){
+			try {
+				pic = latestPictures[start].url_low;
+				createLatestPictureMarker(pic, latestPictures[start].author_nickname);
+			} catch(e) {
+				start = 0;
+				pic = latestPictures[start].url_low;
+				createLatestPictureMarker(pic, latestPictures[start].author_nickname);
+			}
+			setTimeout(function(){
+				$('#latest-pic').fadeOut(1000, function(){    
+					$('#latest-pic').remove();
+				});
+			}, 5000);
+			start++;
+		}, 10000);
+
+	}, 5000);
 }
 
 function launchApp() {
@@ -778,6 +782,111 @@ function login() {
     });   
 }
 
+function userPictureGalleryClick(e) {
+    if (!$(e.target).closest('#user-picture-gallery').get(0)) {
+        hideUserPictureGallery();
+    }
+}
+
+function hideUserPictureGallery() {
+    $('#overlay').hide();
+    $('#user-picture-gallery-container').hide();
+
+    pano = null;
+    clearInterval(panoInterval);
+}
+
+function showUserPictures(){
+
+	if (user.photos.length > 0){
+
+		var post = user.photos[0];
+
+		$('#user-picture-gallery .post-author').html(post.author_nickname);
+    $('#user-picture-gallery p').html(post.caption);
+    $('#user-marker-picture').attr('src', "");
+    $('#user-marker-picture').attr('src', post.url_normal);
+    $('#user-current-picture-id').val(post.id);
+
+		var position = new google.maps.LatLng(post.lat, post.long);
+
+		$('#overlay').show();
+    $('#user-picture-gallery-container').show();
+
+    var panoOptions = {
+        position: position,
+        pov: {
+            heading: 0,
+            pitch: 0
+        },
+        streetViewControl: false,
+        enableCloseButton: false,
+        linksControl: false,
+        panControl: false,
+        clickToGo: false,
+        scrollwheel: false,
+        addressControl: false,
+        disableDefaultUI: true,
+        disableDoubleClickZoom: false,
+        zoomControl: false
+    };
+
+    pano = new google.maps.StreetViewPanorama(
+        document.getElementById('user-panorama'),
+        panoOptions);
+
+    panoInterval = window.setInterval(function() {
+        var pov = pano.getPov();
+        pov.heading += 0.1;
+        pano.setPov(pov);
+    }, 10);
+
+	}
+
+}
+
+function userUpdatePictureDetails(post) {
+    $('#userPicture-gallery .post-author').html(post.author_nickname);
+    $('#user-picture-gallery p').html(post.caption);
+    $('#user-marker-picture').attr('src', "");
+    $('#user-marker-picture').attr('src', post.url_normal);
+    $('#user-current-picture-id').val(post.id);
+}
+
+function userShowPreviousPicture() {
+    var previousIndex = 0;
+    for (var i=0; i<user.photos.length; i++) {
+        if (user.photos[i].id == $('#user-current-picture-id').val()) {
+            if (i-1 >= 0) {
+                previousIndex = i-1;
+            } else {
+                previousIndex = user.photos.length - 1;
+            }
+            break;
+        }
+    }
+
+    userUpdatePictureDetails(user.photos[previousIndex]);
+}
+
+function userShowNextPicture() {
+    var nextIndex = 0;
+    for (var i=0; i<user.photos.length; i++) {
+        if (user.photos[i].id == $('#user-current-picture-id').val()) {
+            if (i+1 < user.photos.length) {
+                nextIndex = i+1;
+            } else {
+                nextIndex = 0;
+            }
+            break;
+        }
+    }
+
+    console.log(routes);
+
+    userUpdatePictureDetails(user.photos[nextIndex]);
+}
+
 function showDashboard() {
     $("#login-btn").css("display", "none");
     $("#dashboard").css("display", "block");
@@ -785,6 +894,7 @@ function showDashboard() {
     $("#user-name").text(user.nickname);
     $("#user-points").text(user.points);
     $("#user-photos").text(user.photos.length);
+		$("#user-photos").click(showUserPictures);
     $("#user-invites").text(0);
     if (!user.email)
         console.log("no email");
