@@ -3,7 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	protect_from_forgery except: :instagram
 
 	def instagram
-		puts auth_hash
+		first_time = User.where(:nickname => auth_hash.info.nickname).size == 0 ? true : false;
 		user = User.find_for_instagram_oauth(auth_hash, current_user)
 		if user.persisted?
 			sign_in user
@@ -15,11 +15,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 			success = false
 			response = {:success => success}
 		end
-		#render "login.json"
-		render :json => response.to_json, :callback => 'callbackName'
+		if first_time
+			redirect_to :root
+		else
+			render :json => response.to_json, :callback => 'callbackName'
+		end
 	end
 
 	def auth_hash
 		request.env["omniauth.auth"]
+	end
+
+	def failure
+		redirect_to :root
 	end
 end

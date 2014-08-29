@@ -677,7 +677,10 @@ function login() {
                 showDashboard();
             }
         },
-        error: function(error) {
+        error: function(jqXHR, textStatus, errorThrown) {
+            if (textStatus == 'parsererror') {
+                window.location = '/users/auth/instagram';
+            }
         }
     });   
 }
