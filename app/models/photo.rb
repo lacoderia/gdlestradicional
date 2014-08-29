@@ -6,6 +6,9 @@ class Photo < ActiveRecord::Base
 
 	after_create :update_location
 
+	DISTANCE_GDL = 7.02 
+	DISTANCE_3CUADRAS = 0.31
+
 	def closest_to
 		acc_distance = nil
 		closest_location = nil
@@ -16,11 +19,26 @@ class Photo < ActiveRecord::Base
 				closest_location = location
 			end
 		end
-		closest_location
+		[closest_location, acc_distance]
 	end
 
 	def update_location
-		location = self.closest_to
-		self.update_attribute(:location_id, location.id) if location
+		result = self.closest_to
+		location = result[0]
+		distance = result[1]
+
+		if location
+			#if location.route
+				if distance <= DISTANCE_3CUADRAS
+					self.update_attributes(:location_id => location.id, :points => 3)
+				elsif distance <= DISTANCE_GDL 
+					self.update_attribute(:points, 1)
+				end
+			#else
+			#	if self.user.photos.where("location_id = ?", location.id).empty?
+			#		self.update_attributes(:location_id => location.id, :points => 5)
+			#	end
+			#end
+		end
 	end
 end

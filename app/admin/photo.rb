@@ -26,7 +26,7 @@ ActiveAdmin.register Photo do
 			end
 		end
     column :location_id, :sortable => 'locations.name' do |photo|
-			photo.location.name
+			photo.location.name if photo.location
 		end
     column :url_thumb do |photo|
 			link_to( (image_tag photo.url_thumb), photo.url_normal, :target=>"_blank")
