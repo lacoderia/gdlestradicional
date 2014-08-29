@@ -17,6 +17,8 @@ var tempRoute = [];
 var galleryPictures = null;
 var dispatcher, channel = null;
 var user;
+var latestPictures = [];
+var latestPicturesPositions = []
 
 function init() {
 
@@ -36,6 +38,10 @@ function init() {
     $('#bottle').draggable({
         containment: "document"
     });
+
+		$('#latest-pic').draggable({
+				containment: "document"
+		});
 
     $('#influencer-picture').draggable({
         containment: "document",
@@ -96,6 +102,19 @@ function init() {
         styles: styles
     }
 
+		getLatestPictures();
+
+		latestPicturesPositions.push(new google.maps.LatLng(20.626339,-103.394958));
+		latestPicturesPositions.push(new google.maps.LatLng(20.693847,-103.332336));
+		latestPicturesPositions.push(new google.maps.LatLng(20.659178,-103.414142));
+		latestPicturesPositions.push(new google.maps.LatLng(20.643801,-103.380708));
+		latestPicturesPositions.push(new google.maps.LatLng(20.690118,-103.306945));
+		latestPicturesPositions.push(new google.maps.LatLng(20.630118,-103.306209)); 
+		latestPicturesPositions.push(new google.maps.LatLng(20.692533,-103.346447));
+		latestPicturesPositions.push(new google.maps.LatLng(20.690118,-103.332336));
+		latestPicturesPositions.push(new google.maps.LatLng(20.650118,-103.310708)); 
+		latestPicturesPositions.push(new google.maps.LatLng(20.692533,-103.394958));
+
     try {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
@@ -148,9 +167,10 @@ function init() {
         });
 
         channel.bind('new_picture', function(data) {
-            console.log('channel event received: ' + data);
+            console.log('new picture event received: ' + data);
 
             data = JSON.parse(data);
+						addLatestPicture(data);
             for (var i=0; i<routes.length; i++) {
                 for (var j = 0; j < routes[i].locations.length; j++) {
                     if (routes[i].locations[j].id == data.location_id) {
@@ -181,12 +201,84 @@ function init() {
     }
 }
 
+function getLatestPictures() {
+	$.ajax({
+		type: "GET",
+		url: "/photos/recent.json",
+		data: null,
+		dataType: "json",
+		success: function(response) {
+			latestPictures = response;	
+		},
+		error: function(error) {
+		}
+	});	
+}
+
+function addLatestPicture(data) {
+	var latestPicture = {
+		id: data.id,
+		author_nickname: data.author_nickname,
+		url_low: data.url_low,
+		url_thumb: data.url_thumb
+	};
+	latestPictures.shift();
+	latestPictures.push(latestPicture);
+}
+
+function createLatestPictureMarker(pic, nickname){
+
+		position = Math.floor((Math.random() * 10) + 1)-1;
+		console.log("position " + position);
+		var marker = new RichMarker({
+				position: latestPicturesPositions[position],
+				map: map,
+				draggable: false,
+				flat: true,
+				jqueryId: "latest-pic",
+				content: '<div id="latest-pic"><div>#GDLESTRADICIONAL</div><img src="' + pic + '"/><div>'+ nickname +'</div></div>'
+		});
+
+		google.maps.event.addListener(marker, 'ready', function() {
+  		$('#latest-pic').fadeIn(1000);    
+		});
+}
+
+function showLatestPictures() {
+
+	createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
+	setTimeout(function(){
+  	$('#latest-pic').fadeOut(1000, function(){    
+			$('#latest-pic').remove();
+		});
+	}, 5000);
+	
+	var start = 1;
+	setInterval(function(){
+		try {
+			pic = latestPictures[start].url_low;
+			createLatestPictureMarker(pic, latestPictures[start].author_nickname);
+		} catch(e) {
+			start = 0;
+			pic = latestPictures[start].url_low;
+			createLatestPictureMarker(pic, latestPictures[start].author_nickname);
+		}
+		setTimeout(function(){
+			$('#latest-pic').fadeOut(1000, function(){    
+				$('#latest-pic').remove();
+			});
+		}, 5000);
+		start++;
+	}, 10000);
+}
+
 function launchApp() {
     $('#intro').fadeOut(1000, function() {
         showElements = true;
         loadRoutes();
         $('#news-feed').fadeIn(1000);
         $('#bottle').fadeIn(1000);    
+				showLatestPictures();
     });
 }
 
@@ -234,7 +326,7 @@ function loadRoutes() {
 												});
 
 										} else {
-												var markerId = 'marker_' + i + '_' + j;
+												var markerId = 'secondary_marker_' + i + '_' + j;
 
 												// Si no es el primer punto pintamos un cuadro
 												var marker = new RichMarker({
@@ -245,7 +337,7 @@ function loadRoutes() {
 														anchor: new google.maps.Size(-7, -7),
 														routeIndex: i,
 														jqueryId: markerId,
-														content: '<div id="' + markerId + '" class="marker">' +
+														content: '<div id="' + markerId + '" class="secondary-marker">' +
 																		'<img src="/assets/cuadrito.png"/>' +
 																'</div>'
 												});
@@ -283,6 +375,7 @@ function loadRoutes() {
 																offset: '0',
 																repeat: '9px'
 														}],
+														clickable: false,
 														geodesic: true,
 														map: null
 
