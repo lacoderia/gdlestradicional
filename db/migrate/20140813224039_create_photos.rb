@@ -11,7 +11,7 @@ class CreatePhotos < ActiveRecord::Migration
       t.string :url_low
       t.string :url_thumb
       t.string :url_normal
-      t.integer :points
+      t.integer :points, default: 0
       t.boolean :active, default: true
 
       t.timestamps

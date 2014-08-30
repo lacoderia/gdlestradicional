@@ -3,7 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	protect_from_forgery except: :instagram
 
 	def instagram
-		first_time = User.where(:nickname => auth_hash.info.nickname).size == 0 ? true : false;
+		first_time = User.where(:nickname => auth_hash.info.nickname).size == 0 ? true : false
 		user = User.find_for_instagram_oauth(auth_hash, current_user)
 		if user.persisted?
 			sign_in user

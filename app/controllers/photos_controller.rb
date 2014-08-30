@@ -65,6 +65,18 @@ class PhotosController < ApplicationController
     @photos = Photo.where('active = ?', true).last(10)
   end
 
+  def like
+    if (current_user)
+      photo = Photo.find(params[:id])
+      client = Instagram.client
+      client.access_token = current_user.access_token
+      client.like_media(photo.instagram_id)
+      render json: {:instagram_id => photo.instagram_id}
+      return
+    end
+    render plain: "Error", status: 401
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo

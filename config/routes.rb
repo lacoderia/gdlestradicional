@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     collection do
       get 'recent'
     end
+    member do
+      post 'like'
+    end
   end
 
   resources :roles

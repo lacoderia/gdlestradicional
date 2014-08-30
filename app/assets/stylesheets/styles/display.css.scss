@@ -185,7 +185,7 @@ a.desktop {
   background-color: #FFF;
   border: 6px solid #01BeC7;
   border-radius: 5px;
-  height: 320px;
+  height: 330px;
   width: 600px;
   vertical-align: middle;
   text-align: left;
@@ -216,8 +216,15 @@ a.desktop {
       color: #01BeC7;
       font-size: 24px;
       font-weight: bolder;
+      height: 10px;
       display: block;
       padding: 1em;
+    }
+
+    .post-like {
+      color: white;
+      display: none;
+      padding: 0em 1em 6px;
     }
 
     .hashtag{

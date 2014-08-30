@@ -624,6 +624,43 @@ function updatePictureDetails(post) {
     $('#marker-picture').attr('src', "");
     $('#marker-picture').attr('src', post.url_normal);
     $('#current-picture-id').val(post.id);
+    if (user) {
+        $('#picture-gallery .post-like').css("display", "block");
+        if (hasLiked(post.instagram_id)) {
+            $('#picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
+        }
+        else {
+            $('#picture-gallery .post-like').html("<a href='#' onclick='likePhoto(" + post.id + ")'>Me gusta</a>");
+        }
+    }
+}
+
+function hasLiked(instagram_id) {
+    var liked = false;
+    for (var i = 0; i < user.likes.length; i++) {
+        if (user.likes[i] == instagram_id) {
+            liked = true;
+            break
+        }
+    }
+    return liked;
+}
+
+function likePhoto(id) {
+    $.ajax({
+        beforeSend: function( xhr ) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            if (token) xhr.setRequestHeader('X-CSRF-Token', token);
+        }, 
+        type: "POST",
+        url: "/photos/" + id + "/like",
+        success: function(response) {
+            $('#picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
+            user.likes.push(response.instagram_id);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+        }
+    }); 
 }
 
 function showPictureGallery(marker) {
@@ -710,9 +747,6 @@ function showNextPicture() {
             break;
         }
     }
-
-    console.log(routes);
-
     updatePictureDetails(galleryPictures[nextIndex]);
 }
 
@@ -779,7 +813,7 @@ function login() {
                 window.location = '/users/auth/instagram';
             }
         }
-    });   
+    });
 }
 
 function userPictureGalleryClick(e) {
