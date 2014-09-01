@@ -23,6 +23,23 @@
         </div>
     </div>
   </div>
+	<div id="user-picture-gallery-container" onclick="userPictureGalleryClick(event)">
+    <div id="user-picture-gallery">
+      <input type="hidden" id="user-current-picture-id" value="0"/>
+        <div id="user-panorama-overlay"></div>
+        <div id="user-panorama"></div>
+        <img id="user-marker-picture" src=""/>
+        <div class="post">
+            <div class="bkg-opacity"></div>
+            <span class="post-author"></span>
+            <p></p>
+            <div class="navigation">
+              <div class="arrow arrow-left" onclick="userShowPreviousPicture()"> < Anterior</div> |
+              <div class="arrow arrow-right" onclick="userShowNextPicture()">Siguiente > </div>
+            </div>
+        </div>
+    </div>
+  </div>
   <div id="influencer-picture" onclick="showInfluencerGallery()">
     <img src="" />
   </div>
@@ -41,7 +58,7 @@
           <div class="dashboard-element-pic"><img /></div>
           <div class="dashboard-element"><span id="user-name"/></div><br/>
           <div class="user-element"><span id="user-points"></span><br/>Puntos</div>
-          <div class="user-element"><span id="user-photos"></span><br/>Fotos</div>
+          <div class="user-element" onclick="showUserPictures()"><span id="user-photos"></span><br/>Fotos</div>
           <div class="user-element"><span id="user-invites"></span><br/>Invitaciones</div>
       </div>
     </div>
