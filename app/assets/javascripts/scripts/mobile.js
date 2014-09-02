@@ -7,7 +7,6 @@ $(document).ready(
 );
 
 var map = null;
-var pano, panoInterval = null;
 var mapCenter = null;
 var showElements = false;
 var showAllRoutesZoom = false;
@@ -16,6 +15,7 @@ var routes = [];
 var tempRoute = [];
 var galleryPictures = null;
 var dispatcher, channel = null;
+var user;
 var latestPictures = [];
 var latestPicturesPositions = []
 
@@ -31,7 +31,6 @@ function init() {
 
     $('.close-gallery').click(function(){
        hidePictureGallery();
-
     });
 
     $('#simple-menu').sidr();
@@ -40,6 +39,10 @@ function init() {
         $.sidr('close', 'sidr');
     });
 
+    if ($("#ruby-values").data("user")) {
+        user = $("#ruby-values").data("user");
+        showDashboard();
+    }
 
     $('#influencer-picture').draggable({
         stop: function(event, ui) {
@@ -51,13 +54,6 @@ function init() {
     if(window.DeviceOrientationEvent){
         window.addEventListener('deviceorientation', devOrientHandler, false);
     }
-
-    $("#owl-example").owlCarousel({
-        pagination: true,
-        itemsTablet: [$(window).width(),1], //1 items between device.width and 0
-        itemsMobile : [$(window).width(),1],
-        lazyLoad: true
-    });
 
     var styles = [
         {
@@ -150,7 +146,7 @@ function init() {
         channel = dispatcher.subscribe('twitter_channel');
 
         channel.bind('new_tweet', function(data) {
-            console.log('channel event received: ' + data);
+            //console.log('channel event received: ' + data);
 
             var marker = new RichMarker({
                 position: new google.maps.LatLng(data[0], data[1]),
@@ -172,10 +168,10 @@ function init() {
         });
 
         channel.bind('new_picture', function(data) {
-						console.log('new picture event received: ' + data);
+			//console.log('new picture event received: ' + data);
 
             data = JSON.parse(data);
-						addLatestPicture(data);
+			addLatestPicture(data);
             for (var i=0; i<routes.length; i++) {
                 for (var j = 0; j < routes[i].locations.length; j++) {
                     if (routes[i].locations[j].id == data.location_id) {
@@ -197,6 +193,46 @@ function init() {
                         }
                     }
                 }
+            }
+
+            var content = '';
+            var imgURL = data.url_normal;
+            var caption = data.caption;
+            var author_nickname = data.author_nickname;
+            var post_like = '';
+
+            if (user) {
+                if (hasLiked(data.instagram_id)) {
+                    post_like = "<span>Ya te gusta esta foto</span>";
+                } else {
+                    post_like = "<a href='#' onclick='likePhoto(" + data.id + ")'>Me gusta</a>";
+                }
+            }
+
+            content += "<div id='picture_" + data.id + "'>" +
+                "<img src=\"" + imgURL + "\" alt=\"" + caption + "\">" +
+                "<span class='post'>" +
+                "<div class='post-background'></div>" +
+                "<h3>" + author_nickname + "</h3>" +
+                "<div class='post-like'>" + post_like + "</div>" +
+                "<p>" + caption + "</p>" +
+                "</span>" +
+                "</div>";
+
+            var slick = $('#slick-carousel').getSlick();
+            if (slick){
+                $('#slick-carousel').slickAdd(content);
+            }
+
+            if (user) {
+                $('.post-like').show();
+
+                if (data.author_id == user.uid){
+                    user.photos.push(data);
+                    showDashboard();
+                }
+            } else {
+                $('.post-like').hide();
             }
 
         });
@@ -238,7 +274,7 @@ function addLatestPicture(data) {
 function createLatestPictureMarker(pic, nickname){
 
 		position = Math.floor((Math.random() * 10) + 1)-1;
-		console.log("position " + position);
+		//console.log("position " + position);
 		var marker = new RichMarker({
 				position: latestPicturesPositions[position],
 				map: map,
@@ -286,7 +322,7 @@ function launchApp() {
     $('#intro').fadeOut(1000, function() {
         showElements = true;
         loadRoutes();
-				showLatestPictures();
+		showLatestPictures();
     });
 }
 
@@ -582,7 +618,6 @@ function showRouteDetail(routeIndex){
                                     if (routes[i].locations[j].id == richMarker.id) {
                                         if (routes[i].locations[j].pictures != undefined) {
                                             galleryPictures = routes[i].locations[j].pictures;
-                                            //updatePictureDetails(galleryPictures[0]);
                                             showPictureGallery(galleryPictures);
                                             break;
                                         } else {
@@ -597,7 +632,6 @@ function showRouteDetail(routeIndex){
                                                             if (routes[i].locations[j].id == richMarker.id) {
                                                                 routes[i].locations[j].pictures = sortGalleryPictures(response);
                                                                 galleryPictures = routes[i].locations[j].pictures;
-                                                                //updatePictureDetails(galleryPictures[0]);
                                                                 showPictureGallery(galleryPictures);
                                                             }
                                                         }
@@ -638,32 +672,55 @@ function showRouteDetail(routeIndex){
     }
 }
 
-function updatePictureDetails(post) {
-   /* $('#picture-gallery .post-author').html(post.author_nickname);
-    $('#picture-gallery p').html(post.caption);
-    $('#marker-picture').attr('src', "");
-    $('#marker-picture').attr('src', post.url_normal);
-    $('#current-picture-id').val(post.id);*/
-}
-
 function showPictureGallery(galleryPictures) {
     $('#gallery').show();
     $('#map_container').hide();
 
-    $("#owl-example").html('')
+    $('#slick-carousel').unslick();
+    $('#slick-carousel').html('');
 
     for(var itemIndex in galleryPictures){
-
         var content = '';
 
         var imgURL = galleryPictures[itemIndex].url_normal;
         var caption = galleryPictures[itemIndex].caption;
         var author_nickname = galleryPictures[itemIndex].author_nickname;
+        var post_like = '';
 
-        content += "<span><img class='lazyOwl' data-src=\"" + imgURL + "\" alt=\"" + caption + "\"><span class='post'><div></div><h3>@" + author_nickname + "</h3><p>" + caption + "</p></span></span>";
+        if (user) {
+            if (hasLiked(galleryPictures[itemIndex].instagram_id)) {
+                post_like = "<span>Ya te gusta esta foto</span>";
+            } else {
+                post_like = "<a href='#' onclick='likePhoto(" + galleryPictures[itemIndex].id + ")'>Me gusta</a>";
+            }
+        }
 
-        $("#owl-example").data('owlCarousel').addItem(content);
+        content += "<div id='picture_" + galleryPictures[itemIndex].id + "'>" +
+                        "<img src=\"" + imgURL + "\" alt=\"" + caption + "\">" +
+                        "<span class='post'>" +
+                            "<div class='post-background'></div>" +
+                            "<h3>" + author_nickname + "</h3>" +
+                            "<div class='post-like'>" + post_like + "</div>" +
+                            "<p>" + caption + "</p>" +
+                        "</span>" +
+                    "</div>";
+
+        $('#slick-carousel').append(content);
+
+        if (user) {
+            $('.post-like').show();
+        } else {
+            $('.post-like').hide();
+        }
     }
+
+    $('#slick-carousel').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        lazyLoad: 'ondemand'
+    });
+
 }
 
 function hidePictureGallery() {
@@ -723,4 +780,82 @@ function getZoomByBounds( map, bounds ){
             return zoom;
     }
     return 0;
+}
+
+function login() {
+    $.ajax({
+        beforeSend: function( xhr ) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            if (token) xhr.setRequestHeader('X-CSRF-Token', token);
+        },
+        type: "GET",
+        url: "/users/auth/instagram",
+        crossDomain: true,
+        dataType: "jsonp",
+        jsonpCallback: "callbackName",
+        success: function(response) {
+            if (response.success == true) {
+                user = response.user;
+                showDashboard();
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            if (textStatus == 'parsererror') {
+                window.location = '/users/auth/instagram';
+            }
+        }
+    });
+}
+
+function showDashboard() {
+    $("#login-btn").hide();
+    $("#dashboard").show();
+    $("#dashboard img").attr("src", user.picture);
+    $("#user-name").html(user.nickname);
+    $("#user-points").html(user.points);
+    $("#user-photos").html(user.photos.length);
+    $("#user-invites").text(user.invites);
+
+    $("#user-photos").click(function() {
+            showUserPictures();
+    });
+
+    if (!user.email) {
+        console.log("no email");
+    }
+}
+
+function showUserPictures(){
+    if (user.photos.length > 0){
+        $.sidr('close', 'sidr');
+        showPictureGallery(user.photos);
+    }
+}
+
+function hasLiked(instagram_id) {
+    var liked = false;
+    for (var i = 0; i < user.likes.length; i++) {
+        if (user.likes[i] == instagram_id) {
+            liked = true;
+            break
+        }
+    }
+    return liked;
+}
+
+function likePhoto(id) {
+    $.ajax({
+        beforeSend: function( xhr ) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            if (token) xhr.setRequestHeader('X-CSRF-Token', token);
+        },
+        type: "POST",
+        url: "/photos/" + id + "/like",
+        success: function(response) {
+            $('#picture_' + id + ' .post-like').html("<span>Ya te gusta esta foto</span>");
+            user.likes.push(response.instagram_id);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+        }
+    });
 }

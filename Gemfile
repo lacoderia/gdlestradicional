@@ -21,6 +21,7 @@ gem 'daemons'
 gem 'websocket-rails'
 gem 'geocoder'
 gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'jquery-slick-rails'
 
 group :development do
   gem 'sqlite3'

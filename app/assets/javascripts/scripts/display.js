@@ -7,7 +7,7 @@ $(document).ready(
 );
 
 var map = null;
-var pano, panoInterval = null;
+var pano, panoInterval, userPano, userPanoInterval = null;
 var mapCenter = null;
 var showElements = false;
 var showAllRoutesZoom = false;
@@ -145,7 +145,7 @@ function init() {
         channel = dispatcher.subscribe('twitter_channel');
 
         channel.bind('new_tweet', function(data) {
-            console.log('channel event received: ' + data);
+            //console.log('channel event received: ' + data);
 
             var marker = new RichMarker({
                 position: new google.maps.LatLng(data[0], data[1]),
@@ -170,7 +170,7 @@ function init() {
             console.log('new picture event received: ' + data);
 
             data = JSON.parse(data);
-						addLatestPicture(data);
+		    addLatestPicture(data);
             for (var i=0; i<routes.length; i++) {
                 for (var j = 0; j < routes[i].locations.length; j++) {
                     if (routes[i].locations[j].id == data.location_id) {
@@ -191,6 +191,14 @@ function init() {
 
                         }
                     }
+                }
+            }
+
+            if (user) {
+                if (data.author_id == user.uid){
+                    user.photos.push(data);
+                    sortGalleryPictures(user.photos);
+                    showDashboard();
                 }
             }
 
@@ -280,9 +288,11 @@ function launchApp() {
     $('#intro').fadeOut(1000, function() {
         showElements = true;
         loadRoutes();
+        $('#news-feed').css('height', $('#map-canvas').height() - 100);
         $('#news-feed').fadeIn(1000);
+        $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
         $('#bottle').fadeIn(1000);    
-				showLatestPictures();
+		showLatestPictures();
     });
 }
 
@@ -561,8 +571,7 @@ function showRouteDetail(routeIndex){
                                     if (routes[i].locations[j].id == richMarker.id) {
                                         if (routes[i].locations[j].pictures != undefined) {
                                             galleryPictures = routes[i].locations[j].pictures;
-                                            updatePictureDetails(galleryPictures[0]);
-                                            showPictureGallery(richMarker);
+                                            showPictureGallery();
                                             break;
                                         } else {
                                             $.ajax({
@@ -576,8 +585,7 @@ function showRouteDetail(routeIndex){
                                                             if (routes[i].locations[j].id == richMarker.id) {
                                                                 routes[i].locations[j].pictures = sortGalleryPictures(response);
                                                                 galleryPictures = routes[i].locations[j].pictures;
-                                                                updatePictureDetails(galleryPictures[0]);
-                                                                showPictureGallery(richMarker);
+                                                                showPictureGallery();
                                                             }
                                                         }
                                                     }
@@ -619,17 +627,48 @@ function showRouteDetail(routeIndex){
 }
 
 function updatePictureDetails(post) {
+
+    var panoOptions = {
+        position: new google.maps.LatLng(post.lat, post.long),
+        pov: {
+            heading: 0,
+            pitch: 0
+        },
+        streetViewControl: false,
+        enableCloseButton: false,
+        linksControl: false,
+        panControl: false,
+        clickToGo: false,
+        scrollwheel: false,
+        addressControl: false,
+        disableDefaultUI: true,
+        disableDoubleClickZoom: false,
+        zoomControl: false
+    };
+
+    pano = new google.maps.StreetViewPanorama(
+        document.getElementById('panorama'),
+        panoOptions);
+
+    panoInterval = window.setInterval(function() {
+        var pov = pano.getPov();
+        if (pov) {
+            pov.heading += 0.1;
+            pano.setPov(pov);
+        }
+    }, 10);
+
     $('#picture-gallery .post-author').html(post.author_nickname);
     $('#picture-gallery p').html(post.caption);
     $('#marker-picture').attr('src', "");
     $('#marker-picture').attr('src', post.url_normal);
     $('#current-picture-id').val(post.id);
+
     if (user) {
-        $('#picture-gallery .post-like').css("display", "block");
+        $('#picture-gallery .post-like').show();
         if (hasLiked(post.instagram_id)) {
             $('#picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
-        }
-        else {
+        } else {
             $('#picture-gallery .post-like').html("<a href='#' onclick='likePhoto(" + post.id + ")'>Me gusta</a>");
         }
     }
@@ -663,46 +702,36 @@ function likePhoto(id) {
     }); 
 }
 
-function showPictureGallery(marker) {
+function userLikePhoto(id) {
+    $.ajax({
+        beforeSend: function( xhr ) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            if (token) xhr.setRequestHeader('X-CSRF-Token', token);
+        },
+        type: "POST",
+        url: "/photos/" + id + "/like",
+        success: function(response) {
+            $('#user-picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
+            user.likes.push(response.instagram_id);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+        }
+    });
+}
+
+function showPictureGallery() {
     $('#overlay').show();
     $('#picture-gallery-container').show();
 
-    var panoOptions = {
-        position: marker.position,
-        pov: {
-            heading: 0,
-            pitch: 0
-        },
-        streetViewControl: false,
-        enableCloseButton: false,
-        linksControl: false,
-        panControl: false,
-        clickToGo: false,
-        scrollwheel: false,
-        addressControl: false,
-        disableDefaultUI: true,
-        disableDoubleClickZoom: false,
-        zoomControl: false
-    };
-
-    pano = new google.maps.StreetViewPanorama(
-        document.getElementById('panorama'),
-        panoOptions);
-
-    panoInterval = window.setInterval(function() {
-        var pov = pano.getPov();
-        pov.heading += 0.1;
-        pano.setPov(pov);
-    }, 10);
-
+    updatePictureDetails(galleryPictures[0]);
 }
 
 function hidePictureGallery() {
     $('#overlay').hide();
     $('#picture-gallery-container').hide();
 
-    pano = null;
     clearInterval(panoInterval);
+    pano = null;
 }
 
 function pictureGalleryClick(e) {
@@ -826,29 +855,23 @@ function hideUserPictureGallery() {
     $('#overlay').hide();
     $('#user-picture-gallery-container').hide();
 
-    pano = null;
-    clearInterval(panoInterval);
+    clearInterval(userPanoInterval);
+    userPano = null;
 }
 
 function showUserPictures(){
-
 	if (user.photos.length > 0){
+        $('#overlay').show();
+        $('#user-picture-gallery-container').show();
 
-		var post = user.photos[0];
+        userUpdatePictureDetails(user.photos[0]);
+	}
+}
 
-		$('#user-picture-gallery .post-author').html(post.author_nickname);
-    $('#user-picture-gallery p').html(post.caption);
-    $('#user-marker-picture').attr('src', "");
-    $('#user-marker-picture').attr('src', post.url_normal);
-    $('#user-current-picture-id').val(post.id);
-
-		var position = new google.maps.LatLng(post.lat, post.long);
-
-		$('#overlay').show();
-    $('#user-picture-gallery-container').show();
+function userUpdatePictureDetails(post) {
 
     var panoOptions = {
-        position: position,
+        position: new google.maps.LatLng(post.lat, post.long),
         pov: {
             heading: 0,
             pitch: 0
@@ -865,26 +888,33 @@ function showUserPictures(){
         zoomControl: false
     };
 
-    pano = new google.maps.StreetViewPanorama(
+    userPano = new google.maps.StreetViewPanorama(
         document.getElementById('user-panorama'),
         panoOptions);
 
-    panoInterval = window.setInterval(function() {
-        var pov = pano.getPov();
-        pov.heading += 0.1;
-        pano.setPov(pov);
+    userPanoInterval = window.setInterval(function() {
+        var pov = userPano.getPov();
+        if (pov) {
+            pov.heading += 0.1;
+            userPano.setPov(pov);
+        }
     }, 10);
 
-	}
-
-}
-
-function userUpdatePictureDetails(post) {
-    $('#userPicture-gallery .post-author').html(post.author_nickname);
+    $('#user-picture-gallery .post-author').html(post.author_nickname);
     $('#user-picture-gallery p').html(post.caption);
     $('#user-marker-picture').attr('src', "");
     $('#user-marker-picture').attr('src', post.url_normal);
     $('#user-current-picture-id').val(post.id);
+
+    if (user) {
+        $('#user-picture-gallery .post-like').css("display", "block");
+        if (hasLiked(post.instagram_id)) {
+            $('#user-picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
+        }
+        else {
+            $('#user-picture-gallery .post-like').html("<a href='#' onclick='userLikePhoto(" + post.id + ")'>Me gusta</a>");
+        }
+    }
 }
 
 function userShowPreviousPicture() {
@@ -916,8 +946,6 @@ function userShowNextPicture() {
         }
     }
 
-    console.log(routes);
-
     userUpdatePictureDetails(user.photos[nextIndex]);
 }
 
@@ -928,8 +956,13 @@ function showDashboard() {
     $("#user-name").text(user.nickname);
     $("#user-points").text(user.points);
     $("#user-photos").text(user.photos.length);
-		$("#user-photos").click(showUserPictures);
-    $("#user-invites").text(0);
-    if (!user.email)
+    $("#user-invites").text(user.invites);
+
+    $("#user-photos").click(function(){
+        showUserPictures();
+    });
+
+    if (!user.email) {
         console.log("no email");
+    }
 }

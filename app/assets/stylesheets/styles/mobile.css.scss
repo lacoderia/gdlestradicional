@@ -96,6 +96,37 @@ header{
   }
 }
 
+#dashboard {
+  display: none;
+  margin: 5px;
+  vertical-align: middle;
+  text-align: center;
+
+  line-height: normal;
+
+  table {
+    width: 100%;
+    border-spacing: 5px;
+    border-collapse: separate;
+
+    tr {
+      height: 50px;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .user-cell {
+      width: 70px;
+      border: 1px solid black;
+      font-size: 11px;
+    }
+  }
+
+}
+
 #gallery{
 
   background: #002131 url('/assets/img-bkg-gallery-mobile.png') no-repeat top left;
@@ -118,7 +149,7 @@ header{
     z-index: 100;
   }
 
-  .owl-carousel{
+  #slick-carousel{
     height: 100%;
     width: 100%;
 
@@ -146,7 +177,7 @@ header{
       min-height: 500px;
       overflow: hidden;
 
-      div{
+      .post-background{
         background: black;
         opacity: 0.7;
         position: absolute;
@@ -166,29 +197,19 @@ header{
         z-index: 1;
       }
 
+      .post-like {
+        position: relative;
+        color: white;
+        display: none;
+        margin: 0.5em 1em;
+      }
+
       p{
         position: relative;
         color: white;
         font-size: 16px;
         margin: auto 1em;
         z-index: 1;
-      }
-    }
-
-
-    .owl-pagination{
-      bottom: 0px;
-      position: absolute;
-      display: block;
-      text-align: center;
-      width: 100%;
-
-      .owl-page span{
-        color: #002131;
-      }
-
-      .active span{
-        color: #00C0CA;
       }
     }
   }

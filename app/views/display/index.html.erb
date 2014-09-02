@@ -8,36 +8,37 @@
   <div id="picture-gallery-container" onclick="pictureGalleryClick(event)">
     <div id="picture-gallery">
       <input type="hidden" id="current-picture-id" value="0"/>
-        <div id="panorama-overlay"></div>
-        <div id="panorama"></div>
-        <img id="marker-picture" src=""/>
-        <div class="post">
-            <div class="bkg-opacity"></div>
-            <span class="post-author"></span>
-            <span class="post-like"></span>
-            <p></p>
-            <div class="navigation">
-              <div class="arrow arrow-left" onclick="showPreviousPicture()"> < Anterior</div> |
-              <div class="arrow arrow-right" onclick="showNextPicture()">Siguiente > </div>
-            </div>
+      <div id="panorama-overlay"></div>
+      <div id="panorama"></div>
+      <img id="marker-picture" src=""/>
+      <div class="post">
+        <div class="bkg-opacity"></div>
+        <span class="post-author"></span>
+        <span class="post-like"></span>
+        <p></p>
+        <div class="navigation">
+          <div class="arrow arrow-left" onclick="showPreviousPicture()"> < Anterior</div> |
+          <div class="arrow arrow-right" onclick="showNextPicture()">Siguiente > </div>
         </div>
+      </div>
     </div>
   </div>
-	<div id="user-picture-gallery-container" onclick="userPictureGalleryClick(event)">
+  <div id="user-picture-gallery-container" onclick="userPictureGalleryClick(event)">
     <div id="user-picture-gallery">
       <input type="hidden" id="user-current-picture-id" value="0"/>
-        <div id="user-panorama-overlay"></div>
-        <div id="user-panorama"></div>
-        <img id="user-marker-picture" src=""/>
-        <div class="post">
-            <div class="bkg-opacity"></div>
-            <span class="post-author"></span>
-            <p></p>
-            <div class="navigation">
-              <div class="arrow arrow-left" onclick="userShowPreviousPicture()"> < Anterior</div> |
-              <div class="arrow arrow-right" onclick="userShowNextPicture()">Siguiente > </div>
-            </div>
+      <div id="user-panorama-overlay"></div>
+      <div id="user-panorama"></div>
+      <img id="user-marker-picture" src=""/>
+      <div class="post">
+        <div class="bkg-opacity"></div>
+        <span class="post-author"></span>
+        <span class="post-like"></span>
+        <p></p>
+        <div class="navigation">
+          <div class="arrow arrow-left" onclick="userShowPreviousPicture()"> < Anterior</div> |
+          <div class="arrow arrow-right" onclick="userShowNextPicture()">Siguiente > </div>
         </div>
+      </div>
     </div>
   </div>
   <div id="influencer-picture" onclick="showInfluencerGallery()">
@@ -51,23 +52,25 @@
   </div>
 
   <div id="news-feed">
-    <div>HEADER</div>
-    <div id="user-div">
-      <div id="login-btn"><a href="#" onclick="login()">PARTICIPA</a></div>
-      <div id="dashboard">
+    <div id="news-feed-upper">
+      <div>HEADER</div>
+      <div id="user-div">
+        <div id="login-btn"><a href="#" onclick="login()">PARTICIPA</a></div>
+        <div id="dashboard">
           <div class="dashboard-element-pic"><img /></div>
           <div class="dashboard-element"><span id="user-name"/></div><br/>
           <div class="user-element"><span id="user-points"></span><br/>Puntos</div>
           <div class="user-element" onclick="showUserPictures()"><span id="user-photos"></span><br/>Fotos</div>
           <div class="user-element"><span id="user-invites"></span><br/>Invitaciones</div>
+        </div>
       </div>
+      <div>¿Qué dice GDL?</div>
     </div>
-    <div>¿Qué dice GDL?</div>
-    <a class="twitter-timeline" href="https://twitter.com/hashtag/gdlestradicional" data-widget-id="505100682592919552"></a>
-     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    <div id="news-feed-lower">
+      <a class="twitter-timeline" href="https://twitter.com/hashtag/gdlestradicional" data-widget-id="505100682592919552"></a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </div>
   </div>
-
-</div>
 
 </div>
 
@@ -77,4 +80,4 @@
   </a>
 </div>
 
-<div id="ruby-values" data-user="<%= @user.to_json%>">
+<div id="ruby-values" data-user="<%= @user.to_json%>"></div>
