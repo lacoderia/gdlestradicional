@@ -52,32 +52,52 @@
   </div>
 
   <div id="news-feed">
-    <div id="news-feed-upper">
-      <div>HEADER</div>
-      <div id="user-div">
-        <div id="login-btn"><a href="#" onclick="login()">PARTICIPA</a></div>
-        <div id="dashboard">
-          <div class="dashboard-element-pic"><img /></div>
-          <div class="dashboard-element"><span id="user-name"/></div><br/>
-          <div class="user-element"><span id="user-points"></span><br/>Puntos</div>
-          <div class="user-element" onclick="showUserPictures()"><span id="user-photos"></span><br/>Fotos</div>
-          <div class="user-element"><span id="user-invites"></span><br/>Invitaciones</div>
+    <div class="news-feed-canvas">
+        <div id="news-feed-upper">
+          <div>HEADER</div>
+          <div id="user-div">
+            <div id="login-btn"><a href="#" onclick="login()">PARTICIPA</a></div>
+            <div id="dashboard">
+              <div class="dashboard-element-pic"><img /></div>
+              <div class="dashboard-element"><span id="user-name"/></div><br/>
+              <div class="user-element"><span id="user-points"></span><br/>Puntos</div>
+              <div class="user-element" onclick="showUserPictures()"><span id="user-photos"></span><br/>Fotos</div>
+              <div class="user-element" onclick="showInviteModal()"><span id="user-invites"></span><br/>Invitaciones</div>
+            </div>
+          </div>
+          <div>¿Qué dice GDL?</div>
         </div>
-      </div>
-      <div>¿Qué dice GDL?</div>
+        <div id="news-feed-lower">
+          <a class="twitter-timeline" href="https://twitter.com/hashtag/gdlestradicional" data-widget-id="505100682592919552"></a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
     </div>
-    <div id="news-feed-lower">
-      <a class="twitter-timeline" href="https://twitter.com/hashtag/gdlestradicional" data-widget-id="505100682592919552"></a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    <div class="social-networks-icons">
+      <ul>
+        <li><a href="http://instagram.com/jctradicional"><span class="icon-uniE602"></span></a></li>
+        <li><a href="https://twitter.com/jctradicional"><span class="icon-uniE600"></span></a></li>
+        <li><a href="https://www.facebook.com/jctradicional"><span class="icon-uniE601"></span></a></li>
+      </ul>
     </div>
   </div>
-
+  
 </div>
 
 <div id="intro">
   <a href="#" class="desktop" onclick='launchApp()'>
     <img src="/assets/img-bkg-button.png" alt="Entrar a Guadalajara es tradicional">
   </a>
+</div>
+
+<div id="invites" style="display: none;">
+    <div class="message">
+      <span class="close_modal">x</span>
+      <h3>Invita a tus amigos</h3>
+      <div class="share-buttons">
+          <a href="#" class="fb"><span class="icon-uniE601 icon"></span> Facebook</a>
+          <a href="#" class="tw"><span class="icon-uniE600 icon"></span> Twitter</a>
+      </div>
+    </div>
 </div>
 
 <div id="ruby-values" data-user="<%= @user.to_json%>"></div>
