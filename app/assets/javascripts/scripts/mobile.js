@@ -17,7 +17,8 @@ var tempRoute = [];
 var galleryPictures = null;
 var dispatcher, channel = null;
 var latestPictures = [];
-var latestPicturesPositions = []
+var latestPicturesPositions = [];
+var tweet_guid = 0;
 
 function init() {
 
@@ -150,24 +151,46 @@ function init() {
         channel = dispatcher.subscribe('twitter_channel');
 
         channel.bind('new_tweet', function(data) {
-            console.log('channel event received: ' + data);
+            //console.log('channel event received: ' + data);
+
+            tweet_guid++;
 
             var marker = new RichMarker({
-                position: new google.maps.LatLng(data[0], data[1]),
+                tweet_guid: tweet_guid,
+                position: new google.maps.LatLng(data.location[0], data.location[1]),
                 map: map,
                 flat: true,
                 anchor: new google.maps.Size(-20, -70),
                 draggable: false,
-                content: '<div>' +
+                content: '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
+                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
                     '<div class="pin icon-uniE600"></div>' +
                     '<div class="pulse"></div>'+
                     '</div>'
             });
 
-            setTimeout(function(){
+            google.maps.event.addListener(marker, 'click', function() {
+                var tweet_marker_element = $('.tweet_marker_' + this.tweet_guid);
+                tweet_marker_element.find('.tweet_marker_detail').show();
+
+                var left = tweet_marker_element.find('.tweet_marker_detail').offset().left + tweet_marker_element.find('.tweet_marker_detail').outerWidth();
+                if(left > screenTop.width){
+                    tweet_marker_element.find('.tweet_marker_detail').css('left',-(tweet_marker_element.find('.tweet_marker_detail').outerWidth()- tweet_marker_element.width()));
+                    tweet_marker_element.find('.arrow-down').css('right', 10)
+                }
+
+                tweet_marker_element.find('.close_tweet').click(function(event){
+                    event.stopPropagation();
+                    marker.setMap(null);
+                    marker = null;
+                });
+                clearInterval(timer);
+            });
+
+            var timer = setTimeout(function(){
                 marker.setMap(null);
                 marker = null;
-            }, 3000);
+            }, 6000);
 
         });
 
@@ -249,7 +272,7 @@ function createLatestPictureMarker(pic, nickname){
 		});
 
 		google.maps.event.addListener(marker, 'ready', function() {
-  		$('#latest-pic-mobile').fadeIn(1000);    
+  		    $('#latest-pic-mobile').fadeIn(1000);
 		});
 }
 

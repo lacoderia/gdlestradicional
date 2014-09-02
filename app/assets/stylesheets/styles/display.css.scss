@@ -552,7 +552,63 @@ a.desktop {
 
 /** marker animado **/
 
+.tweet_marker{
+  position: relative;
+  z-index: 800;
+
+  .tweet_marker_detail{
+    background-color: white;
+    border: 1px solid #002131;
+    border-radius: 5px;
+    bottom: 40px;
+    left: -10px;
+    padding: 1em;
+    position: absolute;
+    width: 200px;
+    z-index: 100;
+
+    p{
+      margin: 0em 0em 0.5em;
+      padding: 0px;
+    }
+
+    p.author{
+      color: #00cae9;
+      font-weight: bolder;
+    }
+
+    .arrow-down{
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid white;
+      height: 0;
+      position: absolute;
+      bottom: -10px;
+      width: 0;
+    }
+
+    .arrow-left{
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid white;
+      height: 0;
+      position: absolute;
+      bottom: -10px;
+      width: 0;
+    }
+
+    .close_tweet{
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+  }
+
+}
+
 .pin {
+  cursor: pointer;
   width: 30px;
   height: 20px;
   font-size: 20px;
