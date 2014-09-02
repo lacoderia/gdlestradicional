@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :roles
   has_many :photos, foreign_key: 'author_id', primary_key: 'uid'
+  has_many :invites
 
   def email_required? 
   	false
@@ -36,7 +37,23 @@ class User < ActiveRecord::Base
 		photos.each do | photo |
 			points += photo.points
 		end
-		return {:id => self.id, :uid => self.uid, :nickname => self.nickname, :picture => self.picture, :likes => likes, :points => points, :photos => photos}
+		num_invites = 0
+		invites = self.invites
+		invites.each do | invite |
+			num_invites++
+			if num_invites == 5
+				points += 1
+				num_invites = 0
+			end
+		end
+		return {:id => self.id, :uid => self.uid, :nickname => self.nickname, :picture => self.picture, :likes => likes, :points => points, :photos => photos, :invites => invites.size}
 	end
 
+	def add_invite(ip)
+		begin
+			Invite.create(user_id: self.id, ip_address: ip)
+		rescue
+			return
+		end
+	end
 end

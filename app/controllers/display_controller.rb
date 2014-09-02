@@ -7,9 +7,26 @@ class DisplayController < ApplicationController
 
   def index
     @user = current_user.get_info if current_user
+    ip = request.remote_ip
+    invite = params[:invite]
+    if invite && @user
+      @user.add_invite(ip) if @user[:uid] != invite
+    elsif invite
+      user = User.find_by_uid(invite)
+      user.add_invite(ip) if user
+    end
   end
 
   def mobile
+    @user = current_user.get_info if current_user
+    ip = request.remote_ip
+    invite = params[:invite]
+    if invite && @user
+      @user.add_invite(ip) if @user[:uid] != invite
+    elsif invite
+      user = User.find_by_uid(invite)
+      user.add_invite(ip) if user
+    end
     render :layout => 'mobile'
   end
 
