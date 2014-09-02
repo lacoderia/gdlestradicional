@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token, :only => [:update_mail]
 
   # GET /users
   # GET /users.json
@@ -59,6 +60,14 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def update_mail
+    result = false
+    if current_user && current_user.id == params[:id] &&params[:email]
+      result = current_user.update_attribute(:email, params[:email])
+    end
+    render :json => {:success => result}
   end
 
   private

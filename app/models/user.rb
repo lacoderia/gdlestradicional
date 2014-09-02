@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
 		num_invites = 0
 		invites = self.invites
 		invites.each do | invite |
-			num_invites++
+			num_invites +=1
 			if num_invites == 5
 				points += 1
 				num_invites = 0
