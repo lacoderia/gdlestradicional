@@ -174,9 +174,25 @@ function init() {
                 tweet_marker_element.find('.tweet_marker_detail').show();
 
                 var left = tweet_marker_element.find('.tweet_marker_detail').offset().left + tweet_marker_element.find('.tweet_marker_detail').outerWidth();
+                var top = tweet_marker_element.find('.tweet_marker_detail').offset().top;
+
+                var height = tweet_marker_element.find('.tweet_marker_detail').outerHeight();
+
                 if(left > screenTop.width){
                     tweet_marker_element.find('.tweet_marker_detail').css('left',-(tweet_marker_element.find('.tweet_marker_detail').outerWidth()- tweet_marker_element.width()));
-                    tweet_marker_element.find('.arrow-down').css('right', 10)
+                    tweet_marker_element.find('.arrow-down').css('right', 10);
+
+                    if(top < 100){
+                        tweet_marker_element.find('.tweet_marker_detail').css('top', 50);
+                        tweet_marker_element.find('.tweet_marker_detail').css('height', height);
+                        tweet_marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
+                    }
+
+                }else if(top < 100){
+                    tweet_marker_element.find('.tweet_marker_detail').css('top', 50);
+                    tweet_marker_element.find('.tweet_marker_detail').css('height', height);
+                    tweet_marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
+
                 }
 
                 tweet_marker_element.find('.close_tweet').click(function(event){

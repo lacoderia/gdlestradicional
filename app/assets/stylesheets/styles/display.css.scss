@@ -587,13 +587,13 @@ a.desktop {
       width: 0;
     }
 
-    .arrow-left{
+    .arrow-up{
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-top: 10px solid white;
+      border-bottom: 10px solid white;
       height: 0;
       position: absolute;
-      bottom: -10px;
+      top: -10px;
       width: 0;
     }
 
