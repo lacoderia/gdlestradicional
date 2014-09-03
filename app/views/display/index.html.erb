@@ -109,9 +109,9 @@
       <h3>Ayúdanos a completar tu registro</h3>
       <form>
         <p>
-          <label>Correo electrónico:</label>
-          <%= email_field_tag :email, '', :required => true, :id => 'mail', :placehoder => 'example@mail.com' %>
-					<p id="email-validation-field" style='color: red; text-align: center'><br/></p>
+            <label>Correo electrónico:</label>
+            <%= email_field_tag :email, '', :required => true, :id => 'mail', :placehoder => 'example@mail.com' %>
+		    <span id="email-validation-field"></span>
         </p>
         <p>
           <button class="send-mail">Enviar</button>

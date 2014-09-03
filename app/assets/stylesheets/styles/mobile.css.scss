@@ -26,6 +26,31 @@ a.mobile{
   background-color:rgba(255,255,255,0.5); /*dim the background*/
 }
 
+#mail-form{
+
+  .message{
+    height: 200px;
+    left: 50%;
+    margin-left: -143px;
+    margin-top: -125px;
+    top: 50%;
+    width: 250px;
+  }
+}
+
+#invites{
+
+  .message{
+    height: 120px;
+    left: 50%;
+    margin-left: -143px;
+    margin-top: -125px;
+    top: 50%;
+    width: 250px;
+
+  }
+}
+
 #map_container{
   width: 100%;
   height: 100%;

@@ -19,6 +19,7 @@ var user;
 var latestPictures = [];
 var latestPicturesPositions = [];
 var tweet_guid = 0;
+var mailSent = false;
 
 function init() {
 
@@ -29,6 +30,22 @@ function init() {
     $('#map_container').height(mapHeight);
     $('#map-canvas').height(mapHeight);
     $('#gallery').height(mapHeight)
+
+    $('.send-mail').click(function(event){
+        event.preventDefault();
+        var mail = $('#mail').val();
+        if (validateEmail(mail)){
+            sendMailInfo(mail);
+        }else{
+            $("#email-validation-field").html("email inválido")
+        }
+    });
+
+    $('#invites').click(function(event){
+        if(event.target.id == 'invites'){
+            hideInviteModal();
+        }
+    });
 
     $('.close-gallery').click(function(){
        hidePictureGallery();
@@ -359,9 +376,20 @@ function showLatestPictures() {
 
 function launchApp() {
     $('#intro').fadeOut(1000, function() {
-        showElements = true;
-        loadRoutes();
-		showLatestPictures();
+
+        if(!mailSent){
+            if (user && !user.email) {
+                showMailModal();
+            }else{
+                showElements = true;
+                loadRoutes();
+                showLatestPictures();
+            }
+        }else{
+            showElements = true;
+            loadRoutes();
+            showLatestPictures();
+        }
     });
 }
 
@@ -866,10 +894,6 @@ function showDashboard() {
     $("#user-photos").click(function() {
             showUserPictures();
     });
-
-    if (!user.email) {
-        console.log("no email");
-    }
 }
 
 function showUserPictures(){
@@ -905,4 +929,58 @@ function likePhoto(id) {
         error: function(jqXHR, textStatus, errorThrown) {
         }
     });
+}
+
+function showInviteModal(){
+    $.sidr('close', 'sidr');
+    $('#invites').fadeIn(500);
+    $('.close_modal').click(function(){
+        hideInviteModal();
+    });
+}
+
+function hideInviteModal(){
+    $('#invites').fadeOut(500);
+}
+
+function showMailModal(){
+    $('#mail-form').fadeIn(500);
+    $('.close_modal').click(function(){
+        hideInviteModal();
+    });
+}
+
+function hideMailModal(){
+    $('#mail-form').fadeOut(500);
+    launchApp();
+}
+
+function sendMailInfo(mail){
+    if(mail){
+        var serviceURL = '/users/' + user.id + '/update_mail';
+        var data = {"email":mail}
+        $.ajax({
+            type: "POST",
+            url:  serviceURL,
+            data: data,
+            dataType: "json",
+            success: function(response) {
+                mailSent = true;
+                $('.mail-message').hide();
+                $('.success-message').show();
+
+                setTimeout(function(){
+                    hideMailModal();
+                },2000)
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+    }
+}
+
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
 }

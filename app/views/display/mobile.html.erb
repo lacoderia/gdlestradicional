@@ -55,7 +55,7 @@
               <div id="user-photos"></div>
               <div>Fotos</div>
             </td>
-            <td class="user-cell">
+            <td class="user-cell"  onclick="showInviteModal()">
               <div id="user-invites"></div>
               <div>Invitaciones</div>
             </td>
@@ -72,6 +72,41 @@
   <a class="mobile" onclick='launchApp()'>
     <img src="/assets/img-bkg-button.png" alt="Entrar a Guadalajara es tradicional">
   </a>
+</div>
+
+<div id="invites" style="display: none;">
+  <div class="message">
+    <span class="close_modal">x</span>
+    <h3>Invita a tus amigos</h3>
+    <div class="share-buttons">
+      <a href="#" class="fb"><span class="icon-uniE601 icon"></span> Facebook</a>
+      <a href="#" class="tw"><span class="icon-uniE600 icon"></span> Twitter</a>
+    </div>
+  </div>
+</div>
+
+<div id="mail-form" style="display: none;">
+  <div class="message">
+    <div class="mail-message">
+      <h3>Ayúdanos a completar tu registro</h3>
+      <form>
+        <p>
+          <label>Correo electrónico:</label>
+          <%= email_field_tag :email, '', :required => true, :id => 'mail', :placehoder => 'example@mail.com' %>
+          <span id="email-validation-field"></span>
+        </p>
+        <p>
+          <button class="send-mail">Enviar</button>
+        </p>
+      </form>
+      <p class="privacity">
+        Lee nuestro <a href="#" title="Aviso de privacidad">aviso de privacidad</a>
+      </p>
+    </div>
+    <div class="success-message" style="display: none;">
+      <h3>Gracias, espere un momento y se le redirigirá a GDLesTradicional</h3>
+    </div>
+  </div>
 </div>
 
 <div id="ruby-values" data-user="<%= @user.to_json%>"></div>

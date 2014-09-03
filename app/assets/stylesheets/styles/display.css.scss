@@ -61,6 +61,17 @@ a.desktop {
       padding: 0px;
     }
 
+
+    span{
+      display: block;
+    }
+
+    #email-validation-field{
+      height: 16px;
+      color: red;
+      text-align: center;
+    }
+
     .privacity{
       font-size: 16px;
       text-align: right;
