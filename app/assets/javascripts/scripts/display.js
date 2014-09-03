@@ -884,6 +884,10 @@ function login() {
     });
 }
 
+function logout() {
+    window.location.replace("/logout");
+}
+
 function userPictureGalleryClick(e) {
     if (!$(e.target).closest('#user-picture-gallery').get(0)) {
         hideUserPictureGallery();

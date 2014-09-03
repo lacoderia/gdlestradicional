@@ -376,6 +376,10 @@ function loadRoutes() {
             for (var i=0; i < routes.length; i++) {
 
                 $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
+                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
+                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
+                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
+                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
 
                 routes[i].markers = new Array();
                 routes[i].lines = new Array();
@@ -844,6 +848,10 @@ function login() {
             }
         }
     });
+}
+
+function logout() {
+    window.location.replace("/logout");
 }
 
 function showDashboard() {
