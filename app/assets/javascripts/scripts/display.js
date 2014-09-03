@@ -27,6 +27,13 @@ function init() {
         window.location = "/mobile";
     }
 
+    $('#invites').click(function(event){
+        console.log(event)
+        if(event.target.id == 'invites'){
+            hideInviteModal();
+        }
+    });
+
     if ($("#ruby-values").data("user")) {
         user = $("#ruby-values").data("user");
         showDashboard();
@@ -1008,4 +1015,15 @@ function showDashboard() {
     if (!user.email) {
         console.log("no email");
     }
+}
+
+function showInviteModal(){
+    $('#invites').show();
+    $('.close_modal').click(function(){
+        hideInviteModal();
+    });
+}
+
+function hideInviteModal(){
+    $('#invites').hide();
 }

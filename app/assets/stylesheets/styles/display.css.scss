@@ -2,10 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-html, body {
-  height: 100%;
-}
-
 body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -29,9 +25,9 @@ a.desktop {
   }
 }
 
-#intro {
+#intro, #invites {
   display: block;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
@@ -40,6 +36,82 @@ a.desktop {
   bottom: 0;
   z-index: 1;
   background-color:rgba(255,255,255,0.5); /*dim the background*/
+}
+
+#invites{
+  background-color: rgba(0,0,0,0.5);
+
+  .message{
+    background-color: white;
+    border: 3px solid #01BeC7;
+    border-radius: 5px;
+    height: 120px;
+    left: 50%;
+    margin-left: -225px;
+    margin-top: -125px;
+    padding: 1em;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    width: 450px;
+
+    -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+    -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+    box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+
+    .close_modal{
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+
+    h3{
+      margin: 10px 0px 0px 0px;
+      padding: 0px;
+    }
+
+    .share-buttons{
+      margin-top: 2em;
+
+      a{
+        border-radius: 5px;
+        color: white;
+        display: inline-block;
+        min-width: 75px;
+        padding: 0.3em 1.2em 0.5em 0.6em;
+        text-decoration: none;
+
+        -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+        -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+        box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+
+        .icon{
+          margin-right: 0.6em;
+        }
+      }
+
+      .fb{
+        background-color: #2b4170;
+        border: 1px solid #2b4170;
+        margin-right: 1em;
+
+        background: -moz-linear-gradient(top, #3b5998, #2b4170);
+        background: -ms-linear-gradient(top, #3b5998, #2b4170);
+        background: -webkit-linear-gradient(top, #3b5998, #2b4170);
+        ;
+      }
+
+      .tw{
+        background-color: #3DB7E7;
+        border: 1px solid #3DB7E7;
+
+        background: -moz-linear-gradient(top, #4AC3EA, #3DB7E7);
+        background: -ms-linear-gradient(top, #4AC3EA, #3DB7E7);
+        background: -webkit-linear-gradient(top, #4AC3EA, #3DB7E7);
+      }
+    }
+  }
 }
 
 #overlay {
@@ -123,7 +195,7 @@ a.desktop {
 }
 
 #latest-pic-mobile {
-	display: none;
+  display: none;
   background-color: white;
   border: 1px solid white;
   border-radius: 5px;
@@ -366,13 +438,44 @@ a.desktop {
 }
 
 #news-feed {
+  background-color: transparent;
   cursor: move;
   display: none;
   position: absolute;
-  top: 50px;
-  right: 50px;
-  width: 250px;
-  background-color: white;
+  top: 5%;
+  right: 5%;
+  width: 280px;
+  height: 80%;
+
+  .social-networks-icons{
+    display: inline-block;
+    font-size: 18px;
+    vertical-align: top;
+    width: 8%;
+
+    ul{
+      list-style: none;
+      margin: 0px 0px 0px 8px;
+      padding: 0px;
+
+      a{
+        color: white;
+        text-decoration: none;
+      }
+
+      li{
+        margin-bottom: 0.6em;
+      }
+    }
+  }
+
+  .news-feed-canvas{
+    background-color: white;
+    display: inline-block;
+    margin-right: 1%;
+    vertical-align: top;
+    width: 90%;
+  }
 }
 
 #twitter-widget-0 {
