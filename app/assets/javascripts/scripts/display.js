@@ -31,7 +31,11 @@ function init() {
     $('.send-mail').click(function(event){
         event.preventDefault();
         var mail = $('#mail').val();
-        sendMailInfo(mail);
+				if (validateEmail(mail)){
+	        	sendMailInfo(mail);
+				}else{
+					$("#email-validation-field").html("email inválido")
+				}
     });
 
     $('#invites').click(function(event){
@@ -1085,4 +1089,9 @@ function sendMailInfo(mail){
             }
         });
     }
+}
+
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
 }
