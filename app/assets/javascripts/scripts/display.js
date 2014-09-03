@@ -340,7 +340,7 @@ function launchApp() {
     $('#intro').fadeOut(1000, function() {
 
         if(!mailSent){
-            if (!user.email) {
+            if (user && !user.email) {
                 showMailModal();
             }else{
                 showElements = true;
@@ -1037,10 +1037,6 @@ function showDashboard() {
 
     $('#news-feed').css('height', $('#map-canvas').height() - 100);
     $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
-
-    if (!user.email) {
-        console.log("no email");
-    }
 }
 
 function showInviteModal(){
