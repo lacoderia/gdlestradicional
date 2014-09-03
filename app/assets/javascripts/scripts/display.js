@@ -20,15 +20,21 @@ var user;
 var latestPictures = [];
 var latestPicturesPositions = []
 var tweet_guid = 0;
+var mailSent = false;
 
 function init() {
 
-    if (screen.width <= 768) {
+    if (screen.width < 768) {
         window.location = "/mobile";
     }
 
+    $('.send-mail').click(function(event){
+        event.preventDefault();
+        var mail = $('#mail').val();
+        sendMailInfo(mail);
+    });
+
     $('#invites').click(function(event){
-        console.log(event)
         if(event.target.id == 'invites'){
             hideInviteModal();
         }
@@ -180,7 +186,7 @@ function init() {
 
                 var height = tweet_marker_element.find('.tweet_marker_detail').outerHeight();
 
-                if(left > screenTop.width){
+                if(left > screen.width){
                     tweet_marker_element.find('.tweet_marker_detail').css('left',-(tweet_marker_element.find('.tweet_marker_detail').outerWidth()- tweet_marker_element.width()));
                     tweet_marker_element.find('.arrow-down').css('right', 10);
 
@@ -332,13 +338,30 @@ function showLatestPictures() {
 
 function launchApp() {
     $('#intro').fadeOut(1000, function() {
-        showElements = true;
-        loadRoutes();
-        $('#news-feed').css('height', $('#map-canvas').height() - 100);
-        $('#news-feed').fadeIn(1000);
-        $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
-        $('#bottle').fadeIn(1000);
-		showLatestPictures();
+
+        if(!mailSent){
+            if (!user.email) {
+                showMailModal();
+            }else{
+                showElements = true;
+                loadRoutes();
+                $('#news-feed').css('height', $('#map-canvas').height() - 100);
+                $('#news-feed').fadeIn(1000);
+                $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
+                $('#bottle').fadeIn(1000);
+                showLatestPictures();
+            }
+        }else{
+            showElements = true;
+            loadRoutes();
+            $('#news-feed').css('height', $('#map-canvas').height() - 100);
+            $('#news-feed').fadeIn(1000);
+            $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
+            $('#bottle').fadeIn(1000);
+            showLatestPictures();
+        }
+
+
     });
 }
 
@@ -1021,12 +1044,49 @@ function showDashboard() {
 }
 
 function showInviteModal(){
-    $('#invites').show();
+    $('#invites').fadeIn(500);
     $('.close_modal').click(function(){
         hideInviteModal();
     });
 }
 
 function hideInviteModal(){
-    $('#invites').hide();
+    $('#invites').fadeOut(500);
+}
+
+function showMailModal(){
+    $('#mail-form').fadeIn(500);
+    $('.close_modal').click(function(){
+        hideInviteModal();
+    });
+}
+
+function hideMailModal(){
+    $('#mail-form').fadeOut(500);
+    launchApp();
+}
+
+function sendMailInfo(mail){
+    if(mail){
+        var serviceURL = '/users/' + user.id + '/update_mail';
+        var data = {"email":mail}
+        $.ajax({
+            type: "POST",
+            url:  serviceURL,
+            data: data,
+            dataType: "json",
+            success: function(response) {
+                mailSent = true;
+                $('.mail-message').hide();
+                $('.success-message').show();
+
+                setTimeout(function(){
+                    hideMailModal();
+                },2000)
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+    }
 }

@@ -21,11 +21,12 @@ a.desktop {
   position: absolute;
 
   img{
+    cursor: pointer;
     width: 500px;
   }
 }
 
-#intro, #invites {
+#intro, #invites, #mail-form {
   display: block;
   position: fixed;
   width: 100%;
@@ -36,6 +37,35 @@ a.desktop {
   bottom: 0;
   z-index: 1;
   background-color:rgba(255,255,255,0.5); /*dim the background*/
+}
+
+#mail-form{
+  background-color: rgba(0,0,0,0.5);
+
+  .message{
+    background-color: white;
+    border: 3px solid #01BeC7;
+    border-radius: 5px;
+    height: 160px;
+    left: 50%;
+    margin-left: -225px;
+    margin-top: -125px;
+    padding: 1em;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    width: 450px;
+
+    h3{
+      margin: 10px 0px 6px 0px;
+      padding: 0px;
+    }
+
+    .privacity{
+      font-size: 16px;
+      text-align: right;
+    }
+  }
 }
 
 #invites{
@@ -549,7 +579,7 @@ a.desktop {
     left: -10px;
     padding: 1em;
     position: absolute;
-    width: 200px;
+    width: 170px;
     z-index: 100;
 
     p{

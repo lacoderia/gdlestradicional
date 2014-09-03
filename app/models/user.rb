@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
 				num_invites = 0
 			end
 		end
-		return {:id => self.id, :uid => self.uid, :nickname => self.nickname, :picture => self.picture, :likes => likes, :points => points, :photos => photos, :invites => invites.size}
+		return {:id => self.id, :uid => self.uid, :email => self.email, :nickname => self.nickname, :picture => self.picture, :likes => likes, :points => points, :photos => photos, :invites => invites.size}
 	end
 
 	def add_invite(ip)

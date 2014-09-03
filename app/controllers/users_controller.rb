@@ -64,7 +64,7 @@ class UsersController < ApplicationController
 
   def update_mail
     result = false
-    if current_user && current_user.id == params[:id] &&params[:email]
+    if current_user && current_user.id.to_s == params[:id] && params[:email]
       result = current_user.update_attribute(:email, params[:email])
     end
     render :json => {:success => result}

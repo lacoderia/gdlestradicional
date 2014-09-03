@@ -174,7 +174,7 @@ function init() {
 
                 var height = tweet_marker_element.find('.tweet_marker_detail').outerHeight();
 
-                if(left > screenTop.width){
+                if(left > screen.width){
                     tweet_marker_element.find('.tweet_marker_detail').css('left',-(tweet_marker_element.find('.tweet_marker_detail').outerWidth()- tweet_marker_element.width()));
                     tweet_marker_element.find('.arrow-down').css('right', 10);
 
