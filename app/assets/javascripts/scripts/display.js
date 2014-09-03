@@ -105,8 +105,8 @@ function init() {
         disableDoubleClickZoom: true,
         scrollwheel: false,
         draggable: false,
-        draggableCursor: 'default', 
-        draggingCursor: 'default', 
+        draggableCursor: 'default',
+        draggingCursor: 'default',
         styles: styles
     }
 
@@ -117,10 +117,10 @@ function init() {
 		latestPicturesPositions.push(new google.maps.LatLng(20.659178,-103.414142));
 		latestPicturesPositions.push(new google.maps.LatLng(20.643801,-103.380708));
 		latestPicturesPositions.push(new google.maps.LatLng(20.690118,-103.306945));
-		latestPicturesPositions.push(new google.maps.LatLng(20.630118,-103.306209)); 
+		latestPicturesPositions.push(new google.maps.LatLng(20.630118,-103.306209));
 		latestPicturesPositions.push(new google.maps.LatLng(20.692533,-103.346447));
 		latestPicturesPositions.push(new google.maps.LatLng(20.690118,-103.332336));
-		latestPicturesPositions.push(new google.maps.LatLng(20.650118,-103.310708)); 
+		latestPicturesPositions.push(new google.maps.LatLng(20.650118,-103.310708));
 		latestPicturesPositions.push(new google.maps.LatLng(20.692533,-103.394958));
 
     try {
@@ -262,11 +262,11 @@ function getLatestPictures() {
 		data: null,
 		dataType: "json",
 		success: function(response) {
-			latestPictures = response;	
+			latestPictures = response;
 		},
 		error: function(error) {
 		}
-	});	
+	});
 }
 
 function addLatestPicture(data) {
@@ -294,7 +294,7 @@ function createLatestPictureMarker(pic, nickname){
 		});
 
 		google.maps.event.addListener(marker, 'ready', function() {
-  		$('#latest-pic').fadeIn(1000);    
+  		$('#latest-pic').fadeIn(1000);
 		});
 }
 
@@ -304,11 +304,11 @@ function showLatestPictures() {
 
 		createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
 		setTimeout(function(){
-			$('#latest-pic').fadeOut(1000, function(){    
+			$('#latest-pic').fadeOut(1000, function(){
 				$('#latest-pic').remove();
 			});
 		}, 5000);
-		
+
 		var start = 1;
 		setInterval(function(){
 			try {
@@ -320,7 +320,7 @@ function showLatestPictures() {
 				createLatestPictureMarker(pic, latestPictures[start].author_nickname);
 			}
 			setTimeout(function(){
-				$('#latest-pic').fadeOut(1000, function(){    
+				$('#latest-pic').fadeOut(1000, function(){
 					$('#latest-pic').remove();
 				});
 			}, 5000);
@@ -337,7 +337,7 @@ function launchApp() {
         $('#news-feed').css('height', $('#map-canvas').height() - 100);
         $('#news-feed').fadeIn(1000);
         $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
-        $('#bottle').fadeIn(1000);    
+        $('#bottle').fadeIn(1000);
 		showLatestPictures();
     });
 }
@@ -416,13 +416,13 @@ function loadRoutes() {
 
                     // Generamos las líneas de la ruta
                     if (j+1 < routes[i].locations.length) {
-																				
+
 												var stepLat = (routes[i].locations[j+1].lat - routes[i].locations[j].lat)/10;
 												var stepLong = (routes[i].locations[j+1].long - routes[i].locations[j].long)/10;
 
 												for(var stepIx = 1; stepIx <= 10; stepIx++){
-													
-													var lineArray = [							 
+
+													var lineArray = [
 														new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long),
 														new google.maps.LatLng(routes[i].locations[j].lat + (stepLat*stepIx), routes[i].locations[j].long + (stepLong*stepIx))
 													];
@@ -440,7 +440,7 @@ function loadRoutes() {
 														map: null
 
 													});
-												
+
 													routes[i].lines.push(line);
 
 												}
@@ -643,7 +643,7 @@ function showRouteDetail(routeIndex){
                                     }
                                 }
                             }
-                            
+
                         });
                     });
 
@@ -736,7 +736,7 @@ function likePhoto(id) {
         beforeSend: function( xhr ) {
             var token = $('meta[name="csrf-token"]').attr('content');
             if (token) xhr.setRequestHeader('X-CSRF-Token', token);
-        }, 
+        },
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
@@ -745,7 +745,7 @@ function likePhoto(id) {
         },
         error: function(jqXHR, textStatus, errorThrown) {
         }
-    }); 
+    });
 }
 
 function userLikePhoto(id) {
@@ -871,7 +871,7 @@ function login() {
         beforeSend: function( xhr ) {
             var token = $('meta[name="csrf-token"]').attr('content');
             if (token) xhr.setRequestHeader('X-CSRF-Token', token);
-        }, 
+        },
         type: "GET",
         url: "/users/auth/instagram",
         crossDomain: true,
@@ -1011,6 +1011,9 @@ function showDashboard() {
     $("#user-photos").click(function(){
         showUserPictures();
     });
+
+    $('#news-feed').css('height', $('#map-canvas').height() - 100);
+    $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
 
     if (!user.email) {
         console.log("no email");
