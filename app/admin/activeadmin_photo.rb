@@ -34,9 +34,9 @@ ActiveAdmin.register Photo do
     column :points
     column :active do |photo|
 			if photo.active
-				link_to 'desactivar', "#", :onclick => "activatePhotos(#{photo.id}, false)", :id => "photo_link_#{photo.id}"
+				check_box_tag "photo_link_#{photo.id}", "active", true, :onclick => "activatePhotos(#{photo.id}, false)"
 			else
-				link_to 'activar', "#", :onclick => "activatePhotos(#{photo.id}, true)", :id => "photo_link_#{photo.id}"
+				check_box_tag "photo_link_#{photo.id}", "active", false, :onclick => "activatePhotos(#{photo.id}, true)" 
 			end
 		end
     column :created_at
