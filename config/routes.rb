@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :locations do
     member do
       get 'gallery'
+			post 'especial'
     end
   end
 

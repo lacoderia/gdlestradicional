@@ -65,6 +65,18 @@ class LocationsController < ApplicationController
     @photos = Photo.where('location_id = ? AND active = ?', params[:id], true)
   end
 
+	def especial
+
+		location = Location.find(params[:id])
+		if location
+			location.update_attribute(:especial, params[:especial])
+      render json: {:location => location}
+      return
+		else
+    	render plain: "Error", status: 401
+		end
+	end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_location

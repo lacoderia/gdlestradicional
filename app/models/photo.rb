@@ -28,17 +28,15 @@ class Photo < ActiveRecord::Base
 		distance = result[1]
 
 		if location
-			#if location.route
-				if distance <= DISTANCE_3CUADRAS
+			if distance <= DISTANCE_3CUADRAS
+				#if location.especial
+				#	self.update_attributes(:location_id => location.id, :points => 5)
+				#else
 					self.update_attributes(:location_id => location.id, :points => 3)
-				elsif distance <= DISTANCE_GDL 
-					self.update_attribute(:points, 1)
-				end
-			#else
-			#	if self.user.photos.where("location_id = ?", location.id).empty?
-			#		self.update_attributes(:location_id => location.id, :points => 5)
-			#	end
-			#end
+				#end
+			elsif distance <= DISTANCE_GDL 
+				self.update_attribute(:points, 1)
+			end
 		end
 	end
 end
