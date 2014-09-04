@@ -77,6 +77,18 @@ class PhotosController < ApplicationController
     render plain: "Error", status: 401
   end
 
+	def activate
+
+		photo = Photo.find(params[:id])
+		if photo
+			photo.update_attribute(:active, params[:activate])
+      render json: {:photo => photo}
+      return
+		else
+    	render plain: "Error", status: 401
+		end
+	end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo

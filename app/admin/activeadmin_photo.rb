@@ -32,7 +32,13 @@ ActiveAdmin.register Photo do
 			link_to( (image_tag photo.url_thumb), photo.url_normal, :target=>"_blank")
 		end
     column :points
-    column :active
+    column :active do |photo|
+			if photo.active
+				link_to 'desactivar', "#", :onclick => "activatePhotos(#{photo.id}, false)", :id => "photo_link_#{photo.id}"
+			else
+				link_to 'activar', "#", :onclick => "activatePhotos(#{photo.id}, true)", :id => "photo_link_#{photo.id}"
+			end
+		end
     column :created_at
 		actions :defaults => false do |photo|
       link_to "Edit", edit_admin_photo_path(photo)

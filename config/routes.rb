@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
     member do
       post 'like'
+			post 'activate'
     end
   end
 
@@ -38,7 +39,6 @@ Rails.application.routes.draw do
 	  get 'signin', :to => "devise/sessions#new"
 	  get 'signup', :to => "devise/registrations#new"
   end
-  
 
   match 'instagram_push' => "display#instagram_push", :as => :instagram_push, via: [:get, :post] 
 

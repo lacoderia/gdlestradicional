@@ -17,7 +17,6 @@ ActiveAdmin.register User do
 		column :name
 		column :nickname
 		column :email
-		column :active
 		column "" do |user|
 				link_to "View", admin_user_path(user)
 		end
