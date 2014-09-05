@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   
-  resources :cuervo_photos
+  resources :tweets do
+		member do
+			post 'activate'
+		end
+	end
+
+  resources :cuervo_photos do
+		member do
+			post 'activate'
+		end
+	end
 
   resources :galleries
 
