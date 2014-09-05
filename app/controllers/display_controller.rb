@@ -62,4 +62,9 @@ class DisplayController < ApplicationController
     end
   end
 
+  def relocated
+    session[:redirect] = true
+    redirect_to '/users/auth/instagram'
+  end
+
 end

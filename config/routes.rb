@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   end
 
   match 'instagram_push' => "display#instagram_push", :as => :instagram_push, via: [:get, :post] 
+  get 'relocated' => "display#relocated", :as => :relocated
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

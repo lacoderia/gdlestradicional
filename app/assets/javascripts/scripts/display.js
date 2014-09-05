@@ -907,12 +907,15 @@ function login() {
         success: function(response) {
             if (response.success == true) {
                 user = response.user;
+                if (user && !user.email) {
+                    showMailModal();
+                }
                 showDashboard();
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             if (textStatus == 'parsererror') {
-                window.location = '/users/auth/instagram';
+                window.location = '/relocated';
             }
         }
     });
@@ -1044,7 +1047,11 @@ function showDashboard() {
 }
 
 function showInviteModal(){
+    var tweet = 'Únete al movimiento';
+    var inviteURL = 'http%3A%2F%2F104.130.128.19%3Finvite%3D' + user.uid;  //'http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FIn_Watermelon_Sugar';
+    var intent = 'https://twitter.com/intent/tweet?text=' + tweet + '&hashtags=GDLESTRADICIONAL&url='+ inviteURL;
     $('#invites').fadeIn(500);
+    $(".share-buttons .tw").attr('href', intent);
     $('.close_modal').click(function(){
         hideInviteModal();
     });
