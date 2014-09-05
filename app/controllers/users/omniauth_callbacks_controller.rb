@@ -15,7 +15,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 			success = false
 			response = {:success => success}
 		end
-		if first_time
+		#if first_time
+		if session[:redirect]
 			redirect_to :root
 		else
 			render :json => response.to_json, :callback => 'callbackName'

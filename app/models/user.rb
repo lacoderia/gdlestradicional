@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 			# CHECK FOR NEW/CREATE
 			user = User.create(name:auth.info.name, uid:auth.uid, nickname:auth.info.nickname, access_token: auth.credentials.token, picture: auth.info.image, password:Devise.friendly_token[0,20])
 		end
+		user.update_attribute(:access_token, auth.credentials.token)
 		user
 	end
 
