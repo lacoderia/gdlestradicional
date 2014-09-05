@@ -1,0 +1,33 @@
+<%= form_for(@cuervo_photo) do |f| %>
+  <% if @cuervo_photo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cuervo_photo.errors.count, "error") %> prohibited this cuervo_photo from being saved:</h2>
+
+      <ul>
+      <% @cuervo_photo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :gallery_id %><br>
+    <%= f.number_field :gallery_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br>
+    <%= f.check_box :active %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

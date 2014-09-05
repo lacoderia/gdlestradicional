@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  resources :cuervo_photos
+
+  resources :galleries
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   

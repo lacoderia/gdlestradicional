@@ -47,7 +47,13 @@ ActiveAdmin.register User do
 				column :location, :class => "photo_alignment"
 				column :caption, :class => "photo_alignment"
 				column :points, :class => "photo_alignment"
-				column :active, :class => "photo_alignment"
+				column :active, :class => "photo_alignment" do |photo|
+					if photo.active
+						check_box_tag "photo_link_#{photo.id}", "active", true, :onclick => "activatePhotos(#{photo.id}, false)"
+					else
+						check_box_tag "photo_link_#{photo.id}", "active", false, :onclick => "activatePhotos(#{photo.id}, true)" 
+					end
+				end
 				column :created_at, :class => "photo_alignment"
 				column "", :editar, :class => "photo_alignment" do |photo|
 					link_to( "Editar", edit_admin_photo_path(photo) )

@@ -1,0 +1,2 @@
+class CuervoPhotosController < ApplicationController
+end

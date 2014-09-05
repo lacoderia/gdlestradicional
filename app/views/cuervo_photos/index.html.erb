@@ -1,0 +1,31 @@
+<h1>Listing cuervo_photos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Gallery</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Active</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cuervo_photos.each do |cuervo_photo| %>
+      <tr>
+        <td><%= cuervo_photo.gallery_id %></td>
+        <td><%= cuervo_photo.name %></td>
+        <td><%= cuervo_photo.description %></td>
+        <td><%= cuervo_photo.active %></td>
+        <td><%= link_to 'Show', cuervo_photo %></td>
+        <td><%= link_to 'Edit', edit_cuervo_photo_path(cuervo_photo) %></td>
+        <td><%= link_to 'Destroy', cuervo_photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cuervo photo', new_cuervo_photo_path %>

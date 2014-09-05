@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Gallery:</strong>
+  <%= @cuervo_photo.gallery_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @cuervo_photo.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @cuervo_photo.description %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @cuervo_photo.active %>
+</p>
+
+<%= link_to 'Edit', edit_cuervo_photo_path(@cuervo_photo) %> |
+<%= link_to 'Back', cuervo_photos_path %>
