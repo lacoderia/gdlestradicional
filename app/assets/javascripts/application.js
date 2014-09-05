@@ -19,6 +19,8 @@
 //= require lib/prefixfree.min.js
 //= require lib/jquery.social.stream.1.5.4.js
 //= require jquery.slick
-
 //= require websocket_rails/main
+//= require lib/facebook.js
+
+
 
