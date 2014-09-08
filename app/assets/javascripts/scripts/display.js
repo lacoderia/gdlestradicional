@@ -21,6 +21,7 @@ var latestPictures = [];
 var latestPicturesPositions = []
 var tweet_guid = 0;
 var mailSent = false;
+var zones = [];
 
 function init() {
 
@@ -150,36 +151,59 @@ function init() {
             )
         });
 
-        google.maps.event.addListener(map, 'idle', function() {
-            if (showAllRoutesZoom) {
-                map.panTo(mapCenter);
-                showAllRoutesZoom = false;
-            }
+
+        // Se agrega el mapa de calor al mapa y se declara el arreglo de puntos para alimentarlo
+        var tweetData = [];
+        var pointArray = new google.maps.MVCArray(tweetData);
+        var heatmap = new google.maps.visualization.HeatmapLayer({
+            data: pointArray,
+            gradient: [
+                'rgba(255,255,255, 0)',
+                'rgba(255,255,153, 1)',
+                'rgba(255,220,115, 1)',
+            ],
+            opacity: 1,
+            radius: 20
         });
 
-        //google.maps.event.addListener(map, 'tilesloaded', drawAllRoutes);
+        heatmap.setMap(map);
+
 
         dispatcher = new WebSocketRails('104.130.128.19:3001/websocket');
         channel = dispatcher.subscribe('twitter_channel');
 
         channel.bind('new_tweet', function(data) {
-            //console.log('channel event received: ' + data);
-            //console.log('channel event received: ' + data);
+
             tweet_guid++;
+
+            var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
+                                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                                '<div class="pin icon-uniE600"></div>' +
+                                '<div class="pulse"></div>'+
+                            '</div>';
+
+            if(tweet_guid % 2 == 0){
+                content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
+                            '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                            '<div class="pin icon-uniE600"></div>' +
+                            '<div class="pulse-featured"></div>'+
+                        '</div>';
+            }
+
+            var position = new google.maps.LatLng(data.location[0], data.location[1]);
 
             var marker = new RichMarker({
                 tweet_guid: tweet_guid,
-                position: new google.maps.LatLng(data.location[0], data.location[1]),
+                position: position,
                 map: map,
                 flat: true,
-                anchor: new google.maps.Size(-20, -70),
                 draggable: false,
-                content: '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="pin icon-uniE600"></div>' +
-                    '<div class="pulse"></div>'+
-                    '</div>'
+                content: content
             });
+
+            console.log(data.location[0], data.location[1])
+
+            pointArray.push(position);
 
             google.maps.event.addListener(marker, 'click', function() {
                 var tweet_marker_element = $('.tweet_marker_' + this.tweet_guid);
@@ -223,7 +247,6 @@ function init() {
         });
 
         channel.bind('new_picture', function(data) {
-            //console.log('new picture event received: ' + data);
 
             data = JSON.parse(data);
 		    addLatestPicture(data);

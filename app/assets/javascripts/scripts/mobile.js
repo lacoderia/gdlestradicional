@@ -168,6 +168,20 @@ function init() {
 
             tweet_guid++;
 
+            var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
+                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                '<div class="pin icon-uniE600"></div>' +
+                '<div class="pulse"></div>'+
+                '</div>';
+
+            if(tweet_guid % 2 == 0){
+                content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
+                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                    '<div class="pin icon-uniE600"></div>' +
+                    '<div class="pulse-featured"></div>'+
+                    '</div>';
+            }
+
             var marker = new RichMarker({
                 tweet_guid: tweet_guid,
                 position: new google.maps.LatLng(data.location[0], data.location[1]),
@@ -175,14 +189,13 @@ function init() {
                 flat: true,
                 anchor: new google.maps.Size(-20, -70),
                 draggable: false,
-                content: '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="pin icon-uniE600"></div>' +
-                    '<div class="pulse"></div>'+
-                    '</div>'
+                content: content
             });
 
             google.maps.event.addListener(marker, 'click', function() {
+
+                clearInterval(timer);
+
                 var tweet_marker_element = $('.tweet_marker_' + this.tweet_guid);
                 tweet_marker_element.find('.tweet_marker_detail').show();
 
@@ -210,10 +223,17 @@ function init() {
 
                 tweet_marker_element.find('.close_tweet').click(function(event){
                     event.stopPropagation();
-                    marker.setMap(null);
-                    marker = null;
+
+                    try{
+                        marker.setMap(null);
+                    }catch(e){
+                        console.log(e)
+                    }finally{
+                        marker = null;
+                    }
                 });
-                clearInterval(timer);
+
+
             });
 
             var timer = setTimeout(function(){
