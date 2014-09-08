@@ -525,14 +525,14 @@ a.desktop {
 
 
 #bottle {
+  bottom: 0;
   cursor: move;
   display: none;
   position: absolute;
-  left: 2em;
-  top: 10%;
+  left: -40px;
 
   img{
-    max-width: 150px;
+    max-width: 300px;
     width: 100%;
   }
 }

@@ -54,13 +54,9 @@ function init() {
         containment: "document"
     });
 
-    $('#bottle').draggable({
-        containment: "document"
+    $('#latest-pic').draggable({
+            containment: "document"
     });
-
-		$('#latest-pic').draggable({
-				containment: "document"
-		});
 
     $('#influencer-picture').draggable({
         containment: "document",
@@ -138,11 +134,11 @@ function init() {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
         var rectangle = new google.maps.Rectangle({
-            strokeColor: '#11384C',
+            strokeColor: '#A6A7AA​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#13435B',
-            fillOpacity: 0.7,
+            fillColor: '#A6A7AA​',
+            fillOpacity: 0.5,
             clickable: false,
             map: map,
             bounds: new google.maps.LatLngBounds(
@@ -153,27 +149,71 @@ function init() {
 
 
         // Se agrega el mapa de calor al mapa y se declara el arreglo de puntos para alimentarlo
-        var tweetData = [];
+        /*var tweetData = [];
+        tweetData = [
+            new google.maps.LatLng(20.669134, -103.368372),
+            new google.maps.LatLng(20.669295, -103.366741),
+            new google.maps.LatLng(20.669937, -103.364510),
+            new google.maps.LatLng(20.670098, -103.361763),
+            new google.maps.LatLng(20.670098, -103.361763),
+            new google.maps.LatLng(20.670098, -103.361763),
+            new google.maps.LatLng(20.643801,-103.380708),
+            new google.maps.LatLng(20.669455, -103.358759),
+            new google.maps.LatLng(20.668893, -103.357472),
+            new google.maps.LatLng(20.669215, -103.357214),
+            new google.maps.LatLng(20.667368, -103.356442),
+            new google.maps.LatLng(20.667689, -103.355068),
+            new google.maps.LatLng(20.667689, -103.353180),
+            new google.maps.LatLng(20.666243, -103.352493),
+            new google.maps.LatLng(20.665440, -103.352408),
+            new google.maps.LatLng(20.664717, -103.352923),
+            new google.maps.LatLng(20.664316, -103.353695),
+            new google.maps.LatLng(20.664316, -103.353695),
+            new google.maps.LatLng(20.664316, -103.353695),
+            new google.maps.LatLng(20.669134, -103.368372),
+            new google.maps.LatLng(20.669295, -103.366741),
+            new google.maps.LatLng(20.663191, -103.370861),
+            new google.maps.LatLng(20.661826, -103.369831),
+            new google.maps.LatLng(20.661425, -103.367771),
+            new google.maps.LatLng(20.660943, -103.364767),
+            new google.maps.LatLng(20.661023, -103.362793),
+            new google.maps.LatLng(20.661103, -103.359703),
+            new google.maps.LatLng(20.661666, -103.356356),
+            new google.maps.LatLng(20.659015, -103.357987),
+            new google.maps.LatLng(20.657891, -103.357987),
+            new google.maps.LatLng(20.654759, -103.357815),
+            new google.maps.LatLng(20.654277, -103.359961),
+            new google.maps.LatLng(20.652671, -103.361420),
+            new google.maps.LatLng(20.652671, -103.361420),
+            new google.maps.LatLng(20.653795, -103.368801),
+            new google.maps.LatLng(20.667368, -103.336443),
+            new google.maps.LatLng(20.667127, -103.335585),
+            new google.maps.LatLng(20.665039, -103.335499),
+            new google.maps.LatLng(20.640382, -103.372406),
+            new google.maps.LatLng(20.640623, -103.375925),
+            new google.maps.LatLng(20.640302, -103.379015),
+            new google.maps.LatLng(20.636687, -103.378758),
+            new google.maps.LatLng(20.636807, -103.380968),
+            new google.maps.LatLng(20.635642, -103.383028),
+            new google.maps.LatLng(20.634598, -103.385346)
+        ];
+
         var pointArray = new google.maps.MVCArray(tweetData);
+
         var heatmap = new google.maps.visualization.HeatmapLayer({
             data: pointArray,
-            gradient: [
-                'rgba(255,255,255, 0)',
-                'rgba(255,255,153, 1)',
-                'rgba(255,220,115, 1)',
-            ],
             opacity: 1,
-            radius: 20
+            radius: 20,
         });
 
-        heatmap.setMap(map);
+        heatmap.setMap(map);*/
 
 
         dispatcher = new WebSocketRails('104.130.128.19:3001/websocket');
         channel = dispatcher.subscribe('twitter_channel');
 
         channel.bind('new_tweet', function(data) {
-
+            console.log(data.featured)
             tweet_guid++;
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
@@ -182,7 +222,7 @@ function init() {
                                 '<div class="pulse"></div>'+
                             '</div>';
 
-            if(tweet_guid % 2 == 0){
+            if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                             '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
                             '<div class="pin icon-uniE600"></div>' +
@@ -190,7 +230,8 @@ function init() {
                         '</div>';
             }
 
-            var position = new google.maps.LatLng(data.location[0], data.location[1]);
+
+            var position = new google.maps.LatLng(data.lat, data.long);
 
             var marker = new RichMarker({
                 tweet_guid: tweet_guid,
@@ -201,9 +242,22 @@ function init() {
                 content: content
             });
 
-            console.log(data.location[0], data.location[1])
+            //console.log(position)
 
-            pointArray.push(position);
+            /*var circle = new google.maps.Circle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.35,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                center: position,
+                radius: 200
+            });
+
+            circle.setMap(map);*/
+
+
+            //pointArray.push(position);
 
             google.maps.event.addListener(marker, 'click', function() {
                 var tweet_marker_element = $('.tweet_marker_' + this.tweet_guid);
@@ -452,7 +506,7 @@ function loadRoutes() {
 														routeIndex: i,
 														jqueryId: markerId,
 														content: '<div id="' + markerId + '" class="secondary-marker">' +
-																		'<img src="/assets/cuadrito.png"/>' +
+																		'<img src="/assets/cuadrito_gris.png"/>' +
 																'</div>'
 												});
 
