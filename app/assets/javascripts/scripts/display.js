@@ -473,48 +473,51 @@ function loadRoutes() {
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
 
                     if (j == 0) {
-												var markerId = 'first_marker_' + i + '_' + j;
-												var marker = new RichMarker({
-														position: routeCoordinate,
-														map: map,
-														flat: true,
-														anchor: new google.maps.Size(-20, -70),
-														draggable: false,
-														routeIndex: i,
-														jqueryId: markerId,
-														content: '<div id="' + markerId + '" class="first-marker">' +
-																		'<img src="/assets/marker_azul_cuadrito.png"/>' +
-																		'<div class="route-name">' + routes[i].name + '</div>' +
-																'</div>'
-												});
+                        var markerId = 'marker_' + i + '_' + j;
+                        var marker = new RichMarker({
+                            position: routeCoordinate,
+                            map: map,
+                            flat: true,
+                            anchor: new google.maps.Size(-20, -70),
+                            draggable: false,
+                            routeIndex: i,
+                            jqueryId: markerId,
+                            content: '<div id="' + markerId + '" class="first-marker marker">' +
+                                '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                                '</div>'
+                        });
 
-												google.maps.event.addListener(marker, 'ready', function() {
-														$('#' + this.jqueryId).hide();
-														$('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
-												});
+                        google.maps.event.addListener(marker, 'ready', function() {
+                            $('#' + this.jqueryId).hide();
+                            $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                        });
 
-										} else {
-												var markerId = 'secondary_marker_' + i + '_' + j;
+                    } else {
+                        var markerId = 'marker_' + i + '_' + j;
 
-												// Si no es el primer punto pintamos un cuadro
-												var marker = new RichMarker({
-														position: routeCoordinate,
-														map: null,
-														draggable: false,
-														flat: true,
-														anchor: new google.maps.Size(-7, -7),
-														routeIndex: i,
-														jqueryId: markerId,
-														content: '<div id="' + markerId + '" class="secondary-marker">' +
-																		'<img src="/assets/cuadrito_gris.png"/>' +
-																'</div>'
-												});
+                        // Si no es el primer punto pintamos un cuadro
+                        var marker = new RichMarker({
+                            position: routeCoordinate,
+                            map: null,
+                            draggable: false,
+                            flat: true,
+                            anchor: new google.maps.Size(-8, -8),
+                            routeIndex: i,
+                            jqueryId: markerId,
+                            content: '<div id="' + markerId + '" class="secondary-marker marker">' +
+                                '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<img src="/assets/cuadrito_gris.png"/>' +
+                                '</div>'
+                        });
 
-												google.maps.event.addListener(marker, 'ready', function() {
-														$('#' + this.jqueryId).hide();
-														$('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
-												});
-										}
+                        google.maps.event.addListener(marker, 'ready', function() {
+                            $('#' + this.jqueryId).hide();
+                            $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                        });
+                    }
+
+                    google.maps.event.clearListeners(marker, 'click');
 
                     google.maps.event.addListener(marker, 'click', function() {
                         showRouteDetail(this.routeIndex);
@@ -525,35 +528,35 @@ function loadRoutes() {
                     // Generamos las líneas de la ruta
                     if (j+1 < routes[i].locations.length) {
 
-												var stepLat = (routes[i].locations[j+1].lat - routes[i].locations[j].lat)/10;
-												var stepLong = (routes[i].locations[j+1].long - routes[i].locations[j].long)/10;
+                        var stepLat = (routes[i].locations[j+1].lat - routes[i].locations[j].lat)/10;
+                        var stepLong = (routes[i].locations[j+1].long - routes[i].locations[j].long)/10;
 
-												for(var stepIx = 1; stepIx <= 10; stepIx++){
+                        for(var stepIx = 1; stepIx <= 10; stepIx++){
 
-													var lineArray = [
-														new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long),
-														new google.maps.LatLng(routes[i].locations[j].lat + (stepLat*stepIx), routes[i].locations[j].long + (stepLong*stepIx))
-													];
+                            var lineArray = [
+                                new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long),
+                                new google.maps.LatLng(routes[i].locations[j].lat + (stepLat*stepIx), routes[i].locations[j].long + (stepLong*stepIx))
+                            ];
 
-													var line = new google.maps.Polyline({
-														path: lineArray,
-														strokeOpacity: 0,
-														icons: [{
-																icon: lineSymbol,
-																offset: '0',
-																repeat: '9px'
-														}],
-														clickable: false,
-														geodesic: true,
-														map: null
+                            var line = new google.maps.Polyline({
+                                path: lineArray,
+                                strokeOpacity: 0,
+                                icons: [{
+                                    icon: lineSymbol,
+                                    offset: '0',
+                                    repeat: '9px'
+                                }],
+                                clickable: false,
+                                geodesic: true,
+                                map: null
 
-													});
+                            });
 
-													routes[i].lines.push(line);
+                            routes[i].lines.push(line);
 
-												}
+                        }
 
-										}
+                    }
 
                 }
 
@@ -604,7 +607,7 @@ function paintOneLine(routeIndex, lineIndex) {
 function showAllRoutes() {
     if (!paintingRoutes) {
 
-				showLatestPictures();
+		showLatestPictures();
 
         $('#influencer-picture').hide();
 
@@ -623,43 +626,40 @@ function showAllRoutes() {
                 routes[i].markers[j] = [];
 
                 var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
+
+                var markerId = 'marker_' + i + '_' + j;
+
                 if (j == 0) {
-                    var markerId = 'first_marker_' + i + '_' + j;
-                    var marker = new RichMarker({
-                        position: routeCoordinate,
-                        map: map,
-                        flat: true,
-                        anchor: new google.maps.Size(-20, -70),
-                        draggable: false,
-                        routeIndex: i,
-                        jqueryId: markerId,
-                        content: '<div id="' + markerId + '" class="first-marker">' +
-                            '<img src="/assets/marker_azul_cuadrito.png"/>' +
-                            '<div class="route-name">' + routes[i].name + '</div>' +
-                            '</div>'
-                    });
+                    var content = '<div id="' + markerId + '" class="first-marker marker">' +
+                        '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                        '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                        '</div>';
 
-                    google.maps.event.addListener(marker, 'ready', function() {
-                        $('#' + this.jqueryId).hide();
-                        $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
-                    });
+                    var anchor = new google.maps.Size(-20, -70);
                 } else {
-                    var icon = {
-                        url: '/assets/cuadrito.png',
-                        scaledSize: new google.maps.Size(16, 16),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(8, 8)
-                    };
+                    var content = '<div id="' + markerId + '" class="secondary-marker marker">' +
+                        '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                        '<img src="/assets/cuadrito_gris.png"/>' +
+                        '</div>';
 
-                    var marker = new google.maps.Marker({
-                        position: routeCoordinate,
-												animation: google.maps.Animation.DROP,
-                        optimized: false,
-                        icon: icon,
-                        map: map,
-                        routeIndex: i
-                    });
+                    var anchor = new google.maps.Size(-8, -8);
                 }
+
+                var marker = new RichMarker({
+                    position: routeCoordinate,
+                    map: map,
+                    flat: true,
+                    anchor: anchor,
+                    draggable: false,
+                    routeIndex: i,
+                    jqueryId: markerId,
+                    content: content
+                });
+
+                google.maps.event.addListener(marker, 'ready', function() {
+                    $('#' + this.jqueryId).hide();
+                    $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                });
 
                 google.maps.event.addListener(marker, 'click', function() {
                     showRouteDetail(this.routeIndex);
@@ -698,14 +698,14 @@ function showRouteDetail(routeIndex){
                 for (var j=0; j<routes[i].markers.length; j++) {
 
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-                    var markerId = 'marker_' + i + '_' + j;
+                    var markerId = 'image_marker_' + i + '_' + j;
                     var marker = new RichMarker({
                         index: j,
                         position: routeCoordinate,
                         map: map,
                         flat: true,
                         anchor: RichMarkerPosition.TOP,
-                        draggable: false,
+                        draggable: true,
                         id: routes[i].locations[j].id,
                         jqueryId : markerId,
                         content: '<div class="image-marker my-marker" id="' + markerId + '">' +
@@ -758,6 +758,7 @@ function showRouteDetail(routeIndex){
                             }
 
                         });
+
                     });
 
                     tempRoute.push(marker);
@@ -778,6 +779,39 @@ function showRouteDetail(routeIndex){
             } else {
                 for (var j=0; j<routes[i].markers.length; j++) {
                     google.maps.event.clearListeners(routes[i].markers[j], 'click');
+
+                    console.log(routes[i].markers[j].jqueryId);
+                    $('#' + routes[i].markers[j].jqueryId).mouseover(function(){
+                        var marker_element = $(this);
+                        marker_element.find('.marker_detail').show();
+
+                        var left = marker_element.find('.marker_detail').offset().left + marker_element.find('.marker_detail').outerWidth();
+                        var top = marker_element.find('.marker_detail').offset().top;
+
+                        var height = marker_element.find('.marker_detail').outerHeight();
+
+                        if(left > screen.width){
+                            marker_element.find('.marker_detail').css('left',-(marker_element.find('.marker_detail').outerWidth()- marker_element.width()));
+                            marker_element.find('.arrow-down').css('right', 10);
+
+                            if(top < 0){
+                                marker_element.find('.marker_detail').css('top', 50);
+                                marker_element.find('.marker_detail').css('height', height);
+                                marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
+                            }
+
+                        }else if(top < 0){
+                            marker_element.find('.marker_detail').css('top', 50);
+                            marker_element.find('.marker_detail').css('height', height);
+                            marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
+
+                        }
+                    });
+
+                    $('#' + routes[i].markers[j].jqueryId).mouseout(function() {
+                        var marker_element = $(this);
+                        marker_element.find('.marker_detail').hide();
+                    });
                 }
             }
 
@@ -786,7 +820,6 @@ function showRouteDetail(routeIndex){
 }
 
 function updatePictureDetails(post) {
-
     var panoOptions = {
         position: new google.maps.LatLng(post.lat, post.long),
         pov: {

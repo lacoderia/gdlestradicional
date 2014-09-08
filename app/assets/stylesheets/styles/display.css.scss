@@ -188,11 +188,44 @@ a.desktop {
   height: 100%;
 }
 
-.secondary-marker {
+.marker{
+  position: relative;
+  z-index: 800;
 
-  img {
-    width: 14px;
-    height: 14px;
+  .marker_detail{
+    display:none;
+    background-color: white;
+    border: 1px solid #002131;
+    border-radius: 5px;
+    padding: 1em;
+    position: absolute;
+    width: 170px;
+    z-index: 100;
+
+    p{
+      margin: 0em 0em 0.5em;
+      padding: 0px;
+    }
+
+    .arrow-down{
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid white;
+      height: 0;
+      position: absolute;
+      bottom: -10px;
+      width: 0;
+    }
+
+    .arrow-up{
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid white;
+      height: 0;
+      position: absolute;
+      top: -10px;
+      width: 0;
+    }
   }
 
 }
@@ -202,9 +235,13 @@ a.desktop {
   display: inline-block;
   width: 120px;
   height: 70px;
-  font-size: 20px;
   text-transform: uppercase;
   vertical-align: bottom;
+
+  .marker_detail{
+    left: 0px;
+    bottom: 80px;
+  }
 
   img {
     width: 40px;
@@ -212,10 +249,25 @@ a.desktop {
   }
 
   .route-name {
+    font-size: 20px;
     display: inline-block;
     padding-bottom: 10px;
     vertical-align: bottom;
   }
+}
+
+.secondary-marker {
+
+  .marker_detail{
+    left: -15px;
+    bottom: 28px;
+  }
+
+  img {
+    width: 14px;
+    height: 14px;
+  }
+
 }
 
 .image-marker {
