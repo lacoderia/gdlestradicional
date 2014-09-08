@@ -20,6 +20,7 @@ var latestPictures = [];
 var latestPicturesPositions = [];
 var tweet_guid = 0;
 var mailSent = false;
+var intervalTimeout;
 
 function init() {
 
@@ -375,7 +376,7 @@ function showLatestPictures() {
 	}, 5000);
 	
 	var start = 1;
-	setInterval(function(){
+	intervalTimeout = setInterval(function(){
 		try {
 			pic = latestPictures[start].url_thumb;
 			createLatestPictureMarker(pic, latestPictures[start].author_nickname);
@@ -393,6 +394,9 @@ function showLatestPictures() {
 	}, 10000);
 }
 
+function stopLatestPictures(){
+	clearTimeout(intervalTimeout);
+}
 
 function launchApp() {
     $('#intro').fadeOut(1000, function() {
@@ -584,6 +588,9 @@ function paintOneLine(routeIndex, lineIndex) {
 function showAllRoutes() {
 
     if(!paintingRoutes){
+
+				showLatestPictures();
+	
         $('#influencer-picture').hide();
 
         for (var i=0; i<tempRoute.length; i++) {
@@ -655,6 +662,8 @@ function showAllRoutes() {
 
 function showRouteDetail(routeIndex){
     if (!paintingRoutes){
+
+				stopLatestPictures();
 
         $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
         $('#influencer-picture').fadeIn(1000);

@@ -29,11 +29,15 @@ class Photo < ActiveRecord::Base
 
 		if location
 			if distance <= DISTANCE_3CUADRAS
-				#if location.especial
-				#	self.update_attributes(:location_id => location.id, :points => 5)
-				#else
+				#fotos del mismo autor, que valgan 5 puntos en ese location por día <-- (sólo una vez)
+				if location.especial
+					condicion = Photo.where("author_id = ? AND location_id = ? AND points = 5 AND (created_at > ? AND created_at < ?)", photo.user.uid, location.id, Time.now.beginning_of_day, Time.now.end_of_day).empty?
+					if condicion
+						self.update_attributes(:location_id => location.id, :points => 5)
+					end
+				else
 					self.update_attributes(:location_id => location.id, :points => 3)
-				#end
+				end
 			elsif distance <= DISTANCE_GDL 
 				self.update_attribute(:points, 1)
 			end
