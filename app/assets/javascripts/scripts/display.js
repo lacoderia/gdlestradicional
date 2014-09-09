@@ -144,8 +144,8 @@ function init() {
             clickable: false,
             map: map,
             bounds: new google.maps.LatLngBounds(
-                new google.maps.LatLng(20.787138, -103.518747),
-                new google.maps.LatLng(20.544287, -103.186411)
+                new google.maps.LatLng(21.022869, -104.182047),
+                new google.maps.LatLng(20.274966, -102.450327)
             )
         });
 
