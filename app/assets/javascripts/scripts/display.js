@@ -144,8 +144,8 @@ function init() {
             clickable: false,
             map: map,
             bounds: new google.maps.LatLngBounds(
-                new google.maps.LatLng(20.787138, -103.518747),
-                new google.maps.LatLng(20.544287, -103.186411)
+                new google.maps.LatLng(21.022869, -104.182047),
+                new google.maps.LatLng(20.274966, -102.450327)
             )
         });
 
@@ -776,7 +776,7 @@ function showAllRoutes() {
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
                             '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                            '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                            '<img src="/assets/marker_azul.png"/>' +
                             '</div>'
                     });
                 } else {
