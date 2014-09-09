@@ -8,7 +8,7 @@ $(document).ready(
 
 var map = null;
 var pano, panoInterval, userPano, userPanoInterval = null;
-var mapCenter = new google.maps.LatLng(20.666735, -103.350335);
+var mapCenter = new google.maps.LatLng(20.7, -103.39);
 var showElements = false;
 var paintingRoutes = true;
 var routes = [];
@@ -100,8 +100,12 @@ function init() {
         showDashboard();
     }
 
+    var xBoundary = screen.width - $('#news-feed').outerWidth() - 16;
+    console.log(xBoundary)
+
     $('#news-feed').draggable({
-        containment: "document"
+        axis: 'x',
+        containment: [10, 10, xBoundary, 300]
     });
 
     $('#latest-pic').draggable({
@@ -416,7 +420,7 @@ function showLatestPictures() {
 }
 
 function stopLatestPictures(){
-	clearTimeout(intervalTimeout);
+	clearInterval(intervalTimeout);
 }
 
 function launchApp() {
@@ -437,7 +441,6 @@ function launchApp() {
         }else{
             showElements = true;
             loadRoutes();
-            $('header').fadeIn(1000);
             $('#news-feed').css('height', $('#map-canvas').height() - 100);
             $('#news-feed').fadeIn(1000);
             $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
@@ -671,66 +674,48 @@ function paintOneMarker(routeIndex, markerIndex) {
             tempRoute.push(marker);
         }
 
-        for (var i=0; i<routes.length; i++) {
-            if (i != routeIndex) {
+        for (var j=0; j<routes[routeIndex].markers.length; j++) {
+            google.maps.event.clearListeners(routes[routeIndex].markers[j], 'click');
 
-                for (var j=0; j<routes[i].lines.length; j++) {
-                    routes[i].lines[j].setMap(null);
+            $('#' + routes[routeIndex].markers[j].jqueryId).mouseover(function(){
+                var marker_element = $(this);
+                marker_element.find('.marker_detail').show();
+
+                var left = marker_element.find('.marker_detail').offset().left + marker_element.find('.marker_detail').outerWidth();
+                var top = marker_element.find('.marker_detail').offset().top;
+
+                var height = marker_element.find('.marker_detail').outerHeight();
+
+                if(left > screen.width){
+                    marker_element.find('.marker_detail').css('left',-(marker_element.find('.marker_detail').outerWidth()- marker_element.width()));
+                    marker_element.find('.arrow-down').css('right', 10);
+
+                    if(top < 0){
+                        marker_element.find('.marker_detail').addClass('inverted');
+                        marker_element.find('.marker_detail').css('height', height);
+                        marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
+                    }
+
+                }else if(top < 0){
+                    marker_element.find('.marker_detail').addClass('inverted');
+                    marker_element.find('.marker_detail').css('height', height);
+                    marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
+
                 }
+            });
 
-                for (var j=0; j<routes[i].markers.length; j++) {
-                    routes[i].markers[j].setMap(null);
-                }
-            } else {
-                for (var j=0; j<routes[i].markers.length; j++) {
-                    google.maps.event.clearListeners(routes[i].markers[j], 'click');
-
-                    $('#' + routes[i].markers[j].jqueryId).mouseover(function(){
-                        var marker_element = $(this);
-                        marker_element.find('.marker_detail').show();
-
-                        var left = marker_element.find('.marker_detail').offset().left + marker_element.find('.marker_detail').outerWidth();
-                        var top = marker_element.find('.marker_detail').offset().top;
-
-                        var height = marker_element.find('.marker_detail').outerHeight();
-
-                        if(left > screen.width){
-                            marker_element.find('.marker_detail').css('left',-(marker_element.find('.marker_detail').outerWidth()- marker_element.width()));
-                            marker_element.find('.arrow-down').css('right', 10);
-
-                            if(top < 0){
-                                marker_element.find('.marker_detail').addClass('inverted');
-                                marker_element.find('.marker_detail').css('height', height);
-                                marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
-                            }
-
-                        }else if(top < 0){
-                            marker_element.find('.marker_detail').addClass('inverted');
-                            marker_element.find('.marker_detail').css('height', height);
-                            marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
-
-                        }
-                    });
-
-                    $('#' + routes[i].markers[j].jqueryId).mouseout(function() {
-                        var marker_element = $(this);
-                        marker_element.find('.marker_detail').hide();
-                    });
-                }
-            }
-
+            $('#' + routes[routeIndex].markers[j].jqueryId).mouseout(function() {
+                var marker_element = $(this);
+                marker_element.find('.marker_detail').hide();
+            });
         }
 
         var mapOptionsRouteDetail = {
-            zoom: 16,
-            center: new google.maps.LatLng(routes[routeIndex].locations[0].lat, routes[routeIndex].locations[0].long),
-            minZoom: 16,
+            minZoom: 13,
             maxZoom: 19,
-            disableDoubleClickZoom: true,
-            scrollwheel: false,
+            disableDoubleClickZoom: false,
+            scrollwheel: true,
             draggable: true,
-            draggableCursor: 'default',
-            draggingCursor: 'default',
             styles: styles,
             panControl:false,
             zoomControl:true,
@@ -757,7 +742,9 @@ function showAllRoutes() {
 
 		showLatestPictures();
 
+        $('#show-all-routes').hide();
         $('#influencer-picture').hide();
+        $('#news-feed').show();
 
         for (var i=0; i<tempRoute.length; i++) {
             tempRoute[i].setMap(null);
@@ -822,16 +809,44 @@ function showAllRoutes() {
             }
         }
 
-        map.setCenter(mapCenter);
         map.setOptions(mapOptions);
+        map.setZoom(13);
+        map.setCenter(mapCenter);
 
     }
 }
 
 function showRouteDetail(routeIndex){
     if (!paintingRoutes) {
+
+        stopLatestPictures();
+
+        var markers = routes[routeIndex].markers;
+        var bounds = new google.maps.LatLngBounds();
+        for(i=0;i<markers.length;i++) {
+            bounds.extend(markers[i].getPosition());
+        }
+
+        map.fitBounds(bounds);
+
+        for (var i=0; i<routes.length; i++) {
+            if (i != routeIndex) {
+
+                for (var j=0; j<routes[i].lines.length; j++) {
+                    routes[i].lines[j].setMap(null);
+                }
+
+                for (var j=0; j<routes[i].markers.length; j++) {
+                    routes[i].markers[j].setMap(null);
+                }
+            }
+
+        }
+
         paintOneRoute(routeIndex);
 
+        $('#show-all-routes').show();
+        $('#news-feed').hide();
         stopLatestPictures();
 
         $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
@@ -871,7 +886,7 @@ function updatePictureDetails(post) {
         }
     }, 10);
 
-    $('#picture-gallery .post-author').html(post.author_nickname);
+    $('#picture-gallery .post-author').html('@' + post.author_nickname);
     $('#picture-gallery p').html(post.caption);
     $('#marker-picture').attr('src', "");
     $('#marker-picture').attr('src', post.url_normal);
@@ -1101,7 +1116,7 @@ function userUpdatePictureDetails(post) {
         }
     }, 10);
 
-    $('#user-picture-gallery .post-author').html(post.author_nickname);
+    $('#user-picture-gallery .post-author').html('@' + post.author_nickname);
     $('#user-picture-gallery p').html(post.caption);
     $('#user-marker-picture').attr('src', "");
     $('#user-marker-picture').attr('src', post.url_normal);

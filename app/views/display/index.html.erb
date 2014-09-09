@@ -1,9 +1,6 @@
 <div id="map_container">
-  <header class="header" style="display: none;">
-    <img src="/assets/logo_cuervo.png" alt="Cuervo" class="logo-cuervo">
-  </header>
   <div id="overlay"></div>
-  <div id="show-all-routes" onclick="showAllRoutes()" style="display: none;">MOSTRAR TODAS LAS RUTAS</div>
+  <div id="show-all-routes" onclick="showAllRoutes()" style="display: none;"><span class="icon-uniE607" title="Mostrar todas las rutas"></span></div>
   <div id="map-canvas"></div>
   <div id="bottle">
     <img src="/assets/bottle_631.png" alt="José Cuervo Tradicional">
@@ -66,14 +63,30 @@
               <a class="button" href="#" title="Participa" onclick="login()">Participa</a>
             </div>
             <div id="dashboard">
-              <div class="dashboard-element-pic"><img /></div>
-              <div class="dashboard-element">
-                <div id="user-name"></div>
-                <div id="instagram-logout" onclick="logout()">Cerrar sesión</div>
-              </div><br/>
-              <div class="user-element"><span id="user-points"></span><br/>Puntos</div>
-              <div class="user-element" onclick="showUserPictures()"><span id="user-photos"></span><br/>Fotos</div>
-              <div class="user-element" onclick="showInviteModal()"><span id="user-invites"></span><br/>Invitaciones</div>
+              <table>
+                <tr>
+                  <td class="dashboard-element-pic"><img /></td>
+                  <td class="dashboard-element" colspan="2">
+                    <div id="user-name"></div>
+                    <div id="instagram-logout" onclick="logout()">Cerrar sesión</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-element">
+                    <div id="user-points"></div>
+                    <div>Puntos</div>
+                  </td>
+                  <td class="user-element" onclick="showUserPictures()">
+                    <div id="user-photos"></div>
+                    <div>Fotos</div>
+                  </td>
+                  <td class="user-element"onclick="showInviteModal()">
+                    <div id="user-invites"></div>
+                    <div>Invitaciones</div>
+                  </td>
+                </tr>
+              </table>
+
             </div>
           </div>
         </div>
