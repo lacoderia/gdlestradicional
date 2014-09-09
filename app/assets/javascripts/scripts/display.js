@@ -776,7 +776,7 @@ function showAllRoutes() {
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
                             '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                            '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                            '<img src="/assets/marker_azul.png"/>' +
                             '</div>'
                     });
                 } else {
