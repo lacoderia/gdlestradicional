@@ -488,12 +488,23 @@ function loadRoutes() {
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
                                 '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
                                 '<img src="/assets/marker_azul.png"/>' +
+                                '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
 
                         google.maps.event.addListener(marker, 'ready', function() {
                             $('#' + this.jqueryId).hide();
                             $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+
+                            $('#' + this.jqueryId).mouseover(function(){
+                                var marker_element = $(this);
+                                marker_element.find('.route-name').show();
+                            });
+
+                            $('#' + this.jqueryId).mouseout(function() {
+                                var marker_element = $(this);
+                                marker_element.find('.route-name').hide();
+                            });
                         });
 
                     } else {
@@ -593,11 +604,20 @@ function paintOneRoute(routeIndex) {
 function paintOneMarker(routeIndex, markerIndex) {
     if(markerIndex < routes[routeIndex].locations.length){
         routes[routeIndex].markers[markerIndex].setMap(map);
+
+        setTimeout(function(){
+            $('#' + routes[routeIndex].markers[markerIndex].jqueryId).mouseout();
+            $('#' + routes[routeIndex].markers[markerIndex].jqueryId).unbind('mouseover mouseout');
+        }, 500);
+
+
         setTimeout(function(){
             paintOneMarker(routeIndex, markerIndex+1);
         }, 250)
     } else {
         paintingRoutes = false;
+
+        $('#show-all-routes').show();
 
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
 
@@ -678,6 +698,9 @@ function paintOneMarker(routeIndex, markerIndex) {
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
             google.maps.event.clearListeners(routes[routeIndex].markers[j], 'click');
 
+            $('#' + routes[routeIndex].markers[j].jqueryId).mouseout();
+            $('#' + routes[routeIndex].markers[j].jqueryId).unbind('mouseover mouseout');
+
             $('#' + routes[routeIndex].markers[j].jqueryId).mouseover(function(){
                 var marker_element = $(this);
                 marker_element.find('.marker_detail').show();
@@ -688,8 +711,8 @@ function paintOneMarker(routeIndex, markerIndex) {
                 var height = marker_element.find('.marker_detail').outerHeight();
 
                 if(left > screen.width){
-                    marker_element.find('.marker_detail').css('left',-(marker_element.find('.marker_detail').outerWidth()- marker_element.width()));
-                    marker_element.find('.arrow-down').css('right', 10);
+                    marker_element.find('.marker_detail').addClass('horizontal-inverted');
+                    marker_element.find('.arrow-down').addClass('inverted');
 
                     if(top < 0){
                         marker_element.find('.marker_detail').addClass('inverted');
@@ -708,6 +731,10 @@ function paintOneMarker(routeIndex, markerIndex) {
             $('#' + routes[routeIndex].markers[j].jqueryId).mouseout(function() {
                 var marker_element = $(this);
                 marker_element.find('.marker_detail').hide();
+
+                marker_element.find('.marker_detail').removeClass('inverted');
+                marker_element.find('.marker_detail').removeClass('horizontal-inverted');
+                marker_element.find('.arrow-down').removeClass('inverted');
             });
         }
 
@@ -778,7 +805,23 @@ function showAllRoutes() {
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
                             '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
                             '<img src="/assets/marker_azul.png"/>' +
+                            '<div class="route-name">' + routes[i].name + '</div>' +
                             '</div>'
+                    });
+
+                    google.maps.event.addListener(marker, 'ready', function() {
+                        $('#' + this.jqueryId).hide();
+                        $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+
+                        $('#' + this.jqueryId).mouseover(function(){
+                            var marker_element = $(this);
+                            marker_element.find('.route-name').show();
+                        });
+
+                        $('#' + this.jqueryId).mouseout(function() {
+                            var marker_element = $(this);
+                            marker_element.find('.route-name').hide();
+                        });
                     });
                 } else {
 
@@ -795,12 +838,12 @@ function showAllRoutes() {
                             '<img src="/assets/cuadrito_gris.png"/>' +
                             '</div>'
                     });
-                }
 
-                google.maps.event.addListener(marker, 'ready', function() {
-                    $('#' + this.jqueryId).hide();
-                    $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
-                });
+                    google.maps.event.addListener(marker, 'ready', function() {
+                        $('#' + this.jqueryId).hide();
+                        $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                    });
+                }
 
                 google.maps.event.addListener(marker, 'click', function() {
                     showRouteDetail(this.routeIndex);
@@ -832,7 +875,6 @@ function showRouteDetail(routeIndex){
 
         for (var i=0; i<routes.length; i++) {
             if (i != routeIndex) {
-
                 for (var j=0; j<routes[i].lines.length; j++) {
                     routes[i].lines[j].setMap(null);
                 }
@@ -841,14 +883,11 @@ function showRouteDetail(routeIndex){
                     routes[i].markers[j].setMap(null);
                 }
             }
-
         }
 
         paintOneRoute(routeIndex);
 
-        $('#show-all-routes').show();
         $('#news-feed').hide();
-        stopLatestPictures();
 
         $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
         $('#influencer-picture').fadeIn(1000);
