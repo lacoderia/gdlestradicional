@@ -20,7 +20,7 @@ var latestPictures = [];
 var latestPicturesPositions = [];
 var tweet_guid = 0;
 var mailSent = false;
-var intervalTimeout;
+var intervalTimeout, latestPicturesTimeout;
 
 var styles = [
     {
@@ -389,7 +389,7 @@ function createLatestPictureMarker(pic, nickname){
 
 function showLatestPictures() {
 
-	setTimeout(function(){
+    latestPicturesTimeout = setTimeout(function(){
 
 		createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
 		setTimeout(function(){
@@ -420,7 +420,8 @@ function showLatestPictures() {
 }
 
 function stopLatestPictures(){
-	clearInterval(intervalTimeout);
+	clearTimeout(latestPicturesTimeout);
+    clearInterval(intervalTimeout);
 }
 
 function launchApp() {
