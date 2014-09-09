@@ -7,6 +7,7 @@ $(document).ready(
 );
 
 var map = null;
+var rectangle = null;
 var pano, panoInterval, userPano, userPanoInterval = null;
 var mapCenter = new google.maps.LatLng(20.7, -103.39);
 var showElements = false;
@@ -135,7 +136,7 @@ function init() {
     try {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        var rectangle = new google.maps.Rectangle({
+        rectangle = new google.maps.Rectangle({
             strokeColor: '#033060​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
@@ -726,6 +727,7 @@ function paintOneMarker(routeIndex, markerIndex) {
         }
 
         map.setOptions(mapOptionsRouteDetail);
+        rectangle.setOptions({clickable: true});
     }
 }
 
@@ -813,6 +815,7 @@ function showAllRoutes() {
         map.setOptions(mapOptions);
         map.setZoom(13);
         map.setCenter(mapCenter);
+        rectangle.setOptions({clickable: false});
 
     }
 }
