@@ -671,27 +671,48 @@ a.desktop {
   }
 }
 
-#dashboard {
-  display: none;
-  margin: 5px;
+#news-feed-lower{
+  box-sizing: border-box;
+  padding: 0px 10px;
+}
 
-  .dashboard-element {
-    display: inline-block;
-    height: 75px;
-    position: relative;
-    vertical-align: middle;
-    width: 160px;
+#dashboard {
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: none;
+  padding: 5px;
+  margin: 10px;
+
+  td{
+    box-sizing: border-box;
+    width: 30%;
   }
 
-  #instagram-logout {
-    cursor: pointer;
+  .dashboard-element {
+    height: 75px;
+    padding-left: 6px;
+    vertical-align: middle;
+
+    #user-name{
+      color: #033060;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    #instagram-logout {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 300;
+      margin-top: 2px;
+      text-decoration: underline;
+    }
+
   }
 
   .dashboard-element-pic {
-    display: inline-block;
     height: 70px;
     vertical-align: middle;
-    width: 70px;
   }
 
   .dashboard-element-pic img {
@@ -700,13 +721,11 @@ a.desktop {
   }
 
   .user-element {
-    border: 1px solid black;
+
     cursor: pointer;
-    display: inline-block;
     height: 50px;
     vertical-align: middle;
     text-align: center;
-    width: 75px;
   }
 }
 

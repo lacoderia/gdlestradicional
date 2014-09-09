@@ -65,20 +65,28 @@
             <div id="dashboard">
               <table>
                 <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td class="dashboard-element-pic"><img /></td>
+                  <td class="dashboard-element" colspan="2">
+                    <div id="user-name"></div>
+                    <div id="instagram-logout" onclick="logout()">Cerrar sesión</div>
+                  </td>
                 </tr>
-
+                <tr>
+                  <td class="user-element">
+                    <div id="user-points"></div>
+                    <div>Puntos</div>
+                  </td>
+                  <td class="user-element" onclick="showUserPictures()">
+                    <div id="user-photos"></div>
+                    <div>Fotos</div>
+                  </td>
+                  <td class="user-element"onclick="showInviteModal()">
+                    <div id="user-invites"></div>
+                    <div>Invitaciones</div>
+                  </td>
+                </tr>
               </table>
-              <div class="dashboard-element-pic"><img /></div>
-              <div class="dashboard-element">
-                <div id="user-name"></div>
-                <div id="instagram-logout" onclick="logout()">Cerrar sesión</div>
-              </div><br/>
-              <div class="user-element"><span id="user-points"></span><br/>Puntos</div>
-              <div class="user-element" onclick="showUserPictures()"><span id="user-photos"></span><br/>Fotos</div>
-              <div class="user-element" onclick="showInviteModal()"><span id="user-invites"></span><br/>Invitaciones</div>
+
             </div>
           </div>
         </div>
