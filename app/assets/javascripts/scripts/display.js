@@ -722,15 +722,11 @@ function paintOneMarker(routeIndex, markerIndex) {
         }
 
         var mapOptionsRouteDetail = {
-            zoom: 16,
-            center: new google.maps.LatLng(routes[routeIndex].locations[0].lat, routes[routeIndex].locations[0].long),
-            minZoom: 16,
+            minZoom: 13,
             maxZoom: 19,
-            disableDoubleClickZoom: true,
-            scrollwheel: false,
+            disableDoubleClickZoom: false,
+            scrollwheel: true,
             draggable: true,
-            draggableCursor: 'default',
-            draggingCursor: 'default',
             styles: styles,
             panControl:false,
             zoomControl:true,
@@ -822,14 +818,24 @@ function showAllRoutes() {
             }
         }
 
-        map.setCenter(mapCenter);
         map.setOptions(mapOptions);
+        map.setZoom(13);
+        map.setCenter(mapCenter);
 
     }
 }
 
 function showRouteDetail(routeIndex){
     if (!paintingRoutes) {
+
+        var markers = routes[routeIndex].markers;
+        var bounds = new google.maps.LatLngBounds();
+        for(i=0;i<markers.length;i++) {
+            bounds.extend(markers[i].getPosition());
+        }
+
+        map.fitBounds(bounds);
+
         paintOneRoute(routeIndex);
 
         stopLatestPictures();
