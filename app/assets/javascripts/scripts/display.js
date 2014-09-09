@@ -8,7 +8,7 @@ $(document).ready(
 
 var map = null;
 var pano, panoInterval, userPano, userPanoInterval = null;
-var mapCenter = new google.maps.LatLng(20.666735, -103.350335);
+var mapCenter = new google.maps.LatLng(20.7, -103.39);
 var showElements = false;
 var paintingRoutes = true;
 var routes = [];
@@ -420,7 +420,7 @@ function showLatestPictures() {
 }
 
 function stopLatestPictures(){
-	clearTimeout(intervalTimeout);
+	clearInterval(intervalTimeout);
 }
 
 function launchApp() {
@@ -674,54 +674,40 @@ function paintOneMarker(routeIndex, markerIndex) {
             tempRoute.push(marker);
         }
 
-        for (var i=0; i<routes.length; i++) {
-            if (i != routeIndex) {
+        for (var j=0; j<routes[routeIndex].markers.length; j++) {
+            google.maps.event.clearListeners(routes[routeIndex].markers[j], 'click');
 
-                for (var j=0; j<routes[i].lines.length; j++) {
-                    routes[i].lines[j].setMap(null);
+            $('#' + routes[routeIndex].markers[j].jqueryId).mouseover(function(){
+                var marker_element = $(this);
+                marker_element.find('.marker_detail').show();
+
+                var left = marker_element.find('.marker_detail').offset().left + marker_element.find('.marker_detail').outerWidth();
+                var top = marker_element.find('.marker_detail').offset().top;
+
+                var height = marker_element.find('.marker_detail').outerHeight();
+
+                if(left > screen.width){
+                    marker_element.find('.marker_detail').css('left',-(marker_element.find('.marker_detail').outerWidth()- marker_element.width()));
+                    marker_element.find('.arrow-down').css('right', 10);
+
+                    if(top < 0){
+                        marker_element.find('.marker_detail').addClass('inverted');
+                        marker_element.find('.marker_detail').css('height', height);
+                        marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
+                    }
+
+                }else if(top < 0){
+                    marker_element.find('.marker_detail').addClass('inverted');
+                    marker_element.find('.marker_detail').css('height', height);
+                    marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
+
                 }
+            });
 
-                for (var j=0; j<routes[i].markers.length; j++) {
-                    routes[i].markers[j].setMap(null);
-                }
-            } else {
-                for (var j=0; j<routes[i].markers.length; j++) {
-                    google.maps.event.clearListeners(routes[i].markers[j], 'click');
-
-                    $('#' + routes[i].markers[j].jqueryId).mouseover(function(){
-                        var marker_element = $(this);
-                        marker_element.find('.marker_detail').show();
-
-                        var left = marker_element.find('.marker_detail').offset().left + marker_element.find('.marker_detail').outerWidth();
-                        var top = marker_element.find('.marker_detail').offset().top;
-
-                        var height = marker_element.find('.marker_detail').outerHeight();
-
-                        if(left > screen.width){
-                            marker_element.find('.marker_detail').css('left',-(marker_element.find('.marker_detail').outerWidth()- marker_element.width()));
-                            marker_element.find('.arrow-down').css('right', 10);
-
-                            if(top < 0){
-                                marker_element.find('.marker_detail').addClass('inverted');
-                                marker_element.find('.marker_detail').css('height', height);
-                                marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
-                            }
-
-                        }else if(top < 0){
-                            marker_element.find('.marker_detail').addClass('inverted');
-                            marker_element.find('.marker_detail').css('height', height);
-                            marker_element.find('.arrow-down').removeClass('arrow-down').addClass('arrow-up');
-
-                        }
-                    });
-
-                    $('#' + routes[i].markers[j].jqueryId).mouseout(function() {
-                        var marker_element = $(this);
-                        marker_element.find('.marker_detail').hide();
-                    });
-                }
-            }
-
+            $('#' + routes[routeIndex].markers[j].jqueryId).mouseout(function() {
+                var marker_element = $(this);
+                marker_element.find('.marker_detail').hide();
+            });
         }
 
         var mapOptionsRouteDetail = {
@@ -833,6 +819,8 @@ function showAllRoutes() {
 function showRouteDetail(routeIndex){
     if (!paintingRoutes) {
 
+        stopLatestPictures();
+
         var markers = routes[routeIndex].markers;
         var bounds = new google.maps.LatLngBounds();
         for(i=0;i<markers.length;i++) {
@@ -840,6 +828,20 @@ function showRouteDetail(routeIndex){
         }
 
         map.fitBounds(bounds);
+
+        for (var i=0; i<routes.length; i++) {
+            if (i != routeIndex) {
+
+                for (var j=0; j<routes[i].lines.length; j++) {
+                    routes[i].lines[j].setMap(null);
+                }
+
+                for (var j=0; j<routes[i].markers.length; j++) {
+                    routes[i].markers[j].setMap(null);
+                }
+            }
+
+        }
 
         paintOneRoute(routeIndex);
 
