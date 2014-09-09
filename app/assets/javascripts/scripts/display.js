@@ -100,8 +100,12 @@ function init() {
         showDashboard();
     }
 
+    var xBoundary = screen.width - $('#news-feed').outerWidth() - 16;
+    console.log(xBoundary)
+
     $('#news-feed').draggable({
-        containment: "document"
+        axis: 'x',
+        containment: [10, 10, xBoundary, 300]
     });
 
     $('#latest-pic').draggable({
@@ -437,7 +441,6 @@ function launchApp() {
         }else{
             showElements = true;
             loadRoutes();
-            $('header').fadeIn(1000);
             $('#news-feed').css('height', $('#map-canvas').height() - 100);
             $('#news-feed').fadeIn(1000);
             $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
@@ -757,7 +760,9 @@ function showAllRoutes() {
 
 		showLatestPictures();
 
+        $('#show-all-routes').hide();
         $('#influencer-picture').hide();
+        $('#news-feed').show();
 
         for (var i=0; i<tempRoute.length; i++) {
             tempRoute[i].setMap(null);
@@ -832,6 +837,8 @@ function showRouteDetail(routeIndex){
     if (!paintingRoutes) {
         paintOneRoute(routeIndex);
 
+        $('#show-all-routes').show();
+        $('#news-feed').hide();
         stopLatestPictures();
 
         $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
@@ -871,7 +878,7 @@ function updatePictureDetails(post) {
         }
     }, 10);
 
-    $('#picture-gallery .post-author').html(post.author_nickname);
+    $('#picture-gallery .post-author').html('@' + post.author_nickname);
     $('#picture-gallery p').html(post.caption);
     $('#marker-picture').attr('src', "");
     $('#marker-picture').attr('src', post.url_normal);
@@ -1101,7 +1108,7 @@ function userUpdatePictureDetails(post) {
         }
     }, 10);
 
-    $('#user-picture-gallery .post-author').html(post.author_nickname);
+    $('#user-picture-gallery .post-author').html('@' + post.author_nickname);
     $('#user-picture-gallery p').html(post.caption);
     $('#user-marker-picture').attr('src', "");
     $('#user-marker-picture').attr('src', post.url_normal);
