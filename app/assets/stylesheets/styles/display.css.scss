@@ -171,13 +171,18 @@ a.desktop {
 }
 
 #show-all-routes {
-  bottom: 1.3em;
   color: white;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 14px;
   position: absolute;
   right: 1.6em;
+  vertical-align: middle;
+  top: 1.3em;
   z-index: 99;
+
+  .icon{
+    font-size: 16px;
+  }
 }
 
 #map-canvas {
@@ -546,7 +551,6 @@ a.desktop {
 
 #news-feed {
   background: transparent;
-  cursor: move;
   display: none;
   font-size: 0px;
   position: absolute;
@@ -558,6 +562,7 @@ a.desktop {
   .news-feed-header{    ;
     box-sizing: border-box;
     color: #A6A7AA;
+    cursor: move;
     font-size: 1.5em;
     font-weight: 700;
     margin: 0px;
@@ -672,7 +677,7 @@ a.desktop {
 
 #news-feed-lower{
   box-sizing: border-box;
-  padding: 0px 10px;
+  padding: 0px 6px;
 }
 
 #dashboard {
@@ -683,9 +688,14 @@ a.desktop {
   padding: 5px;
   margin: 10px;
 
-  td{
-    box-sizing: border-box;
-    width: 30%;
+  table{
+    border-collapse: separate;
+    border-spacing: 6px;
+
+    td{
+      box-sizing: border-box;
+      width: 30%;
+    }
   }
 
   .dashboard-element {
@@ -701,9 +711,9 @@ a.desktop {
 
     #instagram-logout {
       cursor: pointer;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 300;
-      margin-top: 2px;
+      margin-top: 2.5px;
       text-decoration: underline;
     }
 
@@ -719,13 +729,26 @@ a.desktop {
     width: 100%;
   }
 
-  .user-element {
+  .user-element:first-child{
+    cursor: default;
+  }
 
+  .user-element {
+    border: 1px solid #A6A7AA;
+    border-radius: 5px;
     cursor: pointer;
     height: 50px;
     vertical-align: middle;
     text-align: center;
+
+    .icon{
+      color: #033060;
+      display: inline-block;
+      margin-top: 4px;
+    }
   }
+
+
 }
 
 /** marker animado **/

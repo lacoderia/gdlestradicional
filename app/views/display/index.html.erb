@@ -1,6 +1,6 @@
 <div id="map_container">
   <div id="overlay"></div>
-  <div id="show-all-routes" onclick="showAllRoutes()" style="display: none;"><span class="icon-uniE607" title="Mostrar todas las rutas"></span></div>
+  <div id="show-all-routes" onclick="showAllRoutes()" style="display: none;">Regresar <span class="icon icon-uniE603" title="Mostrar todas las rutas"></span></div>
   <div id="map-canvas"></div>
   <div id="bottle">
     <img src="/assets/bottle_631.png" alt="José Cuervo Tradicional">
@@ -72,17 +72,17 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="user-element">
+                  <td class="user-element" title="Puntos">
                     <div id="user-points"></div>
-                    <div>Puntos</div>
+                    <div><span class="icon icon-uniE60A"></span></div>
                   </td>
-                  <td class="user-element" onclick="showUserPictures()">
+                  <td class="user-element" onclick="showUserPictures()" title="Fotos">
                     <div id="user-photos"></div>
-                    <div>Fotos</div>
+                    <div><span class="icon icon-uniE608"></span></div>
                   </td>
-                  <td class="user-element"onclick="showInviteModal()">
+                  <td class="user-element"onclick="showInviteModal()" title="Invitaciones">
                     <div id="user-invites"></div>
-                    <div>Invitaciones</div>
+                    <div><span class="icon icon-uniE609"></span></div>
                   </td>
                 </tr>
               </table>
