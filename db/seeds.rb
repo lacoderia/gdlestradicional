@@ -9,19 +9,73 @@
 
 Util.create(next_min_id: '')
 
-ruta1 = Route.create(name:'Ruta 1', description:'Ruta 1', active:true)
-ruta2 = Route.create(name:'Ruta 2', description:'Ruta de prueba 2', active:true)
+fresca = Location.create(name:'La Fresca', description:'Desayuna', lat:20.701426, long:-103.377358)
+anitali = Location.create(name:'Anita Li', description:'Come', lat:20.6717973, long:-103.3917332)
+teteria = Location.create(name:'La Tetería', description:'Pasa la tarde', lat:20.6718647, long:-103.362534)
+lula = Location.create(name:'Lula Bistro', description:'Cena', lat:20.6699302, long:-103.3910036)
+clarum = Location.create(name:'Hotel Clarum', description:'Pre', lat:20.6645024, long:-103.4022445)
+ilatina = Location.create(name:'La I Latina', description:'De fiesta', lat:20.6719689, long:-103.3923085)
+tortatono = Location.create(name:'Tortas Toño', description:'Recupérate', lat:20.696403, long:-103.390355)
+burritos = Location.create(name:'Burritos Hospital Sta María Chapalita', description:'Botanea', lat:20.6671494, long:-103.4089874)
+kukurucho = Location.create(name:'Los Kukuruchos', description:'Descubre', lat:20.6586665, long:-103.3983908)
+chapalita = Location.create(name:'La Glorieta Chapalita', description:'Captura un momento', lat:20.6663616, long:-103.4026873)
+cafebarra= Location.create(name:'Café Barra', description:'Desayuna', lat:20.6985765, long:-103.3825064)
+cortez = Location.create(name:'Cortez', description:'Come', lat:20.7003178, long:-103.3754092)
+saopaulo = Location.create(name:'Punto Sao Paulo', description:'Pasa la tarde', lat:20.7023301, long:-103.3763695)
+olio = Location.create(name:'Olio Bistro', description:'Cena', lat:20.7019898, long:-103.3763877)
+lamar = Location.create(name:'La Mar', description:'Pre', lat:20.6908082, long:-103.3867013)
+figueroa = Location.create(name:'La Figueroa', description:'De fiesta', lat:20.6922206, long:-103.3864861)
+reddy = Location.create(name:'Reddy Sandwiches', description:'Botanea', lat:20.693446, long:-103.384015)
+colmos = Location.create(name:'Los Colmos', description:'Cuídate', lat:20.707669, long:-103.391053)
+mirilla = Location.create(name:'La Mirilla', description:'Descubre', lat:20.6997098, long:-103.3826046)
+montevideo = Location.create(name:'Esculturas Montevideo', description:'Captura un momento', lat:20.6960182, long:-103.3909996)
+cafeto = Location.create(name:'Cafeto', description:'Desayuna', lat:20.7106007, long:-103.4150366)
+otates = Location.create(name:'Los Otates', description:'Come', lat:20.6234029, long:-103.421515)
+docena = Location.create(name:'La Docena', description:'Cena', lat:20.7095114, long:-103.4129262)
+reyes = Location.create(name:'Reyes Cantina', description:'Pre', lat:20.712426, long:-103.4096074)
+vango = Location.create(name:'Vango', description:'De fiesta', lat:20.7099639, long:-103.4111881)
+santomar = Location.create(name:'Santo Mar', description:'Recupérate', lat:20.7096763, long:-103.413105)
+monkeybros = Location.create(name:'Monkey Brothers', description:'Botanea', lat:20.7082329, long:-103.4151946)
+puntosurf = Location.create(name:'Punto Surf', description:'Cuídate', lat:20.7088411, long:-103.4064087)
+curroponcho = Location.create(name:'Curro y Poncho', description:'Descubre', lat:20.7094204, long:-103.4146526)
+andares = Location.create(name:'Paseo Andares', description:'Captura un momento', lat:20.7105594, long:-103.4119463)
 
-loc10 = Location.create(name:'La Fresca', description:'Desayuna', lat:20.701426, long:-103.377358, route_id: ruta1.id)
-loc11 = Location.create(name:'Anita Li', description:'Come', lat:20.6717973, long:-103.3917332, route_id: ruta1.id)
-loc12 = Location.create(name:'La Tetería', description:'Pasa la tarde', lat:20.6718647, long:-103.362534, route_id: ruta1.id)
-loc13 = Location.create(name:'Lula Bistro', description:'Cena', lat:20.6699302, long:-103.3910036, route_id: ruta1.id)
-loc14 = Location.create(name:'Hotel Clarum', description:'Pre', lat:20.6645024, long:-103.4022445, route_id: ruta1.id)
-loc15 = Location.create(name:'La I Latina', description:'De fiesta', lat:20.6719689, long:-103.3923085, route_id: ruta1.id)
-loc16 = Location.create(name:'Tortas Toño', description:'Recupérate', lat:20.696403, long:-103.390355, route_id: ruta1.id)
-loc17 = Location.create(name:'Burritos Hospital Sta María Chapalita', description:'Botanea', lat:20.6671494, long:-103.4089874, route_id: ruta1.id)
-loc18 = Location.create(name:'Los Kukuruchos', description:'Descubre', lat:20.6586665, long:-103.3983908, route_id: ruta1.id)
-loc19 = Location.create(name:'La Glorieta Chapalita', description:'Captura un momento', lat:20.6663616, long:-103.4026873, route_id: ruta1.id)
+#rutapr1 = Route.create(name:'Ruta Suro', description:'Ruta Suro', active:true)
+#rutapr2 = Route.create(name:'Ruta Jis', description:'Ruta Jis', active:true)
+ruta1 = Route.create(name:'Ruta 1', description:'Ruta 1', active:true)
+ruta1.locations << fresca
+ruta1.locations << anitali
+ruta1.locations << teteria
+ruta1.locations << lula
+ruta1.locations << clarum
+ruta1.locations << ilatina
+ruta1.locations << tortatono
+ruta1.locations << burritos
+ruta1.locations << kukurucho
+ruta1.locations << chapalita
+ruta2 = Route.create(name:'Ruta 2', description:'Ruta 2', active:true)
+ruta2.locations << cafebarra
+ruta2.locations << cortez
+ruta2.locations << saopaulo
+ruta2.locations << olio
+ruta2.locations << lamar
+ruta2.locations << figueroa
+ruta2.locations << tortatono
+ruta2.locations << reddy
+ruta2.locations << colmos
+ruta2.locations << mirilla
+ruta2.locations << montevideo
+ruta3 = Route.create(name:'Ruta 3', description:'Ruta 3', active:true)
+ruta3.locations << cafeto
+ruta3.locations << otates
+ruta3.locations << docena
+ruta3.locations << reyes
+ruta3.locations << vango
+ruta3.locations << santomar
+ruta3.locations << monkeybros
+ruta3.locations << puntosurf
+ruta3.locations << curroponcho
+ruta3.locations << andares
 
 
 photo1 = Photo.create(instagram_id:'786286069276426306_4290975', caption:'Mykonos in Tlaquepaque #scouting #gdlestradicional #museum #brothers #lovemyjob #youbetterwork', author_id:'4290975', author_nickname:'paulorendain', lat:20.68734075, long:-103.264199421, url_low:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_a.jpg', url_thumb:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_s.jpg', url_normal:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_n.jpg')
