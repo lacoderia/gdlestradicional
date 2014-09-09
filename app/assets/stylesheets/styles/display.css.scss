@@ -26,6 +26,30 @@ a.desktop {
   }
 }
 
+.header{
+  background: #031c3c; /* Old browsers */
+  font-size: 0px;
+  padding: 0;
+  width: 100%;
+  z-index: 200;
+
+  background: #002d61; /* Old browsers */
+  background: -moz-linear-gradient(top,  #002d61 0%, #022c5e 50%, #031c3c 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#002d61), color-stop(50%,#022c5e), color-stop(100%,#031c3c)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #002d61 0%,#022c5e 50%,#031c3c 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #002d61 0%,#022c5e 50%,#031c3c 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #002d61 0%,#022c5e 50%,#031c3c 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #002d61 0%,#022c5e 50%,#031c3c 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002d61', endColorstr='#031c3c',GradientType=0 ); /* IE6-9 */
+
+  img.logo-cuervo{
+    max-width: 47px;
+    margin: 0;
+    width: 100%;
+  }
+
+}
+
 #intro, #invites, #mail-form {
   display: block;
   position: fixed;
@@ -166,12 +190,8 @@ a.desktop {
   background-color: rgba(0,0,0,0.5); /*dim the background*/
 }
 
-#map-container {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+#map_container {
+  height: 100%;
 }
 
 #show-all-routes {
@@ -184,8 +204,8 @@ a.desktop {
 
 #map-canvas {
   position: absolute;
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 
 .marker{
@@ -531,20 +551,38 @@ a.desktop {
 }
 
 #news-feed {
-  background-color: transparent;
+  background: transparent;
   cursor: move;
   display: none;
+  font-size: 0px;
   position: absolute;
-  top: 5%;
-  right: 5%;
-  width: 280px;
+  top: 16px;
+  right: 0px;
   height: 80%;
+  width: 300px;
+
+  .news-feed-header{    ;
+    box-sizing: border-box;
+    color: #A6A7AA;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 0px;
+    padding: 0px;
+    text-transform: uppercase;
+
+    img.logo-gdl-tradicional{
+      margin: 0;
+      width: 100%;
+    }
+
+  }
+
 
   .social-networks-icons{
     display: inline-block;
     font-size: 18px;
     vertical-align: top;
-    width: 8%;
+    width: 40px;
 
     ul{
       list-style: none;
@@ -563,11 +601,60 @@ a.desktop {
   }
 
   .news-feed-canvas{
-    background-color: white;
+    background: #031c3c; /* Old browsers */
+    background: white;
     display: inline-block;
-    margin-right: 1%;
     vertical-align: top;
-    width: 90%;
+    width: 250px;
+
+    background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    a.button{
+      border-bottom: 1px solid #A6A7AA;
+      color: #A6A7AA;
+      display: block;
+      margin: 0px auto;
+      padding: 0.8em 0.5em 0.9em;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      width: 80%;
+    }
+
+    a.button:last-child{
+      border-bottom: 1px solid #A6A7AA;
+      margin-bottom: 16px;
+    }
+
+    .tribute{
+      font-size: 20px;
+      font-weight: 700;
+      text-align: left !important;
+
+      span{
+        display: inline-block;
+        margin-left: 5%;
+        vertical-align: top;
+        width: 65%;
+      }
+
+      img{
+        display: inline-block;
+        max-width: 50px;
+        vertical-align: top;
+        width: 30%;
+      }
+    }
+
+    #news-feed-upper{
+      font-size: 16px;
+    }
   }
 }
 
@@ -582,6 +669,7 @@ a.desktop {
   display: none;
   position: absolute;
   left: -40px;
+  width: 22%;
 
   img{
     max-width: 300px;

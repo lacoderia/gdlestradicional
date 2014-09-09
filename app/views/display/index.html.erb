@@ -1,6 +1,9 @@
 <div id="map_container">
+  <header class="header" style="display: none;">
+    <img src="/assets/logo_cuervo.png" alt="Cuervo" class="logo-cuervo">
+  </header>
   <div id="overlay"></div>
-  <div id="show-all-routes" onclick="showAllRoutes()">MOSTRAR TODAS LAS RUTAS</div>
+  <div id="show-all-routes" onclick="showAllRoutes()" style="display: none;">MOSTRAR TODAS LAS RUTAS</div>
   <div id="map-canvas"></div>
   <div id="bottle">
     <img src="/assets/bottle_631.png" alt="José Cuervo Tradicional">
@@ -53,10 +56,15 @@
 
   <div id="news-feed">
     <div class="news-feed-canvas">
+      <div class="news-feed-header"r>
+        <img src="/assets/logo.png" alt="GDL Tradicional" class="logo-gdl-tradicional">
+      </div>
         <div id="news-feed-upper">
-          <div>HEADER</div>
           <div id="user-div">
-            <div id="login-btn"><a href="#" onclick="login()">PARTICIPA</a></div>
+            <div id="login-btn">
+              <a class="button tribute" href="#" title="Únete al homenaje" onclick=""><img src="/assets/logo_cuervo.png" alt="Cuervo tradicional"><span>Únete al homenaje</span></a>
+              <a class="button" href="#" title="Participa" onclick="login()">Participa</a>
+            </div>
             <div id="dashboard">
               <div class="dashboard-element-pic"><img /></div>
               <div class="dashboard-element">
@@ -68,7 +76,6 @@
               <div class="user-element" onclick="showInviteModal()"><span id="user-invites"></span><br/>Invitaciones</div>
             </div>
           </div>
-          <div>¿Qué dice GDL?</div>
         </div>
         <div id="news-feed-lower">
           <a class="twitter-timeline" href="https://twitter.com/hashtag/gdlestradicional" data-widget-id="505100682592919552"></a>
@@ -88,7 +95,7 @@
 
 <div id="intro">
   <a class="desktop" onclick='launchApp()'>
-    <img src="/assets/img-bkg-button.png" alt="Entrar a Guadalajara es tradicional">
+    <img src="/assets/logo.png" alt="Entrar a Guadalajara es Tradicional">
   </a>
 </div>
 

@@ -39,6 +39,7 @@ function init() {
 				}
     });
 
+
     $('#invites').click(function(event){
         if(event.target.id == 'invites'){
             hideInviteModal();
@@ -70,7 +71,7 @@ function init() {
     var styles = [
         {
             stylers: [
-                { hue: "#00ffe6" },
+                { hue: "#033060" },
                 { saturation: -20 }
             ]
         },{
@@ -134,16 +135,16 @@ function init() {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
         var rectangle = new google.maps.Rectangle({
-            strokeColor: '#A6A7AA​',
+            strokeColor: '#033060​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#A6A7AA​',
-            fillOpacity: 0.5,
+            fillColor: '#033060​',
+            fillOpacity: 0.6,
             clickable: false,
             map: map,
             bounds: new google.maps.LatLngBounds(
-                new google.maps.LatLng(20.751853, -103.483541),
-                new google.maps.LatLng(20.507659, -103.146741)
+                new google.maps.LatLng(20.787138, -103.518747),
+                new google.maps.LatLng(20.544287, -103.186411)
             )
         });
 
@@ -439,6 +440,7 @@ function launchApp() {
         }else{
             showElements = true;
             loadRoutes();
+            $('header').fadeIn(1000);
             $('#news-feed').css('height', $('#map-canvas').height() - 100);
             $('#news-feed').fadeIn(1000);
             $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
@@ -484,7 +486,7 @@ function loadRoutes() {
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
                                 '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                                '<img src="/assets/marker_azul.png"/>' +
                                 '</div>'
                         });
 
@@ -607,7 +609,8 @@ function paintOneLine(routeIndex, lineIndex) {
 function showAllRoutes() {
     if (!paintingRoutes) {
 
-		showLatestPictures();
+        $('#show-all-routes').hide();
+	    showLatestPictures();		
 
         $('#influencer-picture').hide();
 
@@ -630,9 +633,23 @@ function showAllRoutes() {
                 var markerId = 'marker_' + i + '_' + j;
 
                 if (j == 0) {
+                    var markerId = 'first_marker_' + i + '_' + j;
+                    var marker = new RichMarker({
+                        position: routeCoordinate,
+                        map: map,
+                        flat: true,
+                        anchor: new google.maps.Size(-20, -70),
+                        draggable: false,
+                        routeIndex: i,
+                        jqueryId: markerId,
+                        content: '<div id="' + markerId + '" class="first-marker">' +
+                            '<img src="/assets/marker_azul.png"/>' +
+                            '<div class="route-name">' + routes[i].name + '</div>' +
+                            '</div>'
+                    });
                     var content = '<div id="' + markerId + '" class="first-marker marker">' +
                         '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                        '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                        '<img src="/assets/marker_azul.png"/>' +
                         '</div>';
 
                     var anchor = new google.maps.Size(-20, -70);
@@ -677,7 +694,8 @@ function showAllRoutes() {
 function showRouteDetail(routeIndex){
     if (!paintingRoutes){
 
-				stopLatestPictures();
+		stopLatestPictures();
+        $('#show-all-routes').show();
 
         $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
         $('#influencer-picture').fadeIn(1000);
