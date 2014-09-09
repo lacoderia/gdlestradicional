@@ -1,5 +1,5 @@
 class Location < ActiveRecord::Base
-	belongs_to :route
+	has_and_belongs_to_many :routes
 	has_many :photos
 
 	geocoded_by :address, :latitude  => :lat, :longitude => :long

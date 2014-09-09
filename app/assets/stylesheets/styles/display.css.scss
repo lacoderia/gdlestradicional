@@ -26,30 +26,6 @@ a.desktop {
   }
 }
 
-.header{
-  background: #031c3c; /* Old browsers */
-  font-size: 0px;
-  padding: 0;
-  width: 100%;
-  z-index: 200;
-
-  background: #002d61; /* Old browsers */
-  background: -moz-linear-gradient(top,  #002d61 0%, #022c5e 50%, #031c3c 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#002d61), color-stop(50%,#022c5e), color-stop(100%,#031c3c)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #002d61 0%,#022c5e 50%,#031c3c 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #002d61 0%,#022c5e 50%,#031c3c 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #002d61 0%,#022c5e 50%,#031c3c 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #002d61 0%,#022c5e 50%,#031c3c 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002d61', endColorstr='#031c3c',GradientType=0 ); /* IE6-9 */
-
-  img.logo-cuervo{
-    max-width: 47px;
-    margin: 0;
-    width: 100%;
-  }
-
-}
-
 #intro, #invites, #mail-form {
   display: block;
   position: fixed;
@@ -68,7 +44,7 @@ a.desktop {
 
   .message{
     background-color: white;
-    border: 3px solid #01BeC7;
+    border: 3px solid #033060;
     border-radius: 5px;
     height: 160px;
     left: 50%;
@@ -108,7 +84,7 @@ a.desktop {
 
   .message{
     background-color: white;
-    border: 3px solid #01BeC7;
+    border: 3px solid #033060;
     border-radius: 5px;
     height: 120px;
     left: 50%;
@@ -195,10 +171,12 @@ a.desktop {
 }
 
 #show-all-routes {
-  background-color: white;
+  bottom: 3.5em;
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
   position: absolute;
-  top: 1em;
-  right: 1em;
+  right: 0.1em;
   z-index: 99;
 }
 
@@ -387,7 +365,7 @@ a.desktop {
   display: inline-block;
   position:relative;
   background-color: #FFF;
-  border: 6px solid #01BeC7;
+  border: 6px solid #033060;
   border-radius: 5px;
   height: 330px;
   width: 600px;
@@ -417,12 +395,12 @@ a.desktop {
     z-index: 1;
 
     .post-author{
-      color: #01BeC7;
+      color: #A6A7AA;
       font-size: 24px;
       font-weight: bolder;
       height: 10px;
       display: block;
-      padding: 1em;
+      padding: 1em 1em 1em 0.6em;
     }
 
     .post-like {
@@ -503,8 +481,9 @@ a.desktop {
   cursor: move;
   display: none;
   position: absolute;
-  top: 5%;
-  left: 50%;
+  bottom: 1.8em;
+  right: 3em;
+
 
   width: 100px;
   height: 100px;
@@ -552,7 +531,7 @@ a.desktop {
   display: inline-block;
   position: relative;
   background-color: #FFF;
-  border: 6px solid #01BeC7;
+  border: 6px solid #033060;
   border-radius: 5px;
   height: 345px;
   width: 420px;
@@ -572,7 +551,7 @@ a.desktop {
   font-size: 0px;
   position: absolute;
   top: 16px;
-  right: 0px;
+  right: 20px;
   height: 80%;
   width: 300px;
 
