@@ -7,7 +7,8 @@ $(document).ready(
 );
 
 var map = null;
-var mapCenter = null;
+var rectangle = null;
+var mapCenter = new google.maps.LatLng(20.69, -103.40);
 var showElements = false;
 var showAllRoutesZoom = false;
 var paintingRoutes = true;
@@ -22,9 +23,57 @@ var tweet_guid = 0;
 var mailSent = false;
 var intervalTimeout;
 
+var styles = [
+    {
+        stylers: [
+            { hue: "#00ffe6" },
+            { saturation: -20 }
+        ]
+    },{
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [
+            { lightness: 100 },
+            { visibility: "simplified" }
+        ]
+    },{
+        featureType: "road",
+        elementType: "labels",
+        stylers: [
+            { visibility: "on" }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [
+            { "visibility": "off" }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+            { "visibility": "simplified" }
+        ]
+    }
+];
+
+var mapOptions = {
+    zoom: 11,
+    center: mapCenter,
+    minZoom: 11,
+    maxZoom: 19,
+    disableDefaultUI: true,
+    disableDoubleClickZoom: true,
+    scrollwheel: false,
+    draggable: false,
+    styles: styles,
+    zoomControl: false
+}
+
 function init() {
 
-    mapCenter = new google.maps.LatLng(20.666735, -103.350335);
     var headerHeight = $('header').outerHeight();
 
     var mapHeight = $(window).height() - headerHeight;
@@ -74,81 +123,33 @@ function init() {
         window.addEventListener('deviceorientation', devOrientHandler, false);
     }
 
-    var styles = [
-        {
-            stylers: [
-                { hue: "#00ffe6" },
-                { saturation: -20 }
-            ]
-        },{
-            featureType: "road",
-            elementType: "geometry",
-            stylers: [
-                { lightness: 100 },
-                { visibility: "simplified" }
-            ]
-        },{
-            featureType: "road",
-            elementType: "labels",
-            stylers: [
-                { visibility: "on" }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "labels",
-            "stylers": [
-                { "visibility": "off" }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "geometry",
-            "stylers": [
-                { "visibility": "simplified" }
-            ]
-        }
-    ];
+    getLatestPictures();
 
-    var mapOptions = {
-        zoom: 13,
-        center: mapCenter,
-        minZoom: 13,
-        maxZoom: 19,
-        disableDefaultUI: true,
-        scrollwheel: false,
-        disableDoubleClickZoom: true,
-        draggable: false,
-        styles: styles
-    }
-
-		getLatestPictures();
-
-		latestPicturesPositions.push(new google.maps.LatLng(20.638339,-103.364336)); 
-		latestPicturesPositions.push(new google.maps.LatLng(20.634339,-103.338336));
-		latestPicturesPositions.push(new google.maps.LatLng(20.689000,-103.368336)); 
-		latestPicturesPositions.push(new google.maps.LatLng(20.636339,-103.355336)); 
-		latestPicturesPositions.push(new google.maps.LatLng(20.685339,-103.332336));
-		latestPicturesPositions.push(new google.maps.LatLng(20.686339,-103.362336));
-		latestPicturesPositions.push(new google.maps.LatLng(20.686339,-103.342336));
-		latestPicturesPositions.push(new google.maps.LatLng(20.634339,-103.342336));
-		latestPicturesPositions.push(new google.maps.LatLng(20.689339,-103.342336));
-		latestPicturesPositions.push(new google.maps.LatLng(20.686339,-103.362336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.638339,-103.364336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.634339,-103.338336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.689000,-103.368336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.636339,-103.355336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.685339,-103.332336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.686339,-103.362336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.686339,-103.342336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.634339,-103.342336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.689339,-103.342336));
+    latestPicturesPositions.push(new google.maps.LatLng(20.686339,-103.362336));
 
     try {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        var rectangle = new google.maps.Rectangle({
-            strokeColor: '#11384C',
+        rectangle = new google.maps.Rectangle({
+            strokeColor: '#033060​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#13435B',
+            fillColor: '#033060​',
             fillOpacity: 0.6,
             clickable: false,
             map: map,
             bounds: new google.maps.LatLngBounds(
-                new google.maps.LatLng(20.751853, -103.483541),
-                new google.maps.LatLng(20.507659, -103.146741)
+                new google.maps.LatLng(21.022869, -104.182047),
+                new google.maps.LatLng(20.274966, -102.450327)
             )
         });
 
@@ -183,12 +184,13 @@ function init() {
                     '</div>';
             }
 
+            var position = new google.maps.LatLng(data.lat, data.long);
+
             var marker = new RichMarker({
                 tweet_guid: tweet_guid,
-                position: new google.maps.LatLng(data.location[0], data.location[1]),
+                position: position,
                 map: map,
                 flat: true,
-                anchor: new google.maps.Size(-20, -70),
                 draggable: false,
                 content: content
             });
@@ -407,12 +409,12 @@ function launchApp() {
             }else{
                 showElements = true;
                 loadRoutes();
-                showLatestPictures();
+                //showLatestPictures();
             }
         }else{
             showElements = true;
             loadRoutes();
-            showLatestPictures();
+            //showLatestPictures();
         }
     });
 }
@@ -428,10 +430,6 @@ function loadRoutes() {
             for (var i=0; i < routes.length; i++) {
 
                 $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
-                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
-                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
-                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
-                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
 
                 routes[i].markers = new Array();
                 routes[i].lines = new Array();
@@ -443,21 +441,21 @@ function loadRoutes() {
                 };
 
                 for(var j = 0; j < routes[i].locations.length; j++){
-                    var animationType = undefined;
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
 
+                    var markerId = 'marker_' + i + '_' + j;
                     if (j == 0) {
-                        var markerId = 'first_marker_' + i + '_' + j;
+
                         var marker = new RichMarker({
                             position: routeCoordinate,
                             map: map,
                             flat: true,
-                            anchor: new google.maps.Size(-20, -70),
+                            anchor: new google.maps.Size(-16, -44),
                             draggable: false,
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker">' +
-                                '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                                '<img src="/assets/marker_azul.png"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
@@ -468,26 +466,25 @@ function loadRoutes() {
                         });
 
                     } else {
-                        var markerId = 'secondary_marker_' + i + '_' + j;
 
-												// Si no es el primer punto pintamos un cuadro
-												var marker = new RichMarker({
-														position: routeCoordinate,
-														map: null,
-														draggable: false,
-														flat: true,
-														anchor: new google.maps.Size(-7, -7),
-														routeIndex: i,
-														jqueryId: markerId,
-														content: '<div id="' + markerId + '" class="secondary-marker">' +
-																		'<img src="/assets/cuadrito.png"/>' +
-																'</div>'
-												});
+                        // Si no es el primer punto pintamos un cuadro
+                        var marker = new RichMarker({
+                            position: routeCoordinate,
+                            map: null,
+                            draggable: false,
+                            flat: true,
+                            anchor: new google.maps.Size(-7, -7),
+                            routeIndex: i,
+                            jqueryId: markerId,
+                            content: '<div id="' + markerId + '" class="secondary-marker">' +
+                                '<img src="/assets/cuadrito.png"/>' +
+                                '</div>'
+                        });
 
-												google.maps.event.addListener(marker, 'ready', function() {
-														$('#' + this.jqueryId).hide();
-														$('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
-												});
+                        google.maps.event.addListener(marker, 'ready', function() {
+                            $('#' + this.jqueryId).hide();
+                            $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                        });
                     }
 
 
@@ -499,33 +496,33 @@ function loadRoutes() {
 
                     if (j+1 < routes[i].locations.length) {
 
-                        var stepLat = (routes[i].locations[j+1].lat - routes[i].locations[j].lat)/10;
-												var stepLong = (routes[i].locations[j+1].long - routes[i].locations[j].long)/10;
+                        var stepLat = (routes[i].locations[j+1].lat - routes[i].locations[j].lat)/5;
+                        var stepLong = (routes[i].locations[j+1].long - routes[i].locations[j].long)/5;
 
-												for(var stepIx = 1; stepIx <= 10; stepIx++){
-													
-													var lineArray = [							 
-														new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long),
-														new google.maps.LatLng(routes[i].locations[j].lat + (stepLat*stepIx), routes[i].locations[j].long + (stepLong*stepIx))
-													];
+                        for(var stepIx = 1; stepIx <= 5; stepIx++){
 
-													var line = new google.maps.Polyline({
-														path: lineArray,
-														strokeOpacity: 0,
-														icons: [{
-																icon: lineSymbol,
-																offset: '0',
-																repeat: '9px'
-														}],
-														clickable: false,
-														geodesic: true,
-														map: null
+                            var lineArray = [
+                                new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long),
+                                new google.maps.LatLng(routes[i].locations[j].lat + (stepLat*stepIx), routes[i].locations[j].long + (stepLong*stepIx))
+                            ];
 
-													});
-												
-													routes[i].lines.push(line);
+                            var line = new google.maps.Polyline({
+                                path: lineArray,
+                                strokeOpacity: 0,
+                                icons: [{
+                                    icon: lineSymbol,
+                                    offset: '0',
+                                    repeat: '9px'
+                                }],
+                                clickable: false,
+                                geodesic: true,
+                                map: null
 
-												}
+                            });
+
+                            routes[i].lines.push(line);
+
+                        }
                     }
 
                 }
@@ -539,7 +536,7 @@ function loadRoutes() {
                     $.sidr('close', 'sidr');
                 }
             });
-            paintAllRoutes(0);
+            paintAllRoutes();
         },
         error: function(error) {
         }
@@ -547,21 +544,34 @@ function loadRoutes() {
 }
 
 function paintAllRoutes(){
-    paintingRoutes = true;
 
     for (var i=0; i<routes.length; i++) {
-        paintOneRoute(i);
+        if (routes[i].markers[0]) {
+            routes[i].markers[0].setMap(map);
+        }
     }
+
+    paintingRoutes = false;
 
     $('#simple-menu').css('visibility','visible');
 }
 
 function paintOneRoute(routeIndex) {
-    if(routeIndex < routes.length){
+    if(routeIndex < routes.length && !paintingRoutes){
+        paintingRoutes = true;
+
+        for (var j=0; j<routes[routeIndex].lines.length; j++) {
+            routes[routeIndex].lines[j].setMap(null);
+        }
+
+        for (var j=0; j<routes[routeIndex].markers.length; j++) {
+            routes[routeIndex].markers[j].setMap(null);
+        }
+
         paintOneMarker(routeIndex, 0);
         setTimeout(function() {
             paintOneLine(routeIndex, 0);
-        }, 100);
+        }, 50);
     }
 }
 
@@ -570,9 +580,101 @@ function paintOneMarker(routeIndex, markerIndex) {
         routes[routeIndex].markers[markerIndex].setMap(map);
         setTimeout(function(){
             paintOneMarker(routeIndex, markerIndex+1);
-        }, 1000)
+        }, 250)
     } else {
         paintingRoutes = false;
+
+        for (var j=0; j<routes[routeIndex].markers.length; j++) {
+
+            var routeCoordinate = new google.maps.LatLng(routes[routeIndex].locations[j].lat, routes[routeIndex].locations[j].long);
+            var markerId = 'image_marker_' + routeIndex + '_' + j;
+
+            if (routes[routeIndex].locations[j].recent_photo) {
+                var src = routes[routeIndex].locations[j].recent_photo;
+            } else {
+                var src = '/assets/logo_cuervo.png';
+            }
+
+            var marker = new RichMarker({
+                index: j,
+                position: routeCoordinate,
+                map: map,
+                flat: true,
+                anchor: RichMarkerPosition.TOP,
+                draggable: false,
+                id: routes[routeIndex].locations[j].id,
+                jqueryId : markerId,
+                content: '<div class="image-marker my-marker" id="' + markerId + '">' +
+                    '<img src="' + src + '"/>' +
+                    '</div>'
+            });
+
+            google.maps.event.addListener(marker, 'ready', function() {
+                var richMarker = this;
+                $('#' + this.jqueryId).hide();
+                var time = (this.index+1) * 250;
+                $('#' + this.jqueryId).fadeIn(time);
+
+                $('#' + this.jqueryId).click(function(){
+
+                    for (var i=0; i<routes.length; i++) {
+                        for (var j=0; j<routes[i].markers.length; j++) {
+                            if (routes[i].locations[j].id == richMarker.id) {
+                                if (routes[i].locations[j].pictures != undefined) {
+                                    galleryPictures = routes[i].locations[j].pictures;
+                                    showPictureGallery(galleryPictures);
+                                    break;
+                                } else {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "/locations/" + richMarker.id + "/gallery.json",
+                                        data: null,
+                                        dataType: "json",
+                                        success: function(response) {
+                                            for (var i=0; i<routes.length; i++) {
+                                                for (var j = 0; j < routes[i].markers.length; j++) {
+                                                    if (routes[i].locations[j].id == richMarker.id) {
+                                                        routes[i].locations[j].pictures = sortGalleryPictures(response);
+                                                        galleryPictures = routes[i].locations[j].pictures;
+                                                        showPictureGallery(galleryPictures);
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        error: function(error) {
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                });
+            });
+
+            tempRoute.push(marker);
+        }
+
+        for (var j=0; j<routes[routeIndex].markers.length; j++) {
+            google.maps.event.clearListeners(routes[routeIndex].markers[j], 'click');
+        }
+
+        var mapOptionsRouteDetail = {
+            minZoom: 11,
+            maxZoom: 19,
+            disableDefaultUI: true,
+            disableDoubleClickZoom: false,
+            scrollwheel: true,
+            draggable: true,
+            styles: styles,
+            panControl:false,
+            zoomControl:true,
+            zoomControlOptions: {
+                position:google.maps.ControlPosition.RIGHT_BOTTOM
+            }
+        }
+
+        map.setOptions(mapOptionsRouteDetail);
     }
 }
 
@@ -581,7 +683,7 @@ function paintOneLine(routeIndex, lineIndex) {
         routes[routeIndex].lines[lineIndex].setMap(map);
         setTimeout(function(){
             paintOneLine(routeIndex, lineIndex+1);
-        }, 100)
+        }, 50)
     }
 }
 
@@ -589,7 +691,7 @@ function showAllRoutes() {
 
     if(!paintingRoutes){
 
-				showLatestPictures();
+	    //showLatestPictures();
 	
         $('#influencer-picture').hide();
 
@@ -600,50 +702,54 @@ function showAllRoutes() {
 
         for (var i=0; i<routes.length; i++) {
             for (var j=0; j<routes[i].lines.length; j++) {
-                routes[i].lines[j].setMap(map);
+                routes[i].lines[j].setMap(null);
             }
 
             for (var j=0; j<routes[i].markers.length; j++) {
                 routes[i].markers[j].setMap(null);
+                routes[i].markers[j] = [];
 
                 var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
+
+                var markerId = 'marker_' + i + '_' + j;
+
                 if (j == 0) {
-                    var markerId = 'first_marker_' + i + '_' + j;
                     var marker = new RichMarker({
                         position: routeCoordinate,
                         map: map,
                         flat: true,
-                        anchor: new google.maps.Size(-20, -70),
+                        anchor: new google.maps.Size(-15, -42),
                         draggable: false,
                         routeIndex: i,
                         jqueryId: markerId,
-                        content: '<div id="' + markerId + '" class="first-marker">' +
-                            '<img src="/assets/marker_azul_cuadrito.png"/>' +
+                        content: '<div id="' + markerId + '" class="first-marker marker">' +
+                            '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                            '<img src="/assets/marker_azul.png"/>' +
                             '<div class="route-name">' + routes[i].name + '</div>' +
                             '</div>'
                     });
 
-                    google.maps.event.addListener(marker, 'ready', function() {
-                        $('#' + this.jqueryId).hide();
-                        $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
-                    });
                 } else {
-                    var icon = {
-                        url: '/assets/cuadrito.png',
-                        scaledSize: new google.maps.Size(16, 16),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(8, 8)
-                    };
-
-                    var marker = new google.maps.Marker({
+                    var marker = new RichMarker({
                         position: routeCoordinate,
-												animation: google.maps.Animation.DROP,
-                        optimized: false,
-                        icon: icon,
-                        map: map,
-                        routeIndex: i
+                        map: null,
+                        flat: true,
+                        anchor: new google.maps.Size(-7, -7),
+                        draggable: false,
+                        routeIndex: i,
+                        jqueryId: markerId,
+                        content: '<div id="' + markerId + '" class="secondary-marker marker">' +
+                            '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                            '<img src="/assets/cuadrito_gris.png"/>' +
+                            '</div>'
                     });
+
                 }
+
+                google.maps.event.addListener(marker, 'ready', function() {
+                    $('#' + this.jqueryId).hide();
+                    $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+                });
 
                 google.maps.event.addListener(marker, 'click', function() {
                     showRouteDetail(this.routeIndex);
@@ -654,7 +760,8 @@ function showAllRoutes() {
         }
 
         showAllRoutesZoom = true;
-        map.setZoom(13);
+        map.setOptions(mapOptions);
+        map.setZoom(11);
         $.sidr('close', 'sidr');
     }
 
@@ -662,16 +769,7 @@ function showAllRoutes() {
 
 function showRouteDetail(routeIndex){
     if (!paintingRoutes){
-
-				stopLatestPictures();
-
-        $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
-        $('#influencer-picture').fadeIn(1000);
-
-        for (var i=0; i<tempRoute.length; i++) {
-            tempRoute[i].setMap(null);
-        }
-        tempRoute = [];
+        stopLatestPictures();
 
         var markers = routes[routeIndex].markers;
         var bounds = new google.maps.LatLngBounds();
@@ -681,81 +779,8 @@ function showRouteDetail(routeIndex){
 
         map.fitBounds(bounds);
 
-        /*map.setCenter(bounds.getCenter());
-         map.setZoom(getZoomByBounds(map, bounds));*/
-
-        for (var i=0; i<routes.length; i++) {
-            if (i == routeIndex) {
-                for (var j=0; j<routes[i].markers.length; j++) {
-
-                    routes[i].markers[j].setMap(map);
-                    if (routes[i].lines[j]) {
-                        routes[i].lines[j].setMap(map);
-                    }
-
-                    var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-                    var markerId = 'marker_' + i + '_' + j;
-                    var marker = new RichMarker({
-                        index: j,
-                        position: routeCoordinate,
-                        map: map,
-                        flat: true,
-                        anchor: RichMarkerPosition.TOP,
-                        draggable: false,
-                        id: routes[i].locations[j].id,
-                        jqueryId : markerId,
-                        content: '<div class="image-marker my-marker" id="' + markerId + '">' +
-                            '<img src="' + routes[i].locations[j].recent_photo + '"/>' +
-                            '</div>'
-                    });
-
-                    google.maps.event.addListener(marker, 'ready', function() {
-                        var richMarker = this;
-                        $('#' + this.jqueryId).click(function(){
-
-                            for (var i=0; i<routes.length; i++) {
-                                for (var j=0; j<routes[i].markers.length; j++) {
-                                    if (routes[i].locations[j].id == richMarker.id) {
-                                        if (routes[i].locations[j].pictures != undefined) {
-                                            galleryPictures = routes[i].locations[j].pictures;
-                                            showPictureGallery(galleryPictures);
-                                            break;
-                                        } else {
-                                            $.ajax({
-                                                type: "GET",
-                                                url: "/locations/" + richMarker.id + "/gallery.json",
-                                                data: null,
-                                                dataType: "json",
-                                                success: function(response) {
-                                                    for (var i=0; i<routes.length; i++) {
-                                                        for (var j = 0; j < routes[i].markers.length; j++) {
-                                                            if (routes[i].locations[j].id == richMarker.id) {
-                                                                routes[i].locations[j].pictures = sortGalleryPictures(response);
-                                                                galleryPictures = routes[i].locations[j].pictures;
-                                                                showPictureGallery(galleryPictures);
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                error: function(error) {
-                                                }
-                                            });
-                                        }
-                                    }
-                                }
-                            }
-
-                        });
-                    });
-
-                    tempRoute.push(marker);
-                }
-            }
-        }
-
         for (var i=0; i<routes.length; i++) {
             if (i != routeIndex) {
-
                 for (var j=0; j<routes[i].lines.length; j++) {
                     routes[i].lines[j].setMap(null);
                 }
@@ -763,12 +788,21 @@ function showRouteDetail(routeIndex){
                 for (var j=0; j<routes[i].markers.length; j++) {
                     routes[i].markers[j].setMap(null);
                 }
-            } else {
-                for (var j=0; j<routes[i].markers.length; j++) {
-                    google.maps.event.clearListeners(routes[i].markers[j], 'click');
-                }
             }
         }
+
+        paintOneRoute(routeIndex);
+
+        $('#news-feed').hide();
+
+        $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
+        $('#influencer-picture').fadeIn(1000);
+
+        for (var i=0; i<tempRoute.length; i++) {
+            tempRoute[i].setMap(null);
+        }
+        tempRoute = [];
+
     }
 }
 
@@ -859,27 +893,6 @@ function influencerGalleryClick(e) {
         hideInfluencerGallery();
         $("#influencer-video").attr('src','');
     }
-}
-
-function getZoomByBounds( map, bounds ){
-    var MAX_ZOOM = map.mapTypes.get( map.getMapTypeId() ).maxZoom || 21 ;
-    var MIN_ZOOM = map.mapTypes.get( map.getMapTypeId() ).minZoom || 0 ;
-
-    var ne= map.getProjection().fromLatLngToPoint( bounds.getNorthEast() );
-    var sw= map.getProjection().fromLatLngToPoint( bounds.getSouthWest() );
-
-    var worldCoordWidth = Math.abs(ne.x-sw.x);
-    var worldCoordHeight = Math.abs(ne.y-sw.y);
-
-    //Fit padding in pixels
-    var FIT_PAD = 40;
-
-    for( var zoom = MAX_ZOOM; zoom >= MIN_ZOOM; --zoom ){
-        if( worldCoordWidth*(1<<zoom)+2*FIT_PAD < $(map.getDiv()).width() &&
-            worldCoordHeight*(1<<zoom)+2*FIT_PAD < $(map.getDiv()).height() )
-            return zoom;
-    }
-    return 0;
 }
 
 function login() {

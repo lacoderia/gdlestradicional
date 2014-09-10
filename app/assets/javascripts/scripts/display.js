@@ -468,16 +468,16 @@ function loadRoutes() {
                 routes[i].lines = new Array();
 
                 var lineSymbol = {
-									path: 'M 0,-0.5 0,0.5',
-									strokeOpacity: 1,
-									scale: 2.5
-								};
+                    path: 'M 0,-0.5 0,0.5',
+                    strokeOpacity: 1,
+                    scale: 2.5
+                };
 
                 for(var j = 0; j < routes[i].locations.length; j++){
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
 
+                    var markerId = 'marker_' + i + '_' + j;
                     if (j == 0) {
-                        var markerId = 'marker_' + i + '_' + j;
                         var marker = new RichMarker({
                             position: routeCoordinate,
                             map: map,
@@ -509,7 +509,6 @@ function loadRoutes() {
                         });
 
                     } else {
-                        var markerId = 'marker_' + i + '_' + j;
 
                         // Si no es el primer punto pintamos un cuadro
                         var marker = new RichMarker({
@@ -648,7 +647,7 @@ function paintOneMarker(routeIndex, markerIndex) {
             google.maps.event.addListener(marker, 'ready', function() {
                 var richMarker = this;
                 $('#' + this.jqueryId).hide();
-                var time = (this.index+1) * 1000;
+                var time = (this.index+1) * 250;
                 $('#' + this.jqueryId).fadeIn(time);
                 $('#' + this.jqueryId).parent().parent().draggable({
                     stop: function(event, ui) {

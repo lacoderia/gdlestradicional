@@ -250,6 +250,27 @@ header{
   }
 }
 
+.first-marker {
+  display: inline-block;
+  width: 30px;
+  height: 46px;
+  vertical-align: bottom;
+
+  img {
+    width: 30px;
+    height: 46px;
+  }
+}
+
+.secondary-marker {
+
+  img {
+    width: 10px;
+    height: 10px;
+  }
+
+}
+
 .image-marker {
   background-color: white;
   border: 1px solid white;
@@ -349,7 +370,7 @@ a.close-menu{
 
 @media (min-width: 768px) {
   .image-marker {
-    height: 80px;
-    width: 80px;
+    height: 60px;
+    width: 60px;
   }
 }
