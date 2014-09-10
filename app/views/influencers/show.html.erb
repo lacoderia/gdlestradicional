@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @influencer.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @influencer.description %>
+</p>
+
+<p>
+  <strong>Is especial:</strong>
+  <%= @influencer.is_especial %>
+</p>
+
+<p>
+  <strong>Video url:</strong>
+  <%= @influencer.video_url %>
+</p>
+
+<%= link_to 'Edit', edit_influencer_path(@influencer) %> |
+<%= link_to 'Back', influencers_path %>

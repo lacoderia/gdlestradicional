@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :influencers
+
   resources :tweets do
 		member do
 			post 'activate'

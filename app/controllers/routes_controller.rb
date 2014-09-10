@@ -62,7 +62,7 @@ class RoutesController < ApplicationController
   end
 
   def all
-    @routes = Route.where(:active => true).includes(:locations)
+    @routes = Route.where(:active => true)#.includes(:locations)
   end
 
   private
