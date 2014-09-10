@@ -96,6 +96,12 @@ function init() {
         }
     });
 
+    $('#instragram-invite').click(function(event){
+        if(event.target.id == 'instragram-invite'){
+            hideInstragramModal();
+        }
+    });
+
     if ($("#ruby-values").data("user")) {
         user = $("#ruby-values").data("user");
         showDashboard();
@@ -936,11 +942,11 @@ function updatePictureDetails(post) {
     $('#current-picture-id').val(post.id);
 
     if (user) {
-        $('#picture-gallery .post-like').show();
+        $('#picture-gallery .post-like').css('visibility','visible');
         if (hasLiked(post.instagram_id)) {
-            $('#picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
         } else {
-            $('#picture-gallery .post-like').html("<a href='#' onclick='likePhoto(" + post.id + ")'>Me gusta</a>");
+            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-uniE60A'></span></a>");
         }
     }
 }
@@ -965,7 +971,7 @@ function likePhoto(id) {
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
-            $('#picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -982,7 +988,7 @@ function userLikePhoto(id) {
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
-            $('#user-picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
+            $('#user-picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1124,7 +1130,9 @@ function showUserPictures(){
         $('#user-picture-gallery-container').show();
 
         userUpdatePictureDetails(user.photos[0]);
-	}
+	}else{
+        showInstragramModal();
+    }
 }
 
 function userUpdatePictureDetails(post) {
@@ -1240,11 +1248,19 @@ function hideInviteModal(){
     $('#invites').fadeOut(500);
 }
 
+function hideInstragramModal(){
+    $('#instragram-invite').fadeOut(500);
+}
+
+function showInstragramModal(){
+    $('#instragram-invite').fadeIn(500);
+    $('#instragram-invite').find('.close_modal').click(function(){
+        hideInstragramModal();
+    });
+}
+
 function showMailModal(){
     $('#mail-form').fadeIn(500);
-    $('.close_modal').click(function(){
-        hideInviteModal();
-    });
 }
 
 function hideMailModal(){

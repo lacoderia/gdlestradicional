@@ -14,12 +14,12 @@
       <div class="post">
         <div class="bkg-opacity"></div>
         <span class="post-author"></span>
-        <span class="post-like"></span>
         <p></p>
         <div class="navigation">
           <div class="arrow arrow-left" onclick="showPreviousPicture()"> < Anterior</div> |
           <div class="arrow arrow-right" onclick="showNextPicture()">Siguiente > </div>
         </div>
+        <span class="post-like"></span>
       </div>
     </div>
   </div>
@@ -71,18 +71,23 @@
                     <div id="instagram-logout" onclick="logout()">Cerrar sesión</div>
                   </td>
                 </tr>
+              </table>
+              <table>
                 <tr>
                   <td class="user-element" title="Puntos">
                     <div id="user-points"></div>
                     <div><span class="icon icon-uniE60A"></span></div>
+                    <div class="icon-name">Puntos</div>
                   </td>
                   <td class="user-element" onclick="showUserPictures()" title="Fotos">
                     <div id="user-photos"></div>
                     <div><span class="icon icon-uniE608"></span></div>
+                    <div class="icon-name">Fotos</div>
                   </td>
                   <td class="user-element"onclick="showInviteModal()" title="Invitaciones">
                     <div id="user-invites"></div>
                     <div><span class="icon icon-uniE609"></span></div>
+                    <div class="icon-name">Invitaciones</div>
                   </td>
                 </tr>
               </table>
@@ -143,6 +148,15 @@
     </div>
     <div class="success-message" style="display: none;">
       <h3>Gracias, espere un momento y se le redirigirá a GDLesTradicional</h3>
+    </div>
+  </div>
+</div>
+
+<div id="instragram-invite" style="display: none;">
+  <div class="message">
+    <span class="close_modal">x</span>
+    <div class="instragram-invite-message">
+      <h3>Participa compartiendo fotos con el hashtag #GDLesTradicional desde Instagram</h3>
     </div>
   </div>
 </div>
