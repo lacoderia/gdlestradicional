@@ -722,8 +722,6 @@ function showAllRoutes() {
                         draggable: false,
                         routeIndex: i,
                         jqueryId: markerId,
-                        content: '<div id="' + markerId + '" class="first-marker">' +
-                            '<img src="/assets/marker_gris.png"/>' +
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
                             '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
                             '<img src="/assets/marker_azul.png"/>' +
