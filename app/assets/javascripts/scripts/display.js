@@ -612,12 +612,6 @@ function paintOneMarker(routeIndex, markerIndex) {
         routes[routeIndex].markers[markerIndex].setMap(map);
 
         setTimeout(function(){
-            $('#' + routes[routeIndex].markers[markerIndex].jqueryId).mouseout();
-            $('#' + routes[routeIndex].markers[markerIndex].jqueryId).unbind('mouseover mouseout');
-        }, 500);
-
-
-        setTimeout(function(){
             paintOneMarker(routeIndex, markerIndex+1);
         }, 250)
     } else {
