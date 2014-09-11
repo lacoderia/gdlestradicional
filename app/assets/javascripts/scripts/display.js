@@ -462,9 +462,6 @@ function launchApp() {
                 loadRoutes();
                 $('.nav').fadeIn(1000);
                 $('.social-networks-icons').fadeIn(1000);
-                //$('#news-feed').css('height', $('#map-canvas').height() - 100);
-                //$('#news-feed').fadeIn(1000);
-                //$('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
                 $('#bottle').fadeIn(1000);
                 showLatestPictures();
             }
@@ -473,11 +470,13 @@ function launchApp() {
             loadRoutes();
             $('.nav').fadeIn(1000);
             $('.social-networks-icons').fadeIn(1000);
-            //$('#news-feed').css('height', $('#map-canvas').height() - 100);
-            //$('#news-feed').fadeIn(1000);
-            //$('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
             $('#bottle').fadeIn(1000);
             showLatestPictures();
+        }
+
+        if(user){
+            $('.account-button a').addClass('selected');
+            $('#user-div').slideToggle('fast');
         }
 
 
@@ -538,6 +537,7 @@ function loadRoutes() {
                             });
                         });
 
+
                     } else {
 
                         // Si no es el primer punto pintamos un cuadro
@@ -576,7 +576,14 @@ function loadRoutes() {
                         showRouteDetail(this.routeIndex);
                     });
 
-                    routes[i].markers.push(marker);
+                    google.maps.event.addListener(marker, 'mouseover', function(){
+                        $('#' + this.jqueryId).parent().parent().css('z-index',1000);
+                    });
+
+                    google.maps.event.addListener(marker, 'mouseout', function(){
+                        $('#' + this.jqueryId).parent().parent().css('z-index','auto');
+                    });
+
 
                     // Generamos las líneas de la ruta
                     if (j+1 < routes[i].locations.length) {
@@ -910,16 +917,18 @@ function showRouteDetail(routeIndex){
 
         var influencerInfo = routes[routeIndex].influencer;
         if(influencerInfo.is_especial){
+            $('.image-route').hide();
             $('.image-influencer').show();
         }else{
+            $('.image-influencer').hide();
             $('.image-route').show();
         }
         $('.influencer-title').html(influencerInfo.name);
         $('.influencer-description').html(influencerInfo.description);
         $('.influencer-video').attr('src','');
-        if(influencerInfo.video_url){
-            $('.influencer-video').attr('src',influencerInfo.video_url);
-            $('.influencer-video').show();
+        if(influencerInfo.video_url != null){
+            $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
+            $('#influencer-video').show();
         }
 
         map.fitBounds(bounds);
