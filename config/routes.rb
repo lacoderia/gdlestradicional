@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   
-  resources :influencers
+  resources :influencers do
+		member do
+			post 'especial'
+		end
+	end
+
 
   resources :tweets do
 		member do

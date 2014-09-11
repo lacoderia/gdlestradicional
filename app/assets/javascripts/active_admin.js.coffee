@@ -35,3 +35,13 @@
 			alert('Error. Intenta de nuevo.')
 		success: (data, textStatus, jqXHR) ->
 			$("#tweet_link_#{tweet_id}").attr('onclick', "activateTweets(#{tweet_id}, #{!activate})")
+
+@especialInfluencer = (influencer_id, especial) ->
+	$.ajax "/influencers/#{influencer_id}/especial?especial=#{especial}",
+		type: 'POST'
+		dataType: 'html'
+		error: (jqXHR, textStatus, errorThrown) ->
+			alert('Error. Intenta de nuevo.')
+		success: (data, textStatus, jqXHR) ->
+			$("#influencer_link_#{influencer_id}").attr('onclick', "especialInfluencer(#{influencer_id}, #{!especial})")
+
