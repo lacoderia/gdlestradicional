@@ -111,11 +111,11 @@ function init() {
     $('.send-mail').click(function(event){
         event.preventDefault();
         var mail = $('#mail').val();
-				if (validateEmail(mail)){
-	        	sendMailInfo(mail);
-				}else{
-					$("#email-validation-field").html("email inválido")
-				}
+        if (validateEmail(mail)){
+            sendMailInfo(mail);
+        }else{
+            $("#email-validation-field").html("email inválido")
+        }
     });
 
     $('#invites').click(function(event){
@@ -136,7 +136,7 @@ function init() {
     }
 
     $('#latest-pic').draggable({
-            containment: "document"
+        containment: "document"
     });
 
     $('#influencer-picture').draggable({
@@ -179,63 +179,63 @@ function init() {
 
         // Se agrega el mapa de calor al mapa y se declara el arreglo de puntos para alimentarlo
         /*var tweetData = [];
-        tweetData = [
-            new google.maps.LatLng(20.669134, -103.368372),
-            new google.maps.LatLng(20.669295, -103.366741),
-            new google.maps.LatLng(20.669937, -103.364510),
-            new google.maps.LatLng(20.670098, -103.361763),
-            new google.maps.LatLng(20.670098, -103.361763),
-            new google.maps.LatLng(20.670098, -103.361763),
-            new google.maps.LatLng(20.643801,-103.380708),
-            new google.maps.LatLng(20.669455, -103.358759),
-            new google.maps.LatLng(20.668893, -103.357472),
-            new google.maps.LatLng(20.669215, -103.357214),
-            new google.maps.LatLng(20.667368, -103.356442),
-            new google.maps.LatLng(20.667689, -103.355068),
-            new google.maps.LatLng(20.667689, -103.353180),
-            new google.maps.LatLng(20.666243, -103.352493),
-            new google.maps.LatLng(20.665440, -103.352408),
-            new google.maps.LatLng(20.664717, -103.352923),
-            new google.maps.LatLng(20.664316, -103.353695),
-            new google.maps.LatLng(20.664316, -103.353695),
-            new google.maps.LatLng(20.664316, -103.353695),
-            new google.maps.LatLng(20.669134, -103.368372),
-            new google.maps.LatLng(20.669295, -103.366741),
-            new google.maps.LatLng(20.663191, -103.370861),
-            new google.maps.LatLng(20.661826, -103.369831),
-            new google.maps.LatLng(20.661425, -103.367771),
-            new google.maps.LatLng(20.660943, -103.364767),
-            new google.maps.LatLng(20.661023, -103.362793),
-            new google.maps.LatLng(20.661103, -103.359703),
-            new google.maps.LatLng(20.661666, -103.356356),
-            new google.maps.LatLng(20.659015, -103.357987),
-            new google.maps.LatLng(20.657891, -103.357987),
-            new google.maps.LatLng(20.654759, -103.357815),
-            new google.maps.LatLng(20.654277, -103.359961),
-            new google.maps.LatLng(20.652671, -103.361420),
-            new google.maps.LatLng(20.652671, -103.361420),
-            new google.maps.LatLng(20.653795, -103.368801),
-            new google.maps.LatLng(20.667368, -103.336443),
-            new google.maps.LatLng(20.667127, -103.335585),
-            new google.maps.LatLng(20.665039, -103.335499),
-            new google.maps.LatLng(20.640382, -103.372406),
-            new google.maps.LatLng(20.640623, -103.375925),
-            new google.maps.LatLng(20.640302, -103.379015),
-            new google.maps.LatLng(20.636687, -103.378758),
-            new google.maps.LatLng(20.636807, -103.380968),
-            new google.maps.LatLng(20.635642, -103.383028),
-            new google.maps.LatLng(20.634598, -103.385346)
-        ];
+         tweetData = [
+         new google.maps.LatLng(20.669134, -103.368372),
+         new google.maps.LatLng(20.669295, -103.366741),
+         new google.maps.LatLng(20.669937, -103.364510),
+         new google.maps.LatLng(20.670098, -103.361763),
+         new google.maps.LatLng(20.670098, -103.361763),
+         new google.maps.LatLng(20.670098, -103.361763),
+         new google.maps.LatLng(20.643801,-103.380708),
+         new google.maps.LatLng(20.669455, -103.358759),
+         new google.maps.LatLng(20.668893, -103.357472),
+         new google.maps.LatLng(20.669215, -103.357214),
+         new google.maps.LatLng(20.667368, -103.356442),
+         new google.maps.LatLng(20.667689, -103.355068),
+         new google.maps.LatLng(20.667689, -103.353180),
+         new google.maps.LatLng(20.666243, -103.352493),
+         new google.maps.LatLng(20.665440, -103.352408),
+         new google.maps.LatLng(20.664717, -103.352923),
+         new google.maps.LatLng(20.664316, -103.353695),
+         new google.maps.LatLng(20.664316, -103.353695),
+         new google.maps.LatLng(20.664316, -103.353695),
+         new google.maps.LatLng(20.669134, -103.368372),
+         new google.maps.LatLng(20.669295, -103.366741),
+         new google.maps.LatLng(20.663191, -103.370861),
+         new google.maps.LatLng(20.661826, -103.369831),
+         new google.maps.LatLng(20.661425, -103.367771),
+         new google.maps.LatLng(20.660943, -103.364767),
+         new google.maps.LatLng(20.661023, -103.362793),
+         new google.maps.LatLng(20.661103, -103.359703),
+         new google.maps.LatLng(20.661666, -103.356356),
+         new google.maps.LatLng(20.659015, -103.357987),
+         new google.maps.LatLng(20.657891, -103.357987),
+         new google.maps.LatLng(20.654759, -103.357815),
+         new google.maps.LatLng(20.654277, -103.359961),
+         new google.maps.LatLng(20.652671, -103.361420),
+         new google.maps.LatLng(20.652671, -103.361420),
+         new google.maps.LatLng(20.653795, -103.368801),
+         new google.maps.LatLng(20.667368, -103.336443),
+         new google.maps.LatLng(20.667127, -103.335585),
+         new google.maps.LatLng(20.665039, -103.335499),
+         new google.maps.LatLng(20.640382, -103.372406),
+         new google.maps.LatLng(20.640623, -103.375925),
+         new google.maps.LatLng(20.640302, -103.379015),
+         new google.maps.LatLng(20.636687, -103.378758),
+         new google.maps.LatLng(20.636807, -103.380968),
+         new google.maps.LatLng(20.635642, -103.383028),
+         new google.maps.LatLng(20.634598, -103.385346)
+         ];
 
-        var pointArray = new google.maps.MVCArray(tweetData);
+         var pointArray = new google.maps.MVCArray(tweetData);
 
-        var heatmap = new google.maps.visualization.HeatmapLayer({
-            data: pointArray,
-            opacity: 1,
-            radius: 20,
-        });
+         var heatmap = new google.maps.visualization.HeatmapLayer({
+         data: pointArray,
+         opacity: 1,
+         radius: 20,
+         });
 
-        heatmap.setMap(map);*/
+         heatmap.setMap(map);*/
 
 
         dispatcher = new WebSocketRails('104.130.128.19:3001/websocket');
@@ -246,17 +246,17 @@ function init() {
             tweet_guid++;
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                                '<div class="pin icon-uniE600"></div>' +
-                                '<div class="pulse"></div>'+
-                            '</div>';
+                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                '<div class="pin icon-uniE600"></div>' +
+                '<div class="pulse"></div>'+
+                '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                            '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                            '<div class="pin icon-uniE600"></div>' +
-                            '<div class="pulse-featured"></div>'+
-                        '</div>';
+                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                    '<div class="pin icon-uniE600"></div>' +
+                    '<div class="pulse-featured"></div>'+
+                    '</div>';
             }
 
 
@@ -274,16 +274,16 @@ function init() {
             //console.log(position)
 
             /*var circle = new google.maps.Circle({
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.35,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35,
-                center: position,
-                radius: 200
-            });
+             strokeColor: '#FF0000',
+             strokeOpacity: 0.35,
+             strokeWeight: 2,
+             fillColor: '#FF0000',
+             fillOpacity: 0.35,
+             center: position,
+             radius: 200
+             });
 
-            circle.setMap(map);*/
+             circle.setMap(map);*/
 
 
             //pointArray.push(position);
@@ -332,7 +332,7 @@ function init() {
         channel.bind('new_picture', function(data) {
 
             data = JSON.parse(data);
-		    addLatestPicture(data);
+            addLatestPicture(data);
             for (var i=0; i<routes.length; i++) {
                 for (var j = 0; j < routes[i].locations.length; j++) {
                     if (routes[i].locations[j].id == data.location_id) {
@@ -372,82 +372,82 @@ function init() {
 }
 
 function getLatestPictures() {
-	$.ajax({
-		type: "GET",
-		url: "/photos/recent.json",
-		data: null,
-		dataType: "json",
-		success: function(response) {
-			latestPictures = response;
-		},
-		error: function(error) {
-		}
-	});
+    $.ajax({
+        type: "GET",
+        url: "/photos/recent.json",
+        data: null,
+        dataType: "json",
+        success: function(response) {
+            latestPictures = response;
+        },
+        error: function(error) {
+        }
+    });
 }
 
 function addLatestPicture(data) {
-	var latestPicture = {
-		id: data.id,
-		author_nickname: data.author_nickname,
-		url_low: data.url_low,
-		url_thumb: data.url_thumb
-	};
-	latestPictures.shift();
-	latestPictures.push(latestPicture);
+    var latestPicture = {
+        id: data.id,
+        author_nickname: data.author_nickname,
+        url_low: data.url_low,
+        url_thumb: data.url_thumb
+    };
+    latestPictures.shift();
+    latestPictures.push(latestPicture);
 }
 
 function createLatestPictureMarker(pic, nickname){
 
-		position = Math.floor((Math.random() * 10) + 1)-1;
-		//console.log("position " + position);
-		var marker = new RichMarker({
-				position: latestPicturesPositions[position],
-				map: map,
-				draggable: false,
-				flat: true,
-				jqueryId: "latest-pic",
-				content: '<div id="latest-pic"><div>#GDLESTRADICIONAL</div><img src="' + pic + '"/><div>'+ nickname +'</div></div>'
-		});
+    position = Math.floor((Math.random() * 10) + 1)-1;
+    //console.log("position " + position);
+    var marker = new RichMarker({
+        position: latestPicturesPositions[position],
+        map: map,
+        draggable: false,
+        flat: true,
+        jqueryId: "latest-pic",
+        content: '<div id="latest-pic"><div>#GDLESTRADICIONAL</div><img src="' + pic + '"/><div>'+ nickname +'</div></div>'
+    });
 
-		google.maps.event.addListener(marker, 'ready', function() {
-  		$('#latest-pic').fadeIn(1000);
-		});
+    google.maps.event.addListener(marker, 'ready', function() {
+        $('#latest-pic').fadeIn(1000);
+    });
 }
 
 function showLatestPictures() {
 
     latestPicturesTimeout = setTimeout(function(){
 
-		//createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
-		setTimeout(function(){
-			$('#latest-pic').fadeOut(1000, function(){
-				$('#latest-pic').remove();
-			});
-		}, 5000);
+        //createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
+        setTimeout(function(){
+            $('#latest-pic').fadeOut(1000, function(){
+                $('#latest-pic').remove();
+            });
+        }, 5000);
 
-		var start = 1;
-		intervalTimeout = setInterval(function(){
-			try {
-				pic = latestPictures[start].url_low;
-				createLatestPictureMarker(pic, latestPictures[start].author_nickname);
-			} catch(e) {
-				start = 0;
-				pic = latestPictures[start].url_low;
-				createLatestPictureMarker(pic, latestPictures[start].author_nickname);
-			}
-			setTimeout(function(){
-				$('#latest-pic').fadeOut(1000, function(){
-					$('#latest-pic').remove();
-				});
-			}, 5000);
-			start++;
-		}, 10000);
+        var start = 1;
+        intervalTimeout = setInterval(function(){
+            try {
+                pic = latestPictures[start].url_low;
+                createLatestPictureMarker(pic, latestPictures[start].author_nickname);
+            } catch(e) {
+                start = 0;
+                pic = latestPictures[start].url_low;
+                createLatestPictureMarker(pic, latestPictures[start].author_nickname);
+            }
+            setTimeout(function(){
+                $('#latest-pic').fadeOut(1000, function(){
+                    $('#latest-pic').remove();
+                });
+            }, 5000);
+            start++;
+        }, 10000);
 
-	}, 5000);
+    }, 5000);
 }
 
 function stopLatestPictures(){
-	clearTimeout(latestPicturesTimeout);
+    clearTimeout(latestPicturesTimeout);
     clearInterval(intervalTimeout);
 }
 
@@ -463,7 +463,7 @@ function launchApp() {
                 $('.nav').fadeIn(1000);
                 $('.social-networks-icons').fadeIn(1000);
                 $('#bottle').fadeIn(1000);
-                showLatestPictures();
+                //showLatestPictures();
             }
         }else{
             showElements = true;
@@ -471,7 +471,7 @@ function launchApp() {
             $('.nav').fadeIn(1000);
             $('.social-networks-icons').fadeIn(1000);
             $('#bottle').fadeIn(1000);
-            showLatestPictures();
+            //showLatestPictures();
         }
 
         if(user){
@@ -504,8 +504,15 @@ function loadRoutes() {
 
                 for(var j = 0; j < routes[i].locations.length; j++){
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-
                     var markerId = 'marker_' + i + '_' + j;
+                    var markerImageUrl = '/assets/marker_azul.png';
+                    var aditionalText = '';
+
+                    if(routes[i].locations[j].especial){
+                        markerImageUrl = '/assets/marker_azul_amarillo.png';
+                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    }
+
                     if (j == 0) {
                         var marker = new RichMarker({
                             position: routeCoordinate,
@@ -516,8 +523,8 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
-                                '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img src="/assets/marker_azul.png"/>' +
+                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<img src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
@@ -584,6 +591,15 @@ function loadRoutes() {
                         $('#' + this.jqueryId).parent().parent().css('z-index','auto');
                     });
 
+                    google.maps.event.addListener(marker, 'mouseover', function(){
+                        $('#' + this.jqueryId).parent().parent().css('z-index',1000);
+                    });
+
+                    google.maps.event.addListener(marker, 'mouseout', function(){
+                        $('#' + this.jqueryId).parent().parent().css('z-index','auto');
+                    });
+
+                    routes[i].markers.push(marker);
 
                     // Generamos las líneas de la ruta
                     if (j+1 < routes[i].locations.length) {
@@ -648,6 +664,7 @@ function paintOneRoute(routeIndex) {
 }
 
 function paintOneMarker(routeIndex, markerIndex) {
+    console.log(routes)
     if(markerIndex < routes[routeIndex].locations.length){
         routes[routeIndex].markers[markerIndex].setMap(map);
 
@@ -811,7 +828,7 @@ function paintOneLine(routeIndex, lineIndex) {
 function showAllRoutes() {
     if (!paintingRoutes) {
 
-		showLatestPictures();
+        //showLatestPictures();
 
         $('#show-all-routes').hide();
         $('#influencer-picture').hide();
@@ -1171,12 +1188,12 @@ function hideUserPictureGallery() {
 }
 
 function showUserPictures(){
-	if (user.photos.length > 0){
+    if (user.photos.length > 0){
         $('#overlay').show();
         $('#user-picture-gallery-container').show();
 
         userUpdatePictureDetails(user.photos[0]);
-	}else{
+    }else{
         showInstragramModal();
     }
 }

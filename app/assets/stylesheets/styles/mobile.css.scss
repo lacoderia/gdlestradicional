@@ -23,7 +23,23 @@ a.mobile{
   right: 0;
   bottom: 0;
   z-index: 1;
-  background-color:rgba(255,255,255,0.5); /*dim the background*/
+  background-color:rgba(0,0,0,0.3); /*dim the background*/
+}
+
+#intro{
+  img{
+    display: block;
+  }
+  .enter{
+    background-color: #033060;
+    color: white;
+    font-size: 12px;
+    float: right;
+    padding: 5px 15px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100px;
+  }
 }
 
 #mail-form{

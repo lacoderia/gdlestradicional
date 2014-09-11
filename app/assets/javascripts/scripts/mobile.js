@@ -8,7 +8,7 @@ $(document).ready(
 
 var map = null;
 var rectangle = null;
-var mapCenter = new google.maps.LatLng(20.69, -103.40);
+var mapCenter = new google.maps.LatLng(20.69, -103.37);
 var showElements = false;
 var showAllRoutesZoom = false;
 var paintingRoutes = true;
@@ -60,9 +60,9 @@ var styles = [
 ];
 
 var mapOptions = {
-    zoom: 11,
+    zoom: 13,
     center: mapCenter,
-    minZoom: 11,
+    minZoom: 13,
     maxZoom: 19,
     disableDefaultUI: true,
     disableDoubleClickZoom: true,
@@ -143,13 +143,13 @@ function init() {
             strokeColor: '#033060​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#13435B',
+            fillColor: '#033060​',
             fillOpacity: 0.6,
             clickable: false,
             map: map,
             bounds: new google.maps.LatLngBounds(
-                new google.maps.LatLng(20.751853, -103.483541),
-                new google.maps.LatLng(20.507659, -103.146741)
+                new google.maps.LatLng(21.022869, -104.182047),
+                new google.maps.LatLng(20.274966, -102.450327)
             )
         });
 
@@ -160,13 +160,10 @@ function init() {
             }
         });
 
-        //google.maps.event.addListener(map, 'tilesloaded', function() {        });
-
         dispatcher = new WebSocketRails('104.130.128.19:3001/websocket');
         channel = dispatcher.subscribe('twitter_channel');
 
         channel.bind('new_tweet', function(data) {
-            //console.log('channel event received: ' + data);
 
             tweet_guid++;
 
@@ -455,7 +452,7 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker">' +
-                                '<img src="/assets/marker_gris.png"/>' +
+                                '<img src="/assets/marker_azul.png"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
@@ -761,7 +758,7 @@ function showAllRoutes() {
 
         showAllRoutesZoom = true;
         map.setOptions(mapOptions);
-        map.setZoom(11);
+        map.setZoom(13);
         $.sidr('close', 'sidr');
     }
 
@@ -795,7 +792,22 @@ function showRouteDetail(routeIndex){
 
         $('#news-feed').hide();
 
-        $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
+        var influencerInfo = routes[routeIndex].influencer;
+        if(influencerInfo.is_especial){
+            $('.image-route').hide();
+            $('.image-influencer').show();
+        }else{
+            $('.image-influencer').hide();
+            $('.image-route').show();
+        }
+        $('.influencer-title').html(influencerInfo.name);
+        $('.influencer-description').html(influencerInfo.description);
+        $('.influencer-video').attr('src','');
+        if(influencerInfo.video_url != null){
+            $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
+            $('#influencer-video').show();
+        }
+
         $('#influencer-picture').fadeIn(1000);
 
         for (var i=0; i<tempRoute.length; i++) {
