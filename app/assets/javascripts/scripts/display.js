@@ -960,35 +960,86 @@ function showRouteDetail(routeIndex){
 }
 
 function updatePictureDetails(post) {
-    var panoOptions = {
-        position: new google.maps.LatLng(post.lat, post.long),
-        pov: {
-            heading: 0,
-            pitch: 0
-        },
-        streetViewControl: false,
-        enableCloseButton: false,
-        linksControl: false,
-        panControl: false,
-        clickToGo: false,
-        scrollwheel: false,
-        addressControl: false,
-        disableDefaultUI: true,
-        disableDoubleClickZoom: false,
-        zoomControl: false
-    };
+    var latitude = post.lat;
+    var longitude = post.long;
 
-    pano = new google.maps.StreetViewPanorama(
-        document.getElementById('panorama'),
-        panoOptions);
+    var latLng = new google.maps.LatLng(latitude, longitude);
 
-    panoInterval = window.setInterval(function() {
-        var pov = pano.getPov();
-        if (pov) {
-            pov.heading += 0.1;
-            pano.setPov(pov);
+    var streetViewService = new google.maps.StreetViewService();
+
+    streetViewService.getPanoramaByLocation(latLng, 100, function (data, status) {
+
+        if (status == google.maps.StreetViewStatus.OK) {
+            var panoOptions = {
+                pov: {
+                    heading: 0,
+                    pitch: 0
+                },
+                streetViewControl: false,
+                enableCloseButton: false,
+                linksControl: false,
+                panControl: false,
+                clickToGo: false,
+                scrollwheel: false,
+                addressControl: false,
+                disableDefaultUI: true,
+                disableDoubleClickZoom: false,
+                zoomControl: false
+            };
+
+            pano = new google.maps.StreetViewPanorama(
+                document.getElementById('panorama'),
+                panoOptions);
+
+            pano.setPano(data.location.pano);
+            pano.setVisible(true);
+
+            panoInterval = window.setInterval(function() {
+                try {
+                    var pov = pano.getPov();
+                    pov.heading += 0.1;
+                    pano.setPov(pov);
+                } catch(e) {
+                    clearInterval(panoInterval);
+                }
+            }, 10);
+
+        } else {
+
+            var panoOptions = {
+                position: new google.maps.LatLng(20.676899, -103.33893999999998),
+                pov: {
+                    heading: 0,
+                    pitch: 0
+                },
+                streetViewControl: false,
+                enableCloseButton: false,
+                linksControl: false,
+                panControl: false,
+                clickToGo: false,
+                scrollwheel: false,
+                addressControl: false,
+                disableDefaultUI: true,
+                disableDoubleClickZoom: false,
+                zoomControl: false
+            };
+
+            pano = new google.maps.StreetViewPanorama(
+                document.getElementById('panorama'),
+                panoOptions);
+
+            panoInterval = window.setInterval(function() {
+                try {
+                    var pov = pano.getPov();
+                    pov.heading += 0.1;
+                    pano.setPov(pov);
+                } catch(e) {
+                    clearInterval(panoInterval);
+                }
+            }, 10);
+
         }
-    }, 10);
+    });
 
     $('#picture-gallery .post-author').html('@' + post.author_nickname);
     $('#picture-gallery p').html(post.caption);
