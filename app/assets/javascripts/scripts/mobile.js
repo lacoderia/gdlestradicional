@@ -143,13 +143,13 @@ function init() {
             strokeColor: '#033060​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#033060​',
+            fillColor: '#13435B',
             fillOpacity: 0.6,
             clickable: false,
             map: map,
             bounds: new google.maps.LatLngBounds(
-                new google.maps.LatLng(21.022869, -104.182047),
-                new google.maps.LatLng(20.274966, -102.450327)
+                new google.maps.LatLng(20.751853, -103.483541),
+                new google.maps.LatLng(20.507659, -103.146741)
             )
         });
 
@@ -455,7 +455,7 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker">' +
-                                '<img src="/assets/marker_azul.png"/>' +
+                                '<img src="/assets/marker_gris.png"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });

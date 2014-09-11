@@ -1,6 +1,6 @@
 <div id="map_container">
   <div id="overlay"></div>
-  <div id="show-all-routes" onclick="showAllRoutes()" style="display: none;">Regresar <span class="icon icon-uniE603" title="Mostrar todas las rutas"></span></div>
+  <div id="show-all-routes" onclick="showAllRoutes()" style="display: none;"><img src="/assets/boton_regresar.png" alt="Mostrar todas las rutas"></div>
   <div id="map-canvas"></div>
   <div id="bottle">
     <img src="/assets/bottle_631.png" alt="José Cuervo Tradicional">
@@ -42,71 +42,92 @@
     </div>
   </div>
   <div id="influencer-picture" onclick="showInfluencerGallery()">
-    <img src="" />
+    <img src="/assets/icono_influencer.png" alt="Influencer" />
   </div>
   <div id="influencer-container" onclick="influencerGalleryClick(event)">
     <div id="influencer-gallery">
+      <div>
+        <h3>Título de Influencer</h3>
+        <p>Fusce a metus eu diam varius congue nec nec sapien. Vestibulum orci tortor, sollicitudin ac euismod non,
+          placerat ac augue. Nunc convallis accumsan justo. Pellentesque habitant morbi tristique senectus et netus et
+          malesuada fames ac turpis egestas. Donec malesuada vehicula lectus, viverra sodales ipsum gravida nec.
+        </p>
+      </div>
       <iframe id="influencer-video" width="420" height="345" src="">
       </iframe>
     </div>
   </div>
 
-  <div id="news-feed">
-    <div class="news-feed-canvas">
-      <div class="news-feed-header"r>
-        <img src="/assets/logo.png" alt="GDL Tradicional" class="logo-gdl-tradicional">
-      </div>
-        <div id="news-feed-upper">
-          <div id="user-div">
-            <div id="login-btn">
-              <a class="button tribute" href="#" title="Únete al homenaje" onclick=""><img src="/assets/logo_cuervo.png" alt="Cuervo tradicional"><span>Únete al homenaje</span></a>
-              <a class="button" href="#" title="Participa" onclick="login()">Participa</a>
-            </div>
-            <div id="dashboard">
-              <table>
-                <tr>
-                  <td class="dashboard-element-pic"><img /></td>
-                  <td class="dashboard-element" colspan="2">
-                    <div id="user-name"></div>
-                    <div id="instagram-logout" onclick="logout()">Cerrar sesión</div>
-                  </td>
-                </tr>
-              </table>
-              <table>
-                <tr>
-                  <td class="user-element" title="Puntos">
-                    <div id="user-points"></div>
-                    <div><span class="icon icon-uniE60A"></span></div>
-                    <div class="icon-name">Puntos</div>
-                  </td>
-                  <td class="user-element" onclick="showUserPictures()" title="Fotos">
-                    <div id="user-photos"></div>
-                    <div><span class="icon icon-uniE608"></span></div>
-                    <div class="icon-name">Fotos</div>
-                  </td>
-                  <td class="user-element"onclick="showInviteModal()" title="Invitaciones">
-                    <div id="user-invites"></div>
-                    <div><span class="icon icon-uniE609"></span></div>
-                    <div class="icon-name">Invitaciones</div>
-                  </td>
-                </tr>
-              </table>
+  <div class="zoom-image" style="display: none;">
+    <img src="/assets/boton_zoom.png" alt="Zoom">
+  </div>
 
-            </div>
-          </div>
-        </div>
-        <div id="news-feed-lower">
-          <a class="twitter-timeline" href="https://twitter.com/hashtag/gdlestradicional" data-widget-id="505100682592919552"></a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        </div>
+  <div class="nav" style="display: none;">
+    <div class="news-feed-header"r>
+      <img src="/assets/logo_cuervo.png" alt="Cuervo Tradicional" class="logo-cuervo"><img src="/assets/logo.png" alt="GDL es Tradicional" class="logo-gdl-tradicional">
     </div>
-    <div class="social-networks-icons">
-      <ul>
-        <li><a href="http://instagram.com/jctradicional" target="_blank"><span class="icon-uniE602"></span></a></li>
-        <li><a href="https://twitter.com/jctradicional" target="_blank"><span class="icon-uniE600"></span></a></li>
-        <li><a href="https://www.facebook.com/jctradicional" target="_blank"><span class="icon-uniE601"></span></a></li>
-      </ul>
+    <div class="icon-list">
+        <ul>
+          <li class="newsfeed-button icon-list-item"><a title="Noticias"><span class="icon-uniE60D"></span></a></li>
+          <li class="account-button icon-list-item"><a title="Cuenta"><span class="icon-uniE610"></span></a></li>
+          <li class="help-button icon-list-item"><a title="Ayuda"><span class="icon-uniE60E"></span></a></li>
+        </ul>
+        <div class="clearfix"></div>
     </div>
+    <div class="nav-container">
+        <div id="user-div" class="nav-container-item" style="display: none;">
+        <div id="login-btn">
+          <a class="button tribute" href="#" title="Únete al homenaje" onclick=""><img src="/assets/logo_cuervo.png" alt="Cuervo tradicional"><span>Únete al homenaje</span></a>
+          <a class="button participate" href="#" title="Participa" onclick="login()">Participa</a>
+        </div>
+        <div id="dashboard">
+          <table>
+            <tr>
+              <td class="dashboard-element-pic"><img /></td>
+              <td class="dashboard-element" colspan="2">
+                <div id="user-name"></div>
+                <div id="instagram-logout" onclick="logout()">Cerrar sesión</div>
+              </td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td class="user-element" title="Puntos">
+                <div id="user-points"></div>
+                <div><span class="icon icon-uniE60A"></span></div>
+                <div class="icon-name">Puntos</div>
+              </td>
+              <td class="user-element" onclick="showUserPictures()" title="Fotos">
+                <div id="user-photos"></div>
+                <div><span class="icon icon-uniE608"></span></div>
+                <div class="icon-name">Fotos</div>
+              </td>
+              <td class="user-element"onclick="showInviteModal()" title="Invitaciones">
+                <div id="user-invites"></div>
+                <div><span class="icon icon-uniE609"></span></div>
+                <div class="icon-name">Invitaciones</div>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+      <div id="news-feed" class="nav-container-item" style="display: none;">
+        <div class="news-feed-canvas">
+            <a class="twitter-timeline" href="https://twitter.com/hashtag/gdlestradicional" data-widget-id="505100682592919552"></a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
+      </div>
+        <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="social-networks-icons" style="display: none;">
+    <ul>
+      <li><a href="http://instagram.com/jctradicional" target="_blank"><span class="icon-uniE602"></span></a></li>
+      <li><a href="https://twitter.com/jctradicional" target="_blank"><span class="icon-uniE600"></span></a></li>
+      <li><a href="https://www.facebook.com/jctradicional" target="_blank"><span class="icon-uniE601"></span></a></li>
+    </ul>
   </div>
   
 </div>
@@ -114,6 +135,8 @@
 <div id="intro">
   <a class="desktop" onclick='launchApp()'>
     <img src="/assets/logo.png" alt="Entrar a Guadalajara es Tradicional">
+    <div class="enter">Comienza Aquí</div>
+    <div class="clearfix"></div>
   </a>
 </div>
 
@@ -142,7 +165,7 @@
           <button class="send-mail">Enviar</button>
         </p>
       </form>
-      <p class="privacity">
+      <p class="privacity" style="display: none;">
         Lee nuestro <a href="#" title="Aviso de privacidad">aviso de privacidad</a>
       </p>
     </div>

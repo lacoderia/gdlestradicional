@@ -17,7 +17,7 @@ ActiveAdmin.register Location do
 			f.input :name
 			f.input :especial
 			f.input :description
-			f.input :routes, :collection => Route.all, :as => :check_boxes
+			#f.input :routes, :collection => Route.all, :as => :check_boxes
 		end
 		f.actions
 	end	
