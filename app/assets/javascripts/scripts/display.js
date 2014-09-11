@@ -541,6 +541,15 @@ function loadRoutes() {
                     } else {
 
                         // Si no es el primer punto pintamos un cuadro
+
+                        var markerImageUrl = '/assets/cuadrito_gris.png';
+                        var aditionalText = '';
+
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/cuadrito_amarillo.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                        }
+
                         var marker = new RichMarker({
                             position: routeCoordinate,
                             map: null,
@@ -550,8 +559,8 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="secondary-marker marker">' +
-                                '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img src="/assets/cuadrito_gris.png"/>' +
+                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<img src="' + markerImageUrl + '"/>' +
                                 '</div>'
                         });
 
@@ -799,6 +808,7 @@ function showAllRoutes() {
 
         $('#show-all-routes').hide();
         $('#influencer-picture').hide();
+        $('.zoom-image').hide();
 
         for (var i=0; i<tempRoute.length; i++) {
             tempRoute[i].setMap(null);
@@ -896,6 +906,20 @@ function showRouteDetail(routeIndex){
         var bounds = new google.maps.LatLngBounds();
         for(i=0;i<markers.length;i++) {
             bounds.extend(markers[i].getPosition());
+        }
+
+        var influencerInfo = routes[routeIndex].influencer;
+        if(influencerInfo.is_especial){
+            $('.image-influencer').show();
+        }else{
+            $('.image-route').show();
+        }
+        $('.influencer-title').html(influencerInfo.name);
+        $('.influencer-description').html(influencerInfo.description);
+        $('.influencer-video').attr('src','');
+        if(influencerInfo.video_url){
+            $('.influencer-video').attr('src',influencerInfo.video_url);
+            $('.influencer-video').show();
         }
 
         map.fitBounds(bounds);
@@ -1076,7 +1100,6 @@ function showNextPicture() {
 
 function showInfluencerGallery() {
     $('#overlay').show();
-    $("#influencer-video").attr('src','http://www.youtube.com/embed/XGSy3_Czz8k');
     $('#influencer-container').show();
 }
 
@@ -1242,9 +1265,6 @@ function showDashboard() {
     $("#user-photos").click(function(){
         showUserPictures();
     });
-
-    //$('#news-feed').css('height', $('#map-canvas').height() - 100);
-    //$('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
 }
 
 function showInviteModal(){

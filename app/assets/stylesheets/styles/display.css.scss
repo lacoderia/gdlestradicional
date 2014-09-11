@@ -35,7 +35,7 @@ a.desktop {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 101;
   background-color:rgba(0,0,0,0.3); /*dim the background*/
 }
 
@@ -645,13 +645,25 @@ a.desktop {
   background-color: #033060;
   border: 6px solid #A6A7AA;
   border-radius: 5px;
-  width: 500px;
+  width: 600px;
   vertical-align: middle;
   text-align: left;
   overflow: hidden;
 
+  img{
+    display: inline-block;
+    width: 50px;
+  }
+
+  h3{
+    display: inline-block;
+    font-size: 16px;
+    margin: 1em 0px 0px 1em;
+    vertical-align: top;
+  }
+
   p{
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 300;
   }
 
@@ -1044,6 +1056,7 @@ a.desktop {
   position: fixed;
   right: 3em;
   width: 70px;
+  z-index: 99;
 
   img{
     width: 100%;
@@ -1056,7 +1069,7 @@ a.desktop {
   position: fixed;
   right: 8em;
   width: 102px;
-  z-index: 400;
+  z-index: 99;
 
   .icon{
     font-size: 16px;
