@@ -111,11 +111,11 @@ function init() {
     $('.send-mail').click(function(event){
         event.preventDefault();
         var mail = $('#mail').val();
-				if (validateEmail(mail)){
-	        	sendMailInfo(mail);
-				}else{
-					$("#email-validation-field").html("email inválido")
-				}
+        if (validateEmail(mail)){
+            sendMailInfo(mail);
+        }else{
+            $("#email-validation-field").html("email inválido")
+        }
     });
 
     $('#invites').click(function(event){
@@ -136,7 +136,7 @@ function init() {
     }
 
     $('#latest-pic').draggable({
-            containment: "document"
+        containment: "document"
     });
 
     $('#influencer-picture').draggable({
@@ -246,17 +246,17 @@ function init() {
             tweet_guid++;
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                                '<div class="pin icon-uniE600"></div>' +
-                                '<div class="pulse"></div>'+
-                            '</div>';
+                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                '<div class="pin icon-uniE600"></div>' +
+                '<div class="pulse"></div>'+
+                '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                            '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                            '<div class="pin icon-uniE600"></div>' +
-                            '<div class="pulse-featured"></div>'+
-                        '</div>';
+                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                    '<div class="pin icon-uniE600"></div>' +
+                    '<div class="pulse-featured"></div>'+
+                    '</div>';
             }
 
 
@@ -332,7 +332,7 @@ function init() {
         channel.bind('new_picture', function(data) {
 
             data = JSON.parse(data);
-		    addLatestPicture(data);
+            addLatestPicture(data);
             for (var i=0; i<routes.length; i++) {
                 for (var j = 0; j < routes[i].locations.length; j++) {
                     if (routes[i].locations[j].id == data.location_id) {
@@ -372,82 +372,82 @@ function init() {
 }
 
 function getLatestPictures() {
-	$.ajax({
-		type: "GET",
-		url: "/photos/recent.json",
-		data: null,
-		dataType: "json",
-		success: function(response) {
-			latestPictures = response;
-		},
-		error: function(error) {
-		}
-	});
+    $.ajax({
+        type: "GET",
+        url: "/photos/recent.json",
+        data: null,
+        dataType: "json",
+        success: function(response) {
+            latestPictures = response;
+        },
+        error: function(error) {
+        }
+    });
 }
 
 function addLatestPicture(data) {
-	var latestPicture = {
-		id: data.id,
-		author_nickname: data.author_nickname,
-		url_low: data.url_low,
-		url_thumb: data.url_thumb
-	};
-	latestPictures.shift();
-	latestPictures.push(latestPicture);
+    var latestPicture = {
+        id: data.id,
+        author_nickname: data.author_nickname,
+        url_low: data.url_low,
+        url_thumb: data.url_thumb
+    };
+    latestPictures.shift();
+    latestPictures.push(latestPicture);
 }
 
 function createLatestPictureMarker(pic, nickname){
 
-		position = Math.floor((Math.random() * 10) + 1)-1;
-		//console.log("position " + position);
-		var marker = new RichMarker({
-				position: latestPicturesPositions[position],
-				map: map,
-				draggable: false,
-				flat: true,
-				jqueryId: "latest-pic",
-				content: '<div id="latest-pic"><div>#GDLESTRADICIONAL</div><img src="' + pic + '"/><div>'+ nickname +'</div></div>'
-		});
+    position = Math.floor((Math.random() * 10) + 1)-1;
+    //console.log("position " + position);
+    var marker = new RichMarker({
+        position: latestPicturesPositions[position],
+        map: map,
+        draggable: false,
+        flat: true,
+        jqueryId: "latest-pic",
+        content: '<div id="latest-pic"><div>#GDLESTRADICIONAL</div><img src="' + pic + '"/><div>'+ nickname +'</div></div>'
+    });
 
-		google.maps.event.addListener(marker, 'ready', function() {
-  		$('#latest-pic').fadeIn(1000);
-		});
+    google.maps.event.addListener(marker, 'ready', function() {
+        $('#latest-pic').fadeIn(1000);
+    });
 }
 
 function showLatestPictures() {
 
     latestPicturesTimeout = setTimeout(function(){
 
-		//createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
-		setTimeout(function(){
-			$('#latest-pic').fadeOut(1000, function(){
-				$('#latest-pic').remove();
-			});
-		}, 5000);
+        //createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
+        setTimeout(function(){
+            $('#latest-pic').fadeOut(1000, function(){
+                $('#latest-pic').remove();
+            });
+        }, 5000);
 
-		var start = 1;
-		intervalTimeout = setInterval(function(){
-			try {
-				pic = latestPictures[start].url_low;
-				createLatestPictureMarker(pic, latestPictures[start].author_nickname);
-			} catch(e) {
-				start = 0;
-				pic = latestPictures[start].url_low;
-				createLatestPictureMarker(pic, latestPictures[start].author_nickname);
-			}
-			setTimeout(function(){
-				$('#latest-pic').fadeOut(1000, function(){
-					$('#latest-pic').remove();
-				});
-			}, 5000);
-			start++;
-		}, 10000);
+        var start = 1;
+        intervalTimeout = setInterval(function(){
+            try {
+                pic = latestPictures[start].url_low;
+                createLatestPictureMarker(pic, latestPictures[start].author_nickname);
+            } catch(e) {
+                start = 0;
+                pic = latestPictures[start].url_low;
+                createLatestPictureMarker(pic, latestPictures[start].author_nickname);
+            }
+            setTimeout(function(){
+                $('#latest-pic').fadeOut(1000, function(){
+                    $('#latest-pic').remove();
+                });
+            }, 5000);
+            start++;
+        }, 10000);
 
-	}, 5000);
+    }, 5000);
 }
 
 function stopLatestPictures(){
-	clearTimeout(latestPicturesTimeout);
+    clearTimeout(latestPicturesTimeout);
     clearInterval(intervalTimeout);
 }
 
@@ -504,8 +504,15 @@ function loadRoutes() {
 
                 for(var j = 0; j < routes[i].locations.length; j++){
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
-
                     var markerId = 'marker_' + i + '_' + j;
+                    var markerImageUrl = '/assets/marker_azul.png';
+                    var aditionalText = '';
+
+                    if(routes[i].locations[j].especial){
+                        markerImageUrl = '/assets/marker_azul_amarillo.png';
+                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    }
+
                     if (j == 0) {
                         var marker = new RichMarker({
                             position: routeCoordinate,
@@ -516,8 +523,8 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
-                                '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img src="/assets/marker_azul.png"/>' +
+                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<img src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
@@ -953,88 +960,35 @@ function showRouteDetail(routeIndex){
 }
 
 function updatePictureDetails(post) {
+    var panoOptions = {
+        position: new google.maps.LatLng(post.lat, post.long),
+        pov: {
+            heading: 0,
+            pitch: 0
+        },
+        streetViewControl: false,
+        enableCloseButton: false,
+        linksControl: false,
+        panControl: false,
+        clickToGo: false,
+        scrollwheel: false,
+        addressControl: false,
+        disableDefaultUI: true,
+        disableDoubleClickZoom: false,
+        zoomControl: false
+    };
 
-    var latitude = post.lat;
-    var longitude = post.long;
+    pano = new google.maps.StreetViewPanorama(
+        document.getElementById('panorama'),
+        panoOptions);
 
-    var latLng = new google.maps.LatLng(latitude, longitude);
-
-    var streetViewService = new google.maps.StreetViewService();
-
-    streetViewService.getPanoramaByLocation(latLng, 100, function (data, status) {
-
-        if (status == google.maps.StreetViewStatus.OK) {
-            var panoOptions = {
-                pov: {
-                    heading: 0,
-                    pitch: 0
-                },
-                streetViewControl: false,
-                enableCloseButton: false,
-                linksControl: false,
-                panControl: false,
-                clickToGo: false,
-                scrollwheel: false,
-                addressControl: false,
-                disableDefaultUI: true,
-                disableDoubleClickZoom: false,
-                zoomControl: false
-            };
-
-            pano = new google.maps.StreetViewPanorama(
-                document.getElementById('panorama'),
-                panoOptions);
-
-            pano.setPano(data.location.pano);
-            pano.setVisible(true);
-
-            panoInterval = window.setInterval(function() {
-                try {
-                    var pov = pano.getPov();
-                    pov.heading += 0.1;
-                    pano.setPov(pov);
-                } catch(e) {
-                    clearInterval(panoInterval);
-                }
-            }, 10);
-
-
-        } else {
-
-            var panoOptions = {
-                position: new google.maps.LatLng(20.676899, -103.33893999999998),
-                pov: {
-                    heading: 0,
-                    pitch: 0
-                },
-                streetViewControl: false,
-                enableCloseButton: false,
-                linksControl: false,
-                panControl: false,
-                clickToGo: false,
-                scrollwheel: false,
-                addressControl: false,
-                disableDefaultUI: true,
-                disableDoubleClickZoom: false,
-                zoomControl: false
-            };
-
-            pano = new google.maps.StreetViewPanorama(
-                document.getElementById('panorama'),
-                panoOptions);
-
-            panoInterval = window.setInterval(function() {
-                try {
-                    var pov = pano.getPov();
-                    pov.heading += 0.1;
-                    pano.setPov(pov);
-                } catch(e) {
-                    clearInterval(panoInterval);
-                }
-            }, 10);
-
+    panoInterval = window.setInterval(function() {
+        var pov = pano.getPov();
+        if (pov) {
+            pov.heading += 0.1;
+            pano.setPov(pov);
         }
-    });
+    }, 10);
 
     $('#picture-gallery .post-author').html('@' + post.author_nickname);
     $('#picture-gallery p').html(post.caption);
