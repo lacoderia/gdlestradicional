@@ -80,6 +80,34 @@ function init() {
         window.location = "/mobile";
     }
 
+    $('.account-button').click(function(){
+        if(!$('#user-div').is(':visible')){
+            $('.nav-container-item').hide();
+            $('.icon-list-item a.selected').removeClass('selected');
+        }
+        $('.account-button a').addClass('selected');
+        $('#user-div').slideToggle('fast', function(){
+            if(!$('#user-div').is(':visible')){
+                $('.account-button a').removeClass('selected');
+            }
+        });
+
+    });
+
+    $('.newsfeed-button').click(function(){
+        if(!$('#news-feed').is(':visible')){
+            $('.nav-container-item').hide();
+            $('.icon-list-item a.selected').removeClass('selected');
+        }
+        $('.newsfeed-button a').addClass('selected');
+        $('.news-feed-canvas').css('height', $('#map-canvas').height() - 200)
+        $('#news-feed').slideToggle('fast', function(){
+            if(!$('#news-feed').is(':visible')){
+                $('.newsfeed-button a').removeClass('selected');
+            }
+        });
+    });
+
     $('.send-mail').click(function(event){
         event.preventDefault();
         var mail = $('#mail').val();
@@ -106,14 +134,6 @@ function init() {
         user = $("#ruby-values").data("user");
         showDashboard();
     }
-
-    var xBoundary = screen.width - $('#news-feed').outerWidth() - 16;
-    console.log(xBoundary)
-
-    $('#news-feed').draggable({
-        axis: 'x',
-        containment: [10, 10, xBoundary, 300]
-    });
 
     $('#latest-pic').draggable({
             containment: "document"
@@ -222,7 +242,7 @@ function init() {
         channel = dispatcher.subscribe('twitter_channel');
 
         channel.bind('new_tweet', function(data) {
-            console.log(data.featured)
+
             tweet_guid++;
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
@@ -398,7 +418,7 @@ function showLatestPictures() {
 
     latestPicturesTimeout = setTimeout(function(){
 
-		createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
+		//createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
 		setTimeout(function(){
 			$('#latest-pic').fadeOut(1000, function(){
 				$('#latest-pic').remove();
@@ -440,18 +460,22 @@ function launchApp() {
             }else{
                 showElements = true;
                 loadRoutes();
-                $('#news-feed').css('height', $('#map-canvas').height() - 100);
-                $('#news-feed').fadeIn(1000);
-                $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
+                $('.nav').fadeIn(1000);
+                $('.social-networks-icons').fadeIn(1000);
+                //$('#news-feed').css('height', $('#map-canvas').height() - 100);
+                //$('#news-feed').fadeIn(1000);
+                //$('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
                 $('#bottle').fadeIn(1000);
                 showLatestPictures();
             }
         }else{
             showElements = true;
             loadRoutes();
-            $('#news-feed').css('height', $('#map-canvas').height() - 100);
-            $('#news-feed').fadeIn(1000);
-            $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
+            $('.nav').fadeIn(1000);
+            $('.social-networks-icons').fadeIn(1000);
+            //$('#news-feed').css('height', $('#map-canvas').height() - 100);
+            //$('#news-feed').fadeIn(1000);
+            //$('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
             $('#bottle').fadeIn(1000);
             showLatestPictures();
         }
@@ -708,6 +732,7 @@ function paintOneMarker(routeIndex, markerIndex) {
             $('#' + routes[routeIndex].markers[j].jqueryId).unbind('mouseover mouseout');
 
             $('#' + routes[routeIndex].markers[j].jqueryId).mouseover(function(){
+
                 var marker_element = $(this);
                 marker_element.find('.marker_detail').show();
 
@@ -760,6 +785,7 @@ function paintOneMarker(routeIndex, markerIndex) {
 
         map.setOptions(mapOptionsRouteDetail);
         rectangle.setOptions({clickable: true});
+        $('.zoom-image').show();
     }
 }
 
@@ -779,7 +805,6 @@ function showAllRoutes() {
 
         $('#show-all-routes').hide();
         $('#influencer-picture').hide();
-        $('#news-feed').show();
 
         for (var i=0; i<tempRoute.length; i++) {
             tempRoute[i].setMap(null);
@@ -894,10 +919,6 @@ function showRouteDetail(routeIndex){
         }
 
         paintOneRoute(routeIndex);
-
-        $('#news-feed').hide();
-
-        $('#influencer-picture img').attr('src', routes[routeIndex].locations[0].recent_photo);
         $('#influencer-picture').fadeIn(1000);
 
     }
@@ -1228,8 +1249,8 @@ function showDashboard() {
         showUserPictures();
     });
 
-    $('#news-feed').css('height', $('#map-canvas').height() - 100);
-    $('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
+    //$('#news-feed').css('height', $('#map-canvas').height() - 100);
+    //$('#news-feed-lower').css('height', $('#news-feed').height() - $('#news-feed-upper').height());
 }
 
 function showInviteModal(){

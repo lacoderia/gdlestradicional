@@ -14,6 +14,7 @@ body {
 
 a.desktop {
   display: inline-block;
+  cursor: pointer;
   left: 50%;
   top: 50%;
   margin-left: -250px;
@@ -21,7 +22,6 @@ a.desktop {
   position: absolute;
 
   img{
-    cursor: pointer;
     width: 500px;
   }
 }
@@ -36,33 +36,61 @@ a.desktop {
   right: 0;
   bottom: 0;
   z-index: 1;
-  background-color:rgba(255,255,255,0.5); /*dim the background*/
+  background-color:rgba(0,0,0,0.3); /*dim the background*/
+}
+
+#intro{
+  img{
+    display: block;
+  }
+  .enter{
+    background-color: #033060;
+    color: white;
+    float: right;
+    padding: 10px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 150px;
+  }
 }
 
 #instragram-invite{
   background-color: rgba(0,0,0,0.5);
 
   .message{
-    background-color: white;
-    border: 3px solid #033060;
+
+    border: 3px solid #A6A7AA;
     border-radius: 5px;
-    height: 160px;
+    color: white;
+    height: 80px;
     left: 50%;
     margin-left: -225px;
     margin-top: -125px;
     padding: 1em;
     position: relative;
     text-align: center;
+    text-transform: uppercase;
     top: 50%;
     width: 450px;
 
+    background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
     h3{
-      color: #033060;
+      color: white;
+      font-size: 16px;
+      font-weight: 400;
       margin: 10px 0px 6px 0px;
       padding: 0px;
     }
 
     .close_modal{
+      color: #A6A7AA;
       cursor: pointer;
       position: absolute;
       right: 10px;
@@ -75,9 +103,11 @@ a.desktop {
   background-color: rgba(0,0,0,0.5);
 
   .message{
-    background-color: white;
-    border: 3px solid #033060;
+
+    border: 3px solid #A6A7AA;
     border-radius: 5px;
+    color: white;
+    font-size: 14px;
     height: 160px;
     left: 50%;
     margin-left: -225px;
@@ -85,13 +115,25 @@ a.desktop {
     padding: 1em;
     position: relative;
     text-align: center;
+    text-transform: uppercase;
     top: 50%;
     width: 450px;
 
+    background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
     h3{
-      color: #033060;
+      border-bottom: 1px solid #A6A7AA;
+      color: white;
+      font-size: 16px;
+      font-weight: 400;
       margin: 10px 0px 6px 0px;
-      padding: 0px;
+      padding: 0px 0px 6px;
     }
 
 
@@ -106,7 +148,7 @@ a.desktop {
     }
 
     .privacity{
-      font-size: 16px;
+      font-size: 12px;
       text-align: right;
     }
   }
@@ -116,9 +158,10 @@ a.desktop {
   background-color: rgba(0,0,0,0.5);
 
   .message{
-    background-color: white;
-    border: 3px solid #033060;
+
+    border: 3px solid #A6A7AA;
     border-radius: 5px;
+    color: white;
     height: 120px;
     left: 50%;
     margin-left: -225px;
@@ -126,14 +169,24 @@ a.desktop {
     padding: 1em;
     position: relative;
     text-align: center;
+    text-transform: uppercase;
     top: 50%;
     width: 450px;
+
+    background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
     -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
     -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
     box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
 
     .close_modal{
+      color: #A6A7AA;
       cursor: pointer;
       position: absolute;
       right: 10px;
@@ -141,9 +194,12 @@ a.desktop {
     }
 
     h3{
-      color: #033060;
-      margin: 10px 0px 0px 0px;
-      padding: 0px;
+      border-bottom: 1px solid #A6A7AA;
+      color: white;
+      font-size: 16px;
+      font-weight: 400;
+      margin: 10px 0px 6px 0px;
+      padding: 0px 0px 6px;
     }
 
     .share-buttons{
@@ -204,21 +260,6 @@ a.desktop {
   height: 100%;
 }
 
-#show-all-routes {
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-  position: absolute;
-  right: 1.6em;
-  vertical-align: middle;
-  top: 1.3em;
-  z-index: 99;
-
-  .icon{
-    font-size: 16px;
-  }
-}
-
 #map-canvas {
   position: absolute;
   height: 100%;
@@ -231,9 +272,10 @@ a.desktop {
 
   .marker_detail{
     display:none;
-    background-color: white;
-    border: 1px solid #002131;
+    background-color: #033060;
+    border: 1px solid #A6A7AA;
     border-radius: 5px;
+    color: white;
     padding: 1em;
     position: absolute;
     width: 170px;
@@ -247,7 +289,7 @@ a.desktop {
     .arrow-down{
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-top: 10px solid white;
+      border-top: 10px solid #033060;
       height: 0;
       position: absolute;
       bottom: -10px;
@@ -261,7 +303,7 @@ a.desktop {
     .arrow-up{
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-bottom: 10px solid white;
+      border-bottom: 10px solid #033060;
       height: 0;
       position: absolute;
       top: -10px;
@@ -298,11 +340,14 @@ a.desktop {
   }
 
   .route-name {
+    color: white;
     display: none;
     font-size: 20px;
+    font-weight: 400;
     padding-bottom: 10px;
     vertical-align: bottom;
     text-transform: uppercase;
+    width: 200px;
   }
 }
 
@@ -545,7 +590,7 @@ a.desktop {
   cursor: move;
   display: none;
   position: absolute;
-  bottom: 1.8em;
+  bottom: 3.6em;
   right: 3em;
 
 
@@ -592,77 +637,125 @@ a.desktop {
 }
 
 #influencer-gallery {
+  box-sizing: content-box;
+  color: white;
   display: inline-block;
+  padding: 1em;
   position: relative;
-  background-color: #FFF;
-  border: 6px solid #033060;
+  background-color: #033060;
+  border: 6px solid #A6A7AA;
   border-radius: 5px;
-  height: 345px;
-  width: 420px;
+  width: 500px;
   vertical-align: middle;
   text-align: left;
   overflow: hidden;
 
+  p{
+    font-size: 14px;
+    font-weight: 300;
+  }
+
   #influencer-video {
     border: none;
+    display: block;
+    margin: 0px auto;
   }
 }
 
-#news-feed {
-  background: transparent;
-  display: none;
-  font-size: 0px;
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  height: 80%;
-  width: 300px;
+.social-networks-icons{
+  position: fixed;
+  display: inline-block;
+  font-size: 18px;
+  right: 30px;
+  top: 20px;
+  vertical-align: top;
+  width: 40px;
 
-  .news-feed-header{    ;
-    box-sizing: border-box;
-    color: #A6A7AA;
-    cursor: move;
-    font-size: 1.5em;
-    font-weight: 700;
-    margin: 0px;
+  ul{
+    list-style: none;
+    margin: 0px 0px 0px 8px;
     padding: 0px;
-    text-transform: uppercase;
+
+    a{
+      color: white;
+      text-decoration: none;
+    }
+
+    li{
+      margin-bottom: 0.6em;
+    }
+  }
+}
+
+.nav{
+  background: transparent;
+  font-size: 0px;
+  position: fixed;
+  top: 16px;
+  right: 70px;
+  width: 400px;
+  z-index: 90;
+
+  .news-feed-header{
 
     img.logo-gdl-tradicional{
-      margin: 0;
+      max-width: 350px;
       width: 100%;
     }
 
+    img.logo-cuervo{
+      max-width: 47px;
+      width: 100%;
+    }
   }
 
-
-  .social-networks-icons{
-    display: inline-block;
-    font-size: 18px;
-    vertical-align: top;
-    width: 40px;
+  .icon-list{
+    font-size: 0px;
+    float: right;
+    margin-right: 3px;
+    width: 250px;
 
     ul{
-      list-style: none;
-      margin: 0px 0px 0px 8px;
+      background-color: #033060;
+      margin: 0px;
       padding: 0px;
 
-      a{
-        color: white;
-        text-decoration: none;
-      }
-
       li{
-        margin-bottom: 0.6em;
+        box-sizing: border-box;
+        font-size: 20px;
+        display: inline-block;
+        margin: 0px;
+        padding: 0px;
+        text-align: center;
+        vertical-align: top;
+        width: 83px;
+
+        a{
+          color: white;
+          cursor: pointer;
+          display: inline-block;
+          padding: 0.8em 0em;
+          width: 100%;
+        }
+
+        a:hover{
+          background-color: #023974;
+        }
+
+        a.selected{
+          background-color: #021B3B;
+        }
       }
     }
   }
 
-  .news-feed-canvas{
+  .nav-container{
     background: #031c3c; /* Old browsers */
-    background: white;
-    display: inline-block;
-    vertical-align: top;
+    box-sizing: border-box;
+    float: right;
+    margin-right: 3px;
+    padding: 0px;
+    position: relative;
     width: 250px;
 
     background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
@@ -690,6 +783,10 @@ a.desktop {
       margin-bottom: 16px;
     }
 
+    .participate{
+      font-size: 16px;
+    }
+
     .tribute{
       font-size: 20px;
       font-weight: 700;
@@ -710,11 +807,100 @@ a.desktop {
       }
     }
 
-    #news-feed-upper{
-      font-size: 16px;
+    #dashboard {
+      background-color: white;
+      border-radius: 5px;
+      display: none;
+      padding: 0px;
+      margin: 10px;
+
+      table{
+        border-collapse: separate;
+        border-spacing: 6px;
+        width: 100%;
+
+        td{
+          box-sizing: border-box;
+          width: 30%;
+        }
+      }
+
+      .dashboard-element {
+        height: 75px;
+        padding-left: 6px;
+        vertical-align: middle;
+
+        #user-name{
+          color: #033060;
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        #instagram-logout {
+          cursor: pointer;
+          font-size: 12px;
+          font-weight: 300;
+          margin-top: 2.5px;
+          text-decoration: underline;
+        }
+
+      }
+
+      .dashboard-element-pic {
+        height: 70px;
+        vertical-align: middle;
+      }
+
+      .dashboard-element-pic img {
+        height: 100%;
+        width: 100%;
+      }
+
+      .user-element:first-child{
+        cursor: default;
+      }
+
+      .user-element {
+        border: 1px solid #A6A7AA;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        height: 50px;
+        vertical-align: middle;
+        text-align: center;
+
+        .icon{
+          color: #033060;
+          display: inline-block;
+          margin-top: 4px;
+        }
+
+        .icon-name{
+          font-size: 10px;
+          margin-bottom: 4px;
+        }
+      }
+
+
+    }
+
+    #news-feed {
+      background: transparent;
+      box-sizing: border-box;
+      display: none;
+      font-size: 0px;
+      padding: 10px;
+      height: 80%;
+      width: 100%;
     }
   }
+
 }
+
+.clearfix{
+  clear: both;
+}
+
 
 #twitter-widget-0 {
   height: 100% !important;
@@ -734,86 +920,7 @@ a.desktop {
   }
 }
 
-#news-feed-lower{
-  box-sizing: border-box;
-  padding: 0px 10px 10px;
-}
 
-#dashboard {
-  background-color: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  display: none;
-  padding: 5px;
-  margin: 10px;
-
-  table{
-    border-collapse: separate;
-    border-spacing: 6px;
-
-    td{
-      box-sizing: border-box;
-      width: 30%;
-    }
-  }
-
-  .dashboard-element {
-    height: 75px;
-    padding-left: 6px;
-    vertical-align: middle;
-
-    #user-name{
-      color: #033060;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    #instagram-logout {
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 300;
-      margin-top: 2.5px;
-      text-decoration: underline;
-    }
-
-  }
-
-  .dashboard-element-pic {
-    height: 70px;
-    vertical-align: middle;
-  }
-
-  .dashboard-element-pic img {
-    height: 100%;
-    width: 100%;
-  }
-
-  .user-element:first-child{
-    cursor: default;
-  }
-
-  .user-element {
-    border: 1px solid #A6A7AA;
-    border-radius: 5px;
-    cursor: pointer;
-    height: 50px;
-    vertical-align: middle;
-    text-align: center;
-
-    .icon{
-      color: #033060;
-      display: inline-block;
-      margin-top: 4px;
-    }
-
-    .icon-name{
-      font-size: 10px;
-      margin-bottom: 4px;
-    }
-  }
-
-
-}
 
 /** marker animado **/
 
@@ -822,10 +929,11 @@ a.desktop {
   z-index: 800;
 
   .tweet_marker_detail{
-    background-color: white;
-    border: 1px solid #002131;
+    background-color: #033060;
+    border: 1px solid #A6A7AA;
     border-radius: 5px;
     bottom: 40px;
+    color: white;
     left: -10px;
     padding: 1em;
     position: absolute;
@@ -838,14 +946,13 @@ a.desktop {
     }
 
     p.author{
-      color: #00cae9;
-      font-weight: bolder;
+      font-weight: 700;
     }
 
     .arrow-down{
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-top: 10px solid white;
+      border-top: 10px solid #033060;
       height: 0;
       position: absolute;
       bottom: -10px;
@@ -855,7 +962,7 @@ a.desktop {
     .arrow-up{
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-bottom: 10px solid white;
+      border-bottom: 10px solid #033060;
       height: 0;
       position: absolute;
       top: -10px;
@@ -930,6 +1037,34 @@ a.desktop {
   opacity: 0;
   box-shadow: 0 0 1px 2px #00cae9;
   animation-delay: 0.2s;
+}
+
+.zoom-image{
+  bottom: 1.4em;
+  position: fixed;
+  right: 3em;
+  width: 70px;
+
+  img{
+    width: 100%;
+  }
+}
+
+#show-all-routes {
+  bottom: 1.4em;
+  cursor: pointer;
+  position: fixed;
+  right: 8em;
+  width: 102px;
+  z-index: 400;
+
+  .icon{
+    font-size: 16px;
+  }
+
+  img{
+    width: 100%;
+  }
 }
 
 @keyframes pulsate {

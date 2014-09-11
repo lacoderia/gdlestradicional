@@ -101,9 +101,10 @@ header{
   }
 
   .header-mobile{
-    background: transparent url('/assets/img-bkg-header-mobile.png') repeat-x top left;
+    background: transparent url('/assets/logo.png') repeat-x top left;
+    background-size: 100%;
     color: white;
-    height: 50px;
+    height: 42px;
     margin: 0px auto;
     padding: 0em;
 
