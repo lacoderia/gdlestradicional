@@ -10,11 +10,27 @@
       <li><a href="https://twitter.com/jctradicional" target="_blank"><span class="icon-uniE600"></span></a></li>
       <li><a href="https://www.facebook.com/jctradicional" target="_blank"><span class="icon-uniE601"></span></a></li>
     </ul>
+    <ul class="help-icon">
+      <li class="help-button icon-list-item" onclick="showHelpGallery()"><a title="Ayuda"><span class="icon-uniE60E"></span></a></li>
+    </ul>
   </nav>
 </header>
 <div id="gallery" style="display: none;">
-  <span class="close-gallery"><span class="icon-uniE603"></span></span>
+  <span class="close-gallery" onclick="hidePictureGallery()"><span class="icon-uniE603"></span></span>
   <div id="slick-carousel"></div>
+</div>
+<div id="help-gallery" style="display: none;">
+  <span class="close-gallery" onclick="hideHelpGallery()"><span class="icon-uniE603"></span></span>
+  <div id="help-slick-carousel">
+    <div><img src="/assets/help-mobile/ayuda_mobile_01.png"></div>
+    <div><img src="/assets/help-mobile/ayuda_mobile_02.png"></div>
+    <div><img src="/assets/help-mobile/ayuda_mobile_03.png"></div>
+    <div><img src="/assets/help-mobile/ayuda_mobile_04.png"></div>
+    <div><img src="/assets/help-mobile/ayuda_mobile_05.png"></div>
+    <div><img src="/assets/help-mobile/ayuda_mobile_06.png"></div>
+    <div><img src="/assets/help-mobile/ayuda_mobile_07.png"></div>
+    <div><img src="/assets/help-mobile/ayuda_mobile_08.png"></div>
+  </div>
 </div>
 <div id="map_container">
   <div id="map-canvas"></div>

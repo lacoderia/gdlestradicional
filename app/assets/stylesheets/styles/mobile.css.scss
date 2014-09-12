@@ -114,6 +114,11 @@ header{
     .routes{
       float: left;
     }
+
+    .help-icon{
+      float: right;
+      cursor: pointer;
+    }
   }
 
   .header-mobile{
@@ -179,7 +184,7 @@ header{
 
 }
 
-#gallery{
+#gallery, #help-gallery{
 
   background: #002131 url('/assets/img-bkg-gallery-mobile.png') no-repeat top left;
   background-size: cover;
@@ -201,7 +206,7 @@ header{
     z-index: 100;
   }
 
-  #slick-carousel{
+  #slick-carousel, #help-slick-carousel{
     height: 100%;
     width: 100%;
 
@@ -265,6 +270,15 @@ header{
       }
     }
   }
+}
+
+#help-slick-carousel{
+    img {
+      display: block;
+      margin: auto;
+      width: 70%;
+      max-width: 70% !important;
+    }
 }
 
 .first-marker {

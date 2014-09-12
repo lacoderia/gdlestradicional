@@ -5,6 +5,22 @@
   <div id="bottle">
     <img src="/assets/bottle_631.png" alt="José Cuervo Tradicional">
   </div>
+  <div id="help-gallery-container" onclick="helpGalleryClick(event)">
+    <div id="help-gallery">
+      <div id="help-slick-carousel">
+        <div><img src="/assets/help/Pantalla-de-Ayuda_01.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_02.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_03.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_04.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_05.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_06.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_07.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_08.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_09.png"></div>
+        <div><img src="/assets/help/Pantalla-de-Ayuda_10.png"></div>
+      </div>
+    </div>
+  </div>
   <div id="picture-gallery-container" onclick="pictureGalleryClick(event)">
     <div id="picture-gallery">
       <input type="hidden" id="current-picture-id" value="0"/>
@@ -70,7 +86,7 @@
         <ul>
           <li class="newsfeed-button icon-list-item"><a title="Noticias"><span class="icon-uniE60D"></span></a></li>
           <li class="account-button icon-list-item"><a title="Cuenta"><span class="icon-uniE610"></span></a></li>
-          <li class="help-button icon-list-item"><a title="Ayuda"><span class="icon-uniE60E"></span></a></li>
+          <li class="help-button icon-list-item" onclick="showHelpGallery()"><a title="Ayuda"><span class="icon-uniE60E"></span></a></li>
         </ul>
         <div class="clearfix"></div>
     </div>

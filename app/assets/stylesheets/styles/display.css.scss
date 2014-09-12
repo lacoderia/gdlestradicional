@@ -493,7 +493,7 @@ a.desktop {
   }
 }
 
-#picture-gallery-container, #user-picture-gallery-container {
+#picture-gallery-container, #user-picture-gallery-container, #help-gallery-container {
   display: none;
   position: absolute;
   top:0;
@@ -505,7 +505,7 @@ a.desktop {
   background-color: rgba(0,0,0,0.5);
 }
 
-#picture-gallery-container:before, #user-picture-gallery-container:before {
+#picture-gallery-container:before, #user-picture-gallery-container:before, #help-gallery-container:before {
   content: '';
   display: inline-block;
   height: 100%;
@@ -644,6 +644,31 @@ a.desktop {
     height: 100%;
     width: 100%;
     z-index: 0;
+  }
+}
+
+#help-gallery{
+  display: inline-block;
+  position:relative;
+  background-color: #A6A7AA;
+  border: 6px solid #033060;
+  border-radius: 5px;
+  width: 700px;
+  vertical-align: middle;
+  text-align: left;
+  overflow: hidden;
+
+  img {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    width: 700px;
+    z-index: 1;
+  }
+
+  .slick-dots {
+    background-color: #A6A7AA;
+    font-size: 30px;
   }
 }
 

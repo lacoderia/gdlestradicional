@@ -377,6 +377,27 @@ function init() {
     }
 }
 
+function showHelpGallery() {
+    $('#help-gallery-container').show();
+    $('#help-slick-carousel').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true,
+        arrows: true
+    });
+}
+
+function hideHelpGallery() {
+    $('#help-gallery-container').hide();
+}
+
+function helpGalleryClick(e) {
+    if (!$(e.target).closest('#help-gallery').get(0)) {
+        hideHelpGallery();
+    }
+}
+
 function getLatestPictures() {
     $.ajax({
         type: "GET",
@@ -424,7 +445,7 @@ function showLatestPictures() {
 
     latestPicturesTimeout = setTimeout(function(){
 
-        createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
+        //createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
         setTimeout(function(){
             $('#latest-pic').fadeOut(1000, function(){
                 $('#latest-pic').remove();

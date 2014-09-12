@@ -109,10 +109,6 @@ function init() {
         }
     });
 
-    $('.close-gallery').click(function(){
-       hidePictureGallery();
-    });
-
     $('#simple-menu').sidr();
 
     $('#sidr .close-menu').click(function(event){
@@ -828,6 +824,22 @@ function showRouteDetail(routeIndex){
         tempRoute = [];
 
     }
+}
+
+function showHelpGallery() {
+    $('#help-gallery').show();
+    $('#map_container').hide();
+    $('#help-slick-carousel').unslick();
+    $('#help-slick-carousel').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true
+    });
+}
+
+function hideHelpGallery() {
+    $('#help-gallery').hide();
 }
 
 function showPictureGallery(galleryPictures) {
