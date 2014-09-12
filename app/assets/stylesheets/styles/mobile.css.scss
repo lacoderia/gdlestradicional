@@ -13,6 +13,31 @@ a.mobile{
 
 }
 
+#terms-privacity{
+  background-color: rgba(0,0,0,0.5);
+
+  .message{
+
+    border: 3px solid #A6A7AA;
+    border-radius: 5px;
+    color: white;
+    height: 80%;
+    left: 5%;
+    padding: 1em;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    top: 5%;
+    overflow: scroll;
+    width: 78%;
+
+    p, ol, ul{
+      font-size: 7px;
+    }
+  }
+
+}
+
 #intro {
   display: block;
   position: absolute;
@@ -24,23 +49,20 @@ a.mobile{
   bottom: 0;
   z-index: 1;
   background-color:rgba(0,0,0,0.3); /*dim the background*/
-}
 
-#intro{
   img{
     display: block;
   }
   .enter{
-    background-color: #033060;
-    color: white;
-    font-size: 12px;
+    font-size: 10px;
     float: right;
     padding: 5px 15px;
     text-align: center;
     text-transform: uppercase;
-    width: 100px;
+    width: 150px;
   }
 }
+
 
 #mail-form{
 
@@ -57,12 +79,21 @@ a.mobile{
 #invites{
 
   .message{
-    height: 120px;
+    height: 170px;
     left: 50%;
     margin-left: -143px;
     margin-top: -125px;
     top: 50%;
     width: 250px;
+
+    .share-buttons{
+      text-align: center;
+
+      .fb{
+        margin-right: 0px;
+        margin-bottom: 1em;
+      }
+    }
 
   }
 }
@@ -323,33 +354,44 @@ header{
 }
 
 #influencer-picture {
-  display: none;
-  position: absolute;
-  bottom: 5% !important;
+
+  bottom: 11% !important;
+  cursor: move;
+  display: inline-block;
   left: 2% !important;
-  top: auto !important;
   margin-left: 0px !important;
+  position: absolute;
+  top: auto !important;
+  text-align: center;
+  width: 110px;
 
-  width: 60px;
-  height: 60px;
+  .influencer-picture-title{
 
-  overflow: hidden;
-  cursor: pointer;
-
-  background-color: white;
-  border: 2px solid white;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  border-radius: 50px;
-
-  -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
-  -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
-  box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
-
-  img {
-    width: 100%;
-    height: 100%;
+    img{
+      max-width: 110px;
+      width: 100%
+    }
   }
+
+  .influencer-images{
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 50px;
+    display: inline-block;
+    height: 60px;
+    overflow: hidden;
+    width: 60px;
+
+    -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+    -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+    box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+
+    .image-influencer, .image-route{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
 }
 
 #influencer-container {
@@ -373,16 +415,14 @@ header{
 }
 
 #influencer-gallery {
-  display: inline-block;
-  position: relative;
-  background-color: #FFF;
-  border: 6px solid #01BeC7;
   border-radius: 5px;
-  height: 246px;
-  width: 300px;
-  vertical-align: middle;
+  display: inline-block;
+  height: 80%;
+  overflow: scroll;
+  position: relative;
   text-align: left;
-  overflow: hidden;
+  vertical-align: middle;
+  width: 250px;
 
   #influencer-video {
     border: none;
@@ -397,6 +437,21 @@ a.close-menu{
   text-decoration: none;
   padding: 0.8em 1em;
   width: 100px;
+}
+
+.footer{
+  bottom: 2.5em;
+  box-sizing: content-box;
+  color: white;
+  font-size: 8px;
+  display: inline-block;
+  left: 0px;
+  padding: 1.5em 1em;
+  position: fixed;
+  text-align: left;
+  width: 250px;
+  z-index: 1;
+
 }
 
 @media (min-width: 768px) {
