@@ -185,7 +185,7 @@ function init() {
                 '<div class="pulse"></div>'+
                 '</div>';
 
-            if(tweet_guid % 2 == 0){
+            if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                     '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
                     '<div class="pin icon-uniE600"></div>' +
@@ -415,9 +415,11 @@ function launchApp() {
         if(!mailSent){
             if (user && !user.email) {
                 showMailModal();
+                $('.footer').fadeIn(1000);
             }else{
                 showElements = true;
                 loadRoutes();
+                $('.footer').fadeIn(1000);
                 //showLatestPictures();
             }
         }else{
@@ -425,6 +427,9 @@ function launchApp() {
             loadRoutes();
             //showLatestPictures();
         }
+
+        $('.account-button a').addClass('selected');
+        $('#user-div').slideToggle('fast');
     });
 }
 
@@ -453,6 +458,14 @@ function loadRoutes() {
                     var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
 
                     var markerId = 'marker_' + i + '_' + j;
+                    var markerImageUrl = '/assets/marker_azul.png';
+                    var aditionalText = '';
+
+                    if(routes[i].locations[j].especial){
+                        markerImageUrl = '/assets/marker_azul_amarillo.png';
+                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    }
+
                     if (j == 0) {
 
                         var marker = new RichMarker({
@@ -463,8 +476,9 @@ function loadRoutes() {
                             draggable: false,
                             routeIndex: i,
                             jqueryId: markerId,
-                            content: '<div id="' + markerId + '" class="first-marker">' +
-                                '<img src="/assets/marker_azul.png"/>' +
+                            content: '<div id="' + markerId + '" class="first-marker marker">' +
+                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<img src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
@@ -476,6 +490,14 @@ function loadRoutes() {
 
                     } else {
 
+                        var markerImageUrl = '/assets/cuadrito_gris.png';
+                        var aditionalText = '';
+
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/cuadrito_amarillo.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                        }
+
                         // Si no es el primer punto pintamos un cuadro
                         var marker = new RichMarker({
                             position: routeCoordinate,
@@ -485,8 +507,9 @@ function loadRoutes() {
                             anchor: new google.maps.Size(-7, -7),
                             routeIndex: i,
                             jqueryId: markerId,
-                            content: '<div id="' + markerId + '" class="secondary-marker">' +
-                                '<img src="/assets/cuadrito.png"/>' +
+                            content: '<div id="' + markerId + '" class="secondary-marker marker">' +
+                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<img src="' + markerImageUrl + '"/>' +
                                 '</div>'
                         });
 
@@ -1055,6 +1078,17 @@ function sendMailInfo(mail){
             }
         });
     }
+}
+
+function showTermsPrivacity(){
+    $('#terms-privacity').show();
+    $('#terms-privacity').find('.close_modal').click(function(){
+        hideInstragramModal();
+    });
+}
+
+function hideTermsPrivacity(){
+    $('#terms-privacity').hide();
 }
 
 function validateEmail(email) {

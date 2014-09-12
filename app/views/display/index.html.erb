@@ -41,9 +41,14 @@
       </div>
     </div>
   </div>
-  <div id="influencer-picture" onclick="showInfluencerGallery()">
-    <img src="/assets/icono_influencer.png" alt="Influencer" class="image-influencer" style="display: none;" >
-    <img src="/assets/icono_ruta.png" alt="Ruta" class="image-route" style="display: none;">
+  <div id="influencer-picture" onclick="showInfluencerGallery()" style="display: none;">
+    <div class="influencer-picture-title">
+      <img src="/assets/btn_conoce.png" alt="Conoce más sobre esta ruta" class="influencer-message">
+    </div>
+    <div class="influencer-images">
+      <img src="/assets/icono_influencer.png" alt="Influencer" class="image-influencer" style="display: none;" >
+      <img src="/assets/icono_ruta.png" alt="Ruta" class="image-route" style="display: none;">
+    </div>
   </div>
   <div id="influencer-container" onclick="influencerGalleryClick(event)">
     <div id="influencer-gallery">
@@ -66,6 +71,10 @@
     <div class="news-feed-header"r>
       <img src="/assets/logo_cuervo.png" alt="Cuervo Tradicional" class="logo-cuervo"><img src="/assets/logo.png" alt="GDL es Tradicional" class="logo-gdl-tradicional">
     </div>
+    <div class="promo">
+      <a class="button tribute" href="#" title="Únete al homenaje" onclick=""><span>Únete al homenaje</span></a>
+      <div class="clearfix"></div>
+    </div>
     <div class="icon-list">
         <ul>
           <li class="newsfeed-button icon-list-item"><a title="Noticias"><span class="icon-uniE60D"></span></a></li>
@@ -77,7 +86,6 @@
     <div class="nav-container">
         <div id="user-div" class="nav-container-item" style="display: none;">
         <div id="login-btn">
-          <a class="button tribute" href="#" title="Únete al homenaje" onclick=""><img src="/assets/logo_cuervo.png" alt="Cuervo tradicional"><span>Únete al homenaje</span></a>
           <a class="button participate" href="#" title="Participa" onclick="login()">Participa</a>
         </div>
         <div id="dashboard">
@@ -135,7 +143,7 @@
 <div id="intro">
   <a class="desktop" onclick='launchApp()'>
     <img src="/assets/logo.png" alt="Entrar a Guadalajara es Tradicional">
-    <div class="enter">Comienza Aquí</div>
+    <div class="enter">Al entrar confirmas ser mayor de 18 años</div>
     <div class="clearfix"></div>
   </a>
 </div>

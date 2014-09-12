@@ -100,7 +100,7 @@ function init() {
             $('.icon-list-item a.selected').removeClass('selected');
         }
         $('.newsfeed-button a').addClass('selected');
-        $('.news-feed-canvas').css('height', $('#map-canvas').height() - 200)
+        $('.news-feed-canvas').css('height', $('#map-canvas').height() - 250)
         $('#news-feed').slideToggle('fast', function(){
             if(!$('#news-feed').is(':visible')){
                 $('.newsfeed-button a').removeClass('selected');
@@ -421,7 +421,9 @@ function createLatestPictureMarker(pic, nickname){
 }
 
 function showLatestPictures() {
-
+    latestPictures.push({
+        instagram_id:'786286069276426306_4290975', caption:'Mykonos in Tlaquepaque #scouting #gdlestradicional #museum #brothers #lovemyjob #youbetterwork', author_id:'4290975', author_nickname:'paulorendain', lat:20.68734075, long:-103.264199421, url_low:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_a.jpg', url_thumb:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_s.jpg', url_normal:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_n.jpg'
+    })
     latestPicturesTimeout = setTimeout(function(){
 
         createLatestPictureMarker(latestPictures[0].url_low, latestPictures[0].author_nickname);
@@ -482,11 +484,8 @@ function launchApp() {
             showLatestPictures();
         }
 
-        if(user){
             $('.account-button a').addClass('selected');
             $('#user-div').slideToggle('fast');
-        }
-
 
     });
 }
