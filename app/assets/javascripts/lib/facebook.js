@@ -19,6 +19,6 @@ window.fbAsyncInit = function() {
 function shareFB() {
   FB.ui({
     method: 'share',
-    href: 'http://9gag.com'
+    href: 'http://gdlestradicional.com'
   }, function(response){});
 }
