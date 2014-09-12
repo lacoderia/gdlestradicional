@@ -26,7 +26,7 @@ a.desktop {
   }
 }
 
-#intro, #invites, #mail-form, #instragram-invite {
+#intro, #invites, #mail-form, #instragram-invite, #terms-privacity{
   display: block;
   position: fixed;
   width: 100%;
@@ -52,6 +52,63 @@ a.desktop {
     text-transform: uppercase;
     width: 150px;
   }
+}
+
+#terms-privacity{
+  background-color: rgba(0,0,0,0.5);
+
+  .message{
+
+    border: 3px solid #A6A7AA;
+    border-radius: 5px;
+    color: white;
+    height: 80%;
+    left: 10%;
+    padding: 1em;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    top: 7%;
+    overflow: scroll;
+    width: 80%;
+
+    background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    h3{
+      border-bottom: 1px solid #A6A7AA;
+      color: white;
+      font-size: 16px;
+      font-weight: 400;
+      margin: 10px 0px 6px 0px;
+      padding: 0px;
+    }
+
+    p, ul, ol{
+      font-size: 12px;
+      font-weight: 300;
+      text-align: left;
+
+      a{
+        color: white;
+        cursor: pointer;
+      }
+    }
+
+    .close_modal{
+      color: #A6A7AA;
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+  }
+
 }
 
 #instragram-invite{
@@ -396,7 +453,7 @@ a.desktop {
   background-color: white;
   border: 1px solid white;
   border-radius: 5px;
-	font-size: .8em;
+  font-size: .8em;
   height: 120px;
   width: 95px;
   padding: 2px;
@@ -413,23 +470,27 @@ a.desktop {
 }
 
 #latest-pic {
-	display: none;
-  background-color: white;
-  border: 1px solid white;
-  border-radius: 5px;
-  height: 180px;
-  width: 150px;
+  display: none;
+  background-color: #A6A7AA;
+  border: 2px solid #033060;
+  height: 195px;
+  width: 180px;
   padding: 2px;
-  -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
-  -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
-  box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+  text-align: center;
+
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.31);
+  -moz-box-shadow:    2px 2px 5px 0px rgba(50, 50, 50, 0.31);
+  box-shadow:         2px 2px 5px 0px rgba(50, 50, 50, 0.31);
 
   img{
+    max-width: 150px;
+    margin: 6px 0px 3px;
     width: 100%;
   }
-	div{
-		text-align: center;
-	}
+
+  div{
+      text-align: center;
+  }
 }
 
 #picture-gallery-container, #user-picture-gallery-container {
@@ -1077,6 +1138,23 @@ a.desktop {
 
   img{
     width: 100%;
+  }
+}
+
+.footer{
+  bottom: 0px;
+  color: white;
+  font-size: 10px;
+  display: inline-block;
+  left: 190px;
+  padding: 1.5em 0em;
+  position: fixed;
+  width: 600px;
+  z-index: 1;
+
+  a{
+    color: white;
+    text-decoration: none;
   }
 }
 
