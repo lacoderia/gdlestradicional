@@ -84,7 +84,7 @@
 
 <div id="invites" style="display: none;">
   <div class="message">
-    <span class="close_modal">x</span>
+    <span class="close_modal" onclick="hideInviteModal()">x</span>
     <h3>Invita a tus amigos</h3>
     <div class="share-buttons">
       <a href="#" class="fb" onclick="shareFB()"><span class="icon-uniE601 icon"></span> Facebook</a>
@@ -113,6 +113,15 @@
     </div>
     <div class="success-message" style="display: none;">
       <h3>Gracias, espere un momento y se le redirigirá a GDLesTradicional</h3>
+    </div>
+  </div>
+</div>
+
+<div id="instragram-invite" style="display: none;">
+  <div class="message">
+    <span class="close_modal" onclick="hideInstragramModal()">x</span>
+    <div class="instragram-invite-message">
+      <h3>Participa compartiendo fotos con el hashtag #GDLesTradicional desde Instagram</h3>
     </div>
   </div>
 </div>

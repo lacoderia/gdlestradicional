@@ -1400,9 +1400,6 @@ function showInviteModal(){
     var intent = 'https://twitter.com/intent/tweet?text=' + tweet + '&hashtags=GDLESTRADICIONAL&url='+ inviteURL;
     $('#invites').fadeIn(500);
     $(".share-buttons .tw").attr('href', intent);
-    $('.close_modal').click(function(){
-        hideInviteModal();
-    });
 }
 
 function hideInviteModal(){
@@ -1415,9 +1412,6 @@ function hideInstragramModal(){
 
 function showInstragramModal(){
     $('#instragram-invite').fadeIn(500);
-    $('#instragram-invite').find('.close_modal').click(function(){
-        hideInstragramModal();
-    });
 }
 
 function showMailModal(){
@@ -1456,9 +1450,6 @@ function sendMailInfo(mail){
 
 function showTermsPrivacity(){
     $('#terms-privacity').show();
-    $('#terms-privacity').find('.close_modal').click(function(){
-        hideInstragramModal();
-    });
 }
 
 function hideTermsPrivacity(){

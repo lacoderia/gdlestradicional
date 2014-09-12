@@ -91,9 +91,21 @@ function init() {
         }
     });
 
+    $('#terms-privacity').click(function(event){
+        if(event.target.id == 'terms-privacity'){
+            hideTermsPrivacity();
+        }
+    });
+
     $('#invites').click(function(event){
         if(event.target.id == 'invites'){
             hideInviteModal();
+        }
+    });
+
+    $('#instragram-invite').click(function(event){
+        if(event.target.id == 'instragram-invite'){
+            hideInstragramModal();
         }
     });
 
@@ -954,6 +966,8 @@ function showUserPictures(){
     if (user.photos.length > 0){
         $.sidr('close', 'sidr');
         showPictureGallery(user.photos);
+    } else {
+        showInstragramModal();
     }
 }
 
@@ -992,20 +1006,25 @@ function showInviteModal() {
     $.sidr('close', 'sidr');
     $('#invites').fadeIn(500);
     $(".share-buttons .tw").attr('href', intent);
-    $('.close_modal').click(function(){
-        hideInviteModal();
-    });
 }
 
 function hideInviteModal(){
+    $.sidr('close', 'sidr');
     $('#invites').fadeOut(500);
 }
 
+function hideInstragramModal(){
+    $('#instragram-invite').fadeOut(500);
+}
+
+function showInstragramModal(){
+    $.sidr('close', 'sidr');
+    $('#instragram-invite').fadeIn(500);
+}
+
 function showMailModal(){
+    $.sidr('close', 'sidr');
     $('#mail-form').fadeIn(500);
-    $('.close_modal').click(function(){
-        hideInviteModal();
-    });
 }
 
 function hideMailModal(){
