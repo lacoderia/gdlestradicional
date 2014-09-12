@@ -17,7 +17,7 @@ ActiveAdmin.register Influencer do
 			f.input :name
 			f.input :description
 			f.input :is_especial
-			f.input :video_url
+			f.input :video_url, :placeholder => "Pon solamente el código del video. Por ejemplo, si el url del video es http://youtu.be/fMPd5siU0l4, pon solamente fMPd5siU0l4"
 		end
 		f.actions
 	end

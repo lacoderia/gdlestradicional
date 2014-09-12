@@ -1,4 +1,6 @@
 class InfluencersController < ApplicationController
+	
+	load_and_authorize_resource
 
 	def especial
 
