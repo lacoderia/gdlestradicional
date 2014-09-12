@@ -1,5 +1,7 @@
 class DisplayController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:instagram_push]
+  
+	authorize_resource :class => false
 
   def home
     render :layout => 'home'
