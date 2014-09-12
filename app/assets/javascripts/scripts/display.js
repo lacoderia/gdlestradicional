@@ -536,14 +536,15 @@ function loadRoutes() {
                             $('#' + this.jqueryId).mouseover(function(){
                                 var marker_element = $(this);
                                 marker_element.find('.route-name').show();
+                                marker_element.parent().parent().css('z-index', 1000);
                             });
 
                             $('#' + this.jqueryId).mouseout(function() {
                                 var marker_element = $(this);
                                 marker_element.find('.route-name').hide();
+                                marker_element.parent().parent().css('z-index','auto');
                             });
                         });
-
 
                     } else {
 
@@ -581,14 +582,6 @@ function loadRoutes() {
 
                     google.maps.event.addListener(marker, 'click', function() {
                         showRouteDetail(this.routeIndex);
-                    });
-
-                    google.maps.event.addListener(marker, 'mouseover', function(){
-                        $('#' + this.jqueryId).parent().parent().css('z-index',1000);
-                    });
-
-                    google.maps.event.addListener(marker, 'mouseout', function(){
-                        $('#' + this.jqueryId).parent().parent().css('z-index','auto');
                     });
 
                     routes[i].markers.push(marker);
@@ -867,11 +860,13 @@ function showAllRoutes() {
                         $('#' + this.jqueryId).mouseover(function(){
                             var marker_element = $(this);
                             marker_element.find('.route-name').show();
+                            marker_element.parent().parent().css('z-index', 1000);
                         });
 
                         $('#' + this.jqueryId).mouseout(function() {
                             var marker_element = $(this);
                             marker_element.find('.route-name').hide();
+                            marker_element.parent().parent().css('z-index','auto');
                         });
                     });
                 } else {
