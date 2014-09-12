@@ -94,6 +94,7 @@ function init() {
 
     });
 
+
     $('.newsfeed-button').click(function(){
         if(!$('#news-feed').is(':visible')){
             $('.nav-container-item').hide();
@@ -518,6 +519,7 @@ function launchApp() {
 
             $('.account-button a').addClass('selected');
             $('#user-div').slideToggle('fast');
+
 
     });
 }
