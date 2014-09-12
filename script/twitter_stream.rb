@@ -19,8 +19,8 @@ positions = [
 ]
 
 begin
-  #client.filter(:track => 'love') do |object|
-  client.filter(:locations => "-103.477892,20.615802,-103.257822,20.692261") do |object|
+  client.filter(:track => 'gdlestradicional') do |object|
+  #client.filter(:locations => "-103.477892,20.615802,-103.257822,20.692261") do |object|
   	if object.is_a?(Twitter::Tweet)
       tweet = Tweet.new(:featured => false, :author => object.attrs[:user][:screen_name], :text => object.text)
       if object.attrs[:geo]

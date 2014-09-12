@@ -19,10 +19,17 @@
 <div id="map_container">
   <div id="map-canvas"></div>
   <div id="influencer-picture" onclick="showInfluencerGallery()">
-    <img src="" />
+    <img src="/assets/icono_influencer.png" alt="Influencer" class="image-influencer" style="display: none;" >
+    <img src="/assets/icono_ruta.png" alt="Ruta" class="image-route" style="display: none;">
   </div>
   <div id="influencer-container" onclick="influencerGalleryClick(event)">
     <div id="influencer-gallery">
+      <div>
+        <img src="/assets/icono_influencer.png" alt="Influencer" class="image-influencer" style="display: none;" >
+        <img src="/assets/icono_ruta.png" alt="Ruta" class="image-route" style="display: none;">
+        <h3 class="influencer-title"></h3>
+        <p class="influencer-description"></p>
+      </div>
       <iframe id="influencer-video" width="300" height="246" src="http://www.youtube.com/embed/XGSy3_Czz8k">
       </iframe>
     </div>
@@ -69,7 +76,9 @@
 
 <div id="intro">
   <a class="mobile" onclick='launchApp()'>
-    <img src="/assets/img-bkg-button.png" alt="Entrar a Guadalajara es tradicional">
+    <img src="/assets/logo.png" alt="Entrar a Guadalajara es tradicional">
+    <div class="enter">Comienza Aquí</div>
+    <div class="clearfix"></div>
   </a>
 </div>
 

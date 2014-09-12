@@ -72,7 +72,7 @@ recco = Location.create(name:'Recco', description:'Cena', lat:20.6729689, long:-
 inf1 = Influencer.create(name: 'José Noé Suro', description: 'La fábrica de cerámica funciona desde 1951, cuando el papá de José Noé la fundó. Tlaquepaque es el nicho ideal para esto, la fama de sus alfareros y artesanos es mundial. Actualmente este espacio produce gran cantidad de piezas de todo tipo, desde piezas tradicionales pintadas a mano, hasta vajillas completas hechas a medida para hoteles y restaurantes. También produce piezas de arte contemporáneo, con materiales tan diversos como la misma cerámica, la madera o el metal. Es esta combinación tan particular la que ha hecho de José Noé el facilitador de proyectos favoritos de muchos artistas.
 De la cerámica al arte contemporáneo
 Comenzó a coleccionar arte contemporáneo desde hace unos veinte años. A partir de ese momento y hasta ahora, José Noé ha colaborado con más de 300 artistas nacionales e internacionales.
-', is_especial: true, video_url: 'http://youtu.be/fMPd5siU0l4')
+', is_especial: true, video_url: 'fMPd5siU0l4')
 inf2 = Influencer.create(name: 'José Ignacio Solórzano', description: "Caricaturista mexicano nacido en Guadalajara, con el nombre de José Ignacio Solórzano. 
 Fundador de Galimatías, La Mano y los suplementos de humor La mamá del Abulón y Uno Chango pa el Chamuco.
 Dibujó y escribió Los manuscritos del Fongus, Sepa la bola y Los gatos no existen (editada en inglés junto con más de sus obras cortas en una recopilación titulada CatsDon'tExist.
