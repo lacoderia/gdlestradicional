@@ -481,6 +481,17 @@ function stopLatestPictures(){
 }
 
 function launchApp() {
+
+    if(typeof(Storage)!=="undefined") {
+        window.localStorage.removeItem('showHelp');
+
+        if (window.localStorage.showHelp == 'undefined') {
+
+        } else {
+            window.localStorage.showHelp = 'false';
+        }
+    }
+
     $('#intro').fadeOut(1000, function() {
 
         if(!mailSent){
