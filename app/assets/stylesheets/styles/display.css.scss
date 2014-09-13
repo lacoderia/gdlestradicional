@@ -999,8 +999,8 @@ a.desktop {
       }
 
       .dashboard-element-pic img {
+        display: block;
         height: 100%;
-        width: 100%;
       }
 
       .user-element:first-child{
@@ -1241,6 +1241,17 @@ a.desktop {
     color: white;
     cursor: pointer;
     text-decoration: none;
+  }
+}
+
+.helpButton{
+  top: 160px;
+  position: absolute;
+  right: 100px;
+  z-index: 99;
+
+  img{
+    max-width: 200px;
   }
 }
 
