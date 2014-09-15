@@ -1091,8 +1091,9 @@ function sendMailInfo(mail){
             dataType: "json",
             success: function(response) {
                 mailSent = true;
-                $('.mail-message').fadeOut(500);
-                $('.success-message').fadeIn(500);
+                $('.mail-message').fadeOut(500, function(){
+                    $('.success-message').fadeIn(500);
+                });
             },
             error: function(error) {
                 console.log(error)
