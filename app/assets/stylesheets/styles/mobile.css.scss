@@ -312,7 +312,7 @@ header{
     padding: 0;
 
     img {
-      width: 20px;
+      width: 25px;
     }
   }
 
@@ -328,12 +328,20 @@ header{
     position: absolute;
     top: 50%;
     left: 5px;
+    height: 25px;
+    width: 25px;
   }
 
   .slick-next {
     position: absolute;
     top: 50%;
-    right: 5px;
+    right: 7px;
+    height: 25px;
+    width: 25px;
+  }
+
+  .slick-prev:before, .slick-next:before {
+    font-size: 25px;
   }
 }
 
