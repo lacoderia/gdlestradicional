@@ -303,13 +303,38 @@ header{
   }
 }
 
-#help-slick-carousel{
+#help-gallery {
+  position: absolute;
+  top: 87px;
+  bottom: 0;
+
+  .close-gallery {
+    padding: 0;
+
     img {
-      display: block;
-      margin: auto;
-      width: 70%;
-      max-width: 70% !important;
+      width: 20px;
     }
+  }
+
+  #help-slick-carousel img {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    width: 60%;
+    max-width: 60% !important;
+  }
+
+  .slick-prev {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+  }
+
+  .slick-next {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+  }
 }
 
 .first-marker {
