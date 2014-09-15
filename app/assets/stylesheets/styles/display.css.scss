@@ -185,6 +185,11 @@ a.desktop {
     background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
+    dl{
+      font-size: 12px;
+      text-align: left;
+    }
+
     h3{
       border-bottom: 1px solid #A6A7AA;
       color: white;
@@ -447,7 +452,7 @@ a.desktop {
   background-color: white;
   border: 1px solid white;
   border-radius: 5px;
-  cursor: move;
+  cursor: pointer;
   height: 60px;
   width: 60px;
   padding: 2px;
@@ -685,7 +690,7 @@ a.desktop {
 #influencer-picture {
 
   bottom: 3.6em;
-  cursor: move;
+  cursor: pointer;
   display: inline-block;
   position: absolute;
   right: 3em;

@@ -1049,7 +1049,7 @@ function likePhoto(id) {
 
 function showInviteModal() {
     var tweet = 'Únete al movimiento';
-    var inviteURL = 'http%3A%2F%2Fgdlestradicional.com%3Finvite%3D' + user.uid;  //'http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FIn_Watermelon_Sugar';
+    var inviteURL = 'http%3A%2F%2Fgdlestradicional.mx%3Finvite%3D' + user.uid;  //'http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FIn_Watermelon_Sugar';
     var intent = 'https://twitter.com/intent/tweet?text=' + tweet + '&hashtags=GDLESTRADICIONAL&url='+ inviteURL;
     $.sidr('close', 'sidr');
     $('#invites').fadeIn(500);
@@ -1091,12 +1091,9 @@ function sendMailInfo(mail){
             dataType: "json",
             success: function(response) {
                 mailSent = true;
-                $('.mail-message').hide();
-                $('.success-message').show();
-
-                setTimeout(function(){
-                    hideMailModal();
-                },2000)
+                $('.mail-message').fadeOut(500, function(){
+                    $('.success-message').fadeIn(500);
+                });
             },
             error: function(error) {
                 console.log(error)
