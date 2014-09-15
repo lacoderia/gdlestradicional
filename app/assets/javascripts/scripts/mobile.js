@@ -407,15 +407,6 @@ function stopLatestPictures(){
 
 function launchApp() {
 
-    if(typeof(Storage)!=="undefined") {
-        window.localStorage.removeItem('showHelp');
-
-        if (window.localStorage.showHelp == 'undefined') {
-
-        } else {
-            window.localStorage.showHelp = 'false';
-        }
-    }
 
     $('#intro').fadeOut(1000, function() {
 
@@ -437,6 +428,12 @@ function launchApp() {
 
         $('.account-button a').addClass('selected');
         $('#user-div').slideToggle('fast');
+        if(typeof(Storage)!=="undefined") {
+            if (typeof window.localStorage.showHelp === "undefined") {
+                $('.helpButton').fadeIn(1000);
+                window.localStorage.showHelp = false;
+            }
+        }
     });
 }
 
@@ -870,6 +867,7 @@ function showHelpGallery() {
     });
     $('.footer').hide();
 
+    $('.helpButton').hide();
 }
 
 function hideHelpGallery() {

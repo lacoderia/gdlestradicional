@@ -798,6 +798,10 @@ a.desktop {
       text-decoration: none;
     }
 
+    a.cuervo{
+      font-size: 22px;
+    }
+
     li{
       margin-bottom: 0.6em;
     }
@@ -846,13 +850,12 @@ a.desktop {
     .tribute{
       font-size: 20px;
       font-weight: 700;
-      text-align: left !important;
+      text-align: center !important;
 
       span{
         display: inline-block;
         margin-left: 5%;
         vertical-align: top;
-        width: 65%;
       }
 
       img{
@@ -939,12 +942,11 @@ a.desktop {
       border-top: 1px solid #A6A7AA;
       color: #A6A7AA;
       display: block;
-      font-size: 16px;
+      font-size: 14px;
       margin: 16px auto 0px;
       padding: 0.8em 0.5em 0.9em;
-      text-align: center;
+      text-align: left;
       text-decoration: none;
-      text-transform: uppercase;
       width: 80%;
     }
 
@@ -998,8 +1000,8 @@ a.desktop {
       }
 
       .dashboard-element-pic img {
+        display: block;
         height: 100%;
-        width: 100%;
       }
 
       .user-element:first-child{
@@ -1240,6 +1242,17 @@ a.desktop {
     color: white;
     cursor: pointer;
     text-decoration: none;
+  }
+}
+
+.helpButton{
+  top: 160px;
+  position: absolute;
+  right: 100px;
+  z-index: 99;
+
+  img{
+    max-width: 200px;
   }
 }
 
