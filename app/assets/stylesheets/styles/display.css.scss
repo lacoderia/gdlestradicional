@@ -663,14 +663,12 @@ a.desktop {
   display: inline-block;
   position:relative;
   background-color: #A6A7AA;
-  border: 6px solid #033060;
-  border-radius: 5px;
   width: 700px;
   vertical-align: middle;
   text-align: left;
   overflow: hidden;
 
-  img {
+  #help-slick-carousel img {
     display: inline-block;
     position: relative;
     vertical-align: top;

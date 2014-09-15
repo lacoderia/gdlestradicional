@@ -866,64 +866,68 @@ function showHelpGallery() {
     $('#help-slick-carousel').unslick();
     $('#help-slick-carousel').slick({
         slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true
+        slidesToScroll: 1
     });
+    $('.footer').hide();
+
 }
 
 function hideHelpGallery() {
     $('#help-gallery').hide();
+    $('#map_container').show();
 }
 
 function showPictureGallery(galleryPictures) {
-    $('#gallery').show();
-    $('#map_container').hide();
 
-    $('#slick-carousel').unslick();
-    $('#slick-carousel').html('');
+    if (galleryPictures.length) {
+        $('#gallery').show();
+        $('#map_container').hide();
 
-    for(var itemIndex in galleryPictures){
-        var content = '';
+        $('#slick-carousel').unslick();
+        $('#slick-carousel').html('');
 
-        var imgURL = galleryPictures[itemIndex].url_normal;
-        var caption = galleryPictures[itemIndex].caption;
-        var author_nickname = galleryPictures[itemIndex].author_nickname;
-        var post_like = '';
+        for(var itemIndex in galleryPictures){
+            var content = '';
 
-        if (user) {
-            if (hasLiked(galleryPictures[itemIndex].instagram_id)) {
-                post_like = "<span>Ya te gusta esta foto</span>";
+            var imgURL = galleryPictures[itemIndex].url_normal;
+            var caption = galleryPictures[itemIndex].caption;
+            var author_nickname = galleryPictures[itemIndex].author_nickname;
+            var post_like = '';
+
+            if (user) {
+                if (hasLiked(galleryPictures[itemIndex].instagram_id)) {
+                    post_like = "<span>Ya te gusta esta foto</span>";
+                } else {
+                    post_like = "<a href='#' onclick='likePhoto(" + galleryPictures[itemIndex].id + ")'>Me gusta</a>";
+                }
+            }
+
+            content += "<div id='picture_" + galleryPictures[itemIndex].id + "'>" +
+                "<img src=\"" + imgURL + "\" alt=\"" + caption + "\">" +
+                "<span class='post'>" +
+                "<div class='post-background'></div>" +
+                "<h3>" + author_nickname + "</h3>" +
+                "<div class='post-like'>" + post_like + "</div>" +
+                "<p>" + caption + "</p>" +
+                "</span>" +
+                "</div>";
+
+            $('#slick-carousel').append(content);
+
+            if (user) {
+                $('.post-like').show();
             } else {
-                post_like = "<a href='#' onclick='likePhoto(" + galleryPictures[itemIndex].id + ")'>Me gusta</a>";
+                $('.post-like').hide();
             }
         }
 
-        content += "<div id='picture_" + galleryPictures[itemIndex].id + "'>" +
-                        "<img src=\"" + imgURL + "\" alt=\"" + caption + "\">" +
-                        "<span class='post'>" +
-                            "<div class='post-background'></div>" +
-                            "<h3>" + author_nickname + "</h3>" +
-                            "<div class='post-like'>" + post_like + "</div>" +
-                            "<p>" + caption + "</p>" +
-                        "</span>" +
-                    "</div>";
-
-        $('#slick-carousel').append(content);
-
-        if (user) {
-            $('.post-like').show();
-        } else {
-            $('.post-like').hide();
-        }
+        $('#slick-carousel').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: true,
+            lazyLoad: 'ondemand'
+        });
     }
-
-    $('#slick-carousel').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true,
-        lazyLoad: 'ondemand'
-    });
 
 }
 
@@ -1105,9 +1109,6 @@ function sendMailInfo(mail){
 
 function showTermsPrivacity(){
     $('#terms-privacity').show();
-    $('#terms-privacity').find('.close_modal').click(function(){
-        hideInstragramModal();
-    });
 }
 
 function hideTermsPrivacity(){
