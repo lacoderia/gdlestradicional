@@ -1091,12 +1091,8 @@ function sendMailInfo(mail){
             dataType: "json",
             success: function(response) {
                 mailSent = true;
-                $('.mail-message').hide();
-                $('.success-message').show();
-
-                setTimeout(function(){
-                    hideMailModal();
-                },2000)
+                $('.mail-message').fadeOut(500);
+                $('.success-message').fadeIn(500);
             },
             error: function(error) {
                 console.log(error)

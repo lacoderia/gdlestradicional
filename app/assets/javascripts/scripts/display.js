@@ -1472,9 +1472,9 @@ function sendMailInfo(mail){
                 $('.mail-message').hide();
                 $('.success-message').show();
 
-                setTimeout(function(){
+                /*setTimeout(function(){
                     hideMailModal();
-                },2000)
+                },2000)*/
             },
             error: function(error) {
                 console.log(error)
