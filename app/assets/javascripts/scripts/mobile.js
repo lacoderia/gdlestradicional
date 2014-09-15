@@ -830,6 +830,7 @@ function showRouteDetail(routeIndex){
         paintOneRoute(routeIndex);
 
         $('#news-feed').hide();
+        $('#influencer-video').hide();
 
         var influencerInfo = routes[routeIndex].influencer;
         if(influencerInfo.is_especial){
@@ -842,9 +843,9 @@ function showRouteDetail(routeIndex){
         $('.influencer-title').html(influencerInfo.name);
         $('.influencer-description').html(influencerInfo.description);
         $('.influencer-video').attr('src','');
-        $('#influencer-video').hide();
+
         if(typeof influencerInfo.video_url != 'undefined'){
-            if(influencerInfo.video_url != null){
+            if(influencerInfo.video_url){
                 $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
                 $('#influencer-video').show();
             }
