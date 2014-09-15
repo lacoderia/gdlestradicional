@@ -19,6 +19,6 @@ window.fbAsyncInit = function() {
 function shareFB() {
   FB.ui({
     method: 'share',
-    href: 'http://gdlestradicional.com'
+    href: 'http://gdlestradicional.mx?invite=' + user.uid
   }, function(response){});
 }
