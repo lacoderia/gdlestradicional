@@ -454,6 +454,11 @@ a.close-menu{
 
 }
 
+#login-btn{
+  line-height: 20px;
+  padding: 0.6em 1em;
+}
+
 .helpButton{
   top: 80px;
   position: absolute;
@@ -463,6 +468,10 @@ a.close-menu{
   img{
     max-width: 200px;
   }
+}
+
+a.cuervo{
+  font-size: 26px;
 }
 
 @media (min-width: 768px) {
