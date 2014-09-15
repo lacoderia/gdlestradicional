@@ -843,9 +843,11 @@ function showRouteDetail(routeIndex){
         $('.influencer-description').html(influencerInfo.description);
         $('.influencer-video').attr('src','');
         $('#influencer-video').hide();
-        if(influencerInfo.video_url != null){
-            $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
-            $('#influencer-video').show();
+        if(typeof influencerInfo.video_url != 'undefined'){
+            if(influencerInfo.video_url != null){
+                $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
+                $('#influencer-video').show();
+            }
         }
 
         $('#influencer-picture').fadeIn(1000);
