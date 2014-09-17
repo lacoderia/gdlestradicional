@@ -310,4 +310,7 @@
 </footer>
 
 <div id="ruby-values" data-user="<%= @user.to_json%>"></div>
+<% if @user %>
+  <iframe width="1" height="1" frameborder="0" src="http://tbl.tradedoubler.com/report?organization=1574207&event=256040&leadNumber=<%= current_user.uid%>"></iframe>
+<% end %>
 <div id="fb-root"></div>
