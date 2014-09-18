@@ -176,14 +176,14 @@ function init() {
             tweet_guid++;
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
                 '<div class="pin icon-uniE600"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
                     '<div class="pin icon-uniE600"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
@@ -269,9 +269,9 @@ function init() {
                         var markerId = 'marker_' + i + '_' + j;
                         for (var l=0; l<tempRoute.length; l++) {
                             if (tempRoute[l].id == data.location_id) {
-                                $('#' + markerId + ' img').hide();
-                                $('#' + markerId + ' img').attr('src', data.url_thumb);
-                                $('#' + markerId + ' img').fadeIn(1000);
+                                $('#' + markerId + ' .image-marker-gallery-wrapper').hide();
+                                $('#' + markerId + ' .image-marker-gallery-wrapper').attr('src', data.url_thumb);
+                                $('#' + markerId + ' .image-marker-gallery-wrapper').fadeIn(1000);
                             }
 
                         }
@@ -337,11 +337,11 @@ function getLatestPictures() {
 		data: null,
 		dataType: "json",
 		success: function(response) {
-			latestPictures = response;	
+			latestPictures = response;
 		},
 		error: function(error) {
 		}
-	});	
+	});
 }
 
 function addLatestPicture(data) {
@@ -377,11 +377,11 @@ function showLatestPictures() {
 
 	createLatestPictureMarker(latestPictures[0].url_thumb, latestPictures[0].author_nickname);
 	setTimeout(function(){
-  	$('#latest-pic-mobile').fadeOut(1000, function(){    
+  	$('#latest-pic-mobile').fadeOut(1000, function(){
 			$('#latest-pic-mobile').remove();
 		});
 	}, 5000);
-	
+
 	var start = 1;
 	intervalTimeout = setInterval(function(){
 		try {
@@ -393,7 +393,7 @@ function showLatestPictures() {
 			createLatestPictureMarker(pic, latestPictures[start].author_nickname);
 		}
 		setTimeout(function(){
-			$('#latest-pic-mobile').fadeOut(1000, function(){    
+			$('#latest-pic-mobile').fadeOut(1000, function(){
 				$('#latest-pic-mobile').remove();
 			});
 		}, 5000);
@@ -481,7 +481,7 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
-                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<div class="marker_detail"><span class="close_tweet">x</span><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
                                 '<img src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
@@ -512,7 +512,7 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="secondary-marker marker">' +
-                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                                '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
                                 '<img src="' + markerImageUrl + '"/>' +
                                 '</div>'
                         });
@@ -623,16 +623,17 @@ function paintOneMarker(routeIndex, markerIndex) {
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
 
             var routeCoordinate = new google.maps.LatLng(routes[routeIndex].locations[j].lat, routes[routeIndex].locations[j].long);
-            var markerId = 'image_marker_' + routeIndex + '_' + j;
+            var markerId = 'marker_' + routeIndex + '_' + j;
+
+            var src = '/assets/logo_cuervo.png';
 
             if (routes[routeIndex].locations[j].recent_photo) {
-                var src = routes[routeIndex].locations[j].recent_photo;
-            } else {
-                var src = '/assets/logo_cuervo.png';
+                src = routes[routeIndex].locations[j].recent_photo;
             }
 
             var marker = new RichMarker({
                 index: j,
+                pictures: routes[routeIndex].locations[j].pictures,
                 position: routeCoordinate,
                 map: map,
                 flat: true,
@@ -640,52 +641,58 @@ function paintOneMarker(routeIndex, markerIndex) {
                 draggable: false,
                 id: routes[routeIndex].locations[j].id,
                 jqueryId : markerId,
-                content: '<div class="image-marker my-marker" id="' + markerId + '">' +
-                    '<img src="' + src + '"/>' +
-                    '</div>'
+                recent_photo: src
             });
 
             google.maps.event.addListener(marker, 'ready', function() {
+
                 var richMarker = this;
-                $('#' + this.jqueryId).hide();
-                var time = (this.index+1) * 250;
-                $('#' + this.jqueryId).fadeIn(time);
+                if(typeof richMarker.pictures != 'undefined'){
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').show()
+                }else{
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').hide();
+                }
 
                 $('#' + this.jqueryId).click(function(){
 
-                    for (var i=0; i<routes.length; i++) {
-                        for (var j=0; j<routes[i].markers.length; j++) {
-                            if (routes[i].locations[j].id == richMarker.id) {
-                                if (routes[i].locations[j].pictures != undefined) {
-                                    galleryPictures = routes[i].locations[j].pictures;
-                                    showPictureGallery(galleryPictures);
-                                    break;
-                                } else {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "/locations/" + richMarker.id + "/gallery.json",
-                                        data: null,
-                                        dataType: "json",
-                                        success: function(response) {
-                                            for (var i=0; i<routes.length; i++) {
-                                                for (var j = 0; j < routes[i].markers.length; j++) {
-                                                    if (routes[i].locations[j].id == richMarker.id) {
-                                                        routes[i].locations[j].pictures = sortGalleryPictures(response);
-                                                        galleryPictures = routes[i].locations[j].pictures;
-                                                        showPictureGallery(galleryPictures);
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        error: function(error) {
-                                        }
-                                    });
-                                }
-                            }
-                        }
+                    if(!$('#' + richMarker.jqueryId).find('.marker_detail').is(':visible')){
+                        $('.marker_detail').hide();
+                        $('#' + richMarker.jqueryId).find('.image-marker-gallery').attr('src',richMarker.recent_photo);
+                        $('#' + richMarker.jqueryId).find('.marker_detail').show();
+
+                    }else{
+                        $('#' + richMarker.jqueryId).find('.marker_detail').hide();
                     }
 
                 });
+
+                $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').click(function(){
+                    if(typeof richMarker.pictures != 'undefined'){
+                        galleryPictures = richMarker.pictures;
+                        showPictureGallery(galleryPictures);
+                    }else{
+                        $.ajax({
+                            type: "GET",
+                            url: "/locations/" + richMarker.id + "/gallery.json",
+                            data: null,
+                            dataType: "json",
+                            success: function (response) {
+                                for (var i = 0; i < routes.length; i++) {
+                                    for (var j = 0; j < routes[i].markers.length; j++) {
+                                        if (routes[i].locations[j].id == richMarker.id) {
+                                            routes[i].locations[j].pictures = sortGalleryPictures(response);
+                                            galleryPictures = routes[i].locations[j].pictures;
+                                            showPictureGallery(galleryPictures);
+                                        }
+                                    }
+                                }
+                            },
+                            error: function (error) {
+                            }
+                        });
+                    }
+                });
+
             });
 
             tempRoute.push(marker);
@@ -728,7 +735,7 @@ function showAllRoutes() {
     if(!paintingRoutes){
 
 	    //showLatestPictures();
-	
+
         $('#influencer-picture').hide();
 
         for (var i=0; i<tempRoute.length; i++) {
@@ -759,7 +766,7 @@ function showAllRoutes() {
                         routeIndex: i,
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
-                            '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                            '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
                             '<img src="/assets/marker_azul.png"/>' +
                             '<div class="route-name">' + routes[i].name + '</div>' +
                             '</div>'
@@ -775,7 +782,7 @@ function showAllRoutes() {
                         routeIndex: i,
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="secondary-marker marker">' +
-                            '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                            '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
                             '<img src="/assets/cuadrito_gris.png"/>' +
                             '</div>'
                     });
