@@ -626,9 +626,11 @@ function paintOneMarker(routeIndex, markerIndex) {
             var markerId = 'marker_' + routeIndex + '_' + j;
 
             var src = '/assets/logo_cuervo.png';
+            var defaultPhoto = true;
 
             if (routes[routeIndex].locations[j].recent_photo) {
                 src = routes[routeIndex].locations[j].recent_photo;
+                defaultPhoto = false;
             }
 
             var marker = new RichMarker({
@@ -641,13 +643,14 @@ function paintOneMarker(routeIndex, markerIndex) {
                 draggable: false,
                 id: routes[routeIndex].locations[j].id,
                 jqueryId : markerId,
-                recent_photo: src
+                recent_photo: src,
+                default_photo: defaultPhoto
             });
 
             google.maps.event.addListener(marker, 'ready', function() {
 
                 var richMarker = this;
-                if(typeof richMarker.pictures != 'undefined'){
+                if(!richMarker.default_photo){
                     $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').show()
                 }else{
                     $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').hide();
