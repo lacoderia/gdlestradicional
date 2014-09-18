@@ -1293,6 +1293,7 @@ a.desktop {
   position: absolute;
   left: 10px;
   top: 20px;
+  max-width: 450px;
 
   background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
