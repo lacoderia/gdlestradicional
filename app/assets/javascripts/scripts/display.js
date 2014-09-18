@@ -379,6 +379,7 @@ function init() {
 }
 
 function showHelpGallery() {
+    $('.touchMarkerMessage').hide();
     $('#help-gallery-container').show();
     $('#help-slick-carousel').slick({
         slidesToShow: 1,
@@ -392,6 +393,7 @@ function showHelpGallery() {
 
 function hideHelpGallery() {
     $('#help-gallery-container').hide();
+    $('.touchMarkerMessage').show();
 }
 
 function helpGalleryClick(e) {
@@ -702,6 +704,7 @@ function paintOneMarker(routeIndex, markerIndex) {
         paintingRoutes = false;
 
         $('#show-all-routes').show();
+        $('.touchMarkerMessage').show();
 
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
 
@@ -858,6 +861,7 @@ function showAllRoutes() {
         showLatestPictures();
 
         $('#show-all-routes').hide();
+        $('.touchMarkerMessage').hide();
         $('#influencer-picture').hide();
         $('.zoom-image').hide();
 

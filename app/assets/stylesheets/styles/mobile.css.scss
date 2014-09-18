@@ -360,8 +360,8 @@ header{
 .secondary-marker {
 
   img {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
   }
 
 }
@@ -501,6 +501,11 @@ a.close-menu{
   img{
     max-width: 200px;
   }
+}
+
+.touchMarkerMessage{
+  top: 100px;
+  width: 85%;
 }
 
 a.cuervo{

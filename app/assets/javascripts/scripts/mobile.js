@@ -619,6 +619,7 @@ function paintOneMarker(routeIndex, markerIndex) {
         }, 250)
     } else {
         paintingRoutes = false;
+        $('.touchMarkerMessage').show();
 
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
 
@@ -740,6 +741,7 @@ function showAllRoutes() {
 	    //showLatestPictures();
 
         $('#influencer-picture').hide();
+        $('.touchMarkerMessage').hide();
 
         for (var i=0; i<tempRoute.length; i++) {
             tempRoute[i].setMap(null);
@@ -872,6 +874,7 @@ function showRouteDetail(routeIndex){
 }
 
 function showHelpGallery() {
+    $('.touchMarkerMessage').hide();
     $('#help-gallery').show();
     $('#map_container').hide();
     $('#help-slick-carousel').unslick();
@@ -887,6 +890,7 @@ function showHelpGallery() {
 function hideHelpGallery() {
     $('#help-gallery').hide();
     $('#map_container').show();
+    $('.touchMarkerMessage').show();
 }
 
 function showPictureGallery(galleryPictures) {
