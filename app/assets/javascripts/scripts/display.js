@@ -76,8 +76,11 @@ var mapOptions = {
 
 function init() {
 
+    if (document.URL.indexOf("www") != -1) {
+        window.location = "http://gdlestradicional.mx";
+    }
     if (screen.width < 768) {
-        window.location = "/mobile";
+        window.location = "http://gdlestradicional.mx/mobile";
     }
 
     $('.account-button').click(function(){
