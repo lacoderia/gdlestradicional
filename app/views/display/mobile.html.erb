@@ -52,7 +52,7 @@
         <h3 class="influencer-title"></h3>
         <p class="influencer-description"></p>
       </div>
-      <iframe id="influencer-video" width="240" height="170" src="http://www.youtube.com/embed/XGSy3_Czz8k">
+      <iframe id="influencer-video" width="240" height="170" src="http://www.youtube.com/embed/" style="display:none;">
       </iframe>
     </div>
   </div>
@@ -89,6 +89,10 @@
             </td>
           </tr>
         </table>
+      </div>
+      <div class="loader instagram-loader" style="display: none;">
+        <img src="/assets/AjaxLoader.gif" alt="Conectar con Instragram" >
+        <span>Iniciando sesión con Instragram, espere un momento por favor.</span>
       </div>
       <div style="clear:both"></div>
     </li>
@@ -137,6 +141,7 @@
         <dt>3 Puntos: Fotos dentro de las rutas</dt>
         <dt>5 Puntos: Fotos en el lugar "Enfoque Tradicional" de la semana</dt>
       </dl>
+      <p>Tus fotos aparecerán en las rutas de este mapa interactivo, recuerda activar la geolocalización de Instagram</p>
       <button class="start" onclick="hideMailModal();">Comenzar</button>
     </div>
   </div>
@@ -302,7 +307,11 @@
 </div>
 
 <div class="helpButton" style="display: none;">
-  <img src="/assets/comienza_btn.png" alt="Comienza aquí">
+  <img src="/assets/comienza_btn.png" alt="Comienza aquí" onclick="showHelpGallery()">
+</div>
+
+<div class="touchMarkerMessage" style="display: none;">
+  <p>Toca los puntos sobre el mapa para ver más información y fotos</p>
 </div>
 
 <footer class="footer" style="display:none;">
@@ -310,4 +319,7 @@
 </footer>
 
 <div id="ruby-values" data-user="<%= @user.to_json%>"></div>
+<% if @user %>
+  <iframe width="1" height="1" frameborder="0" src="http://tbl.tradedoubler.com/report?organization=1574207&event=256040&leadNumber=<%= current_user.uid%>"></iframe>
+<% end %>
 <div id="fb-root"></div>

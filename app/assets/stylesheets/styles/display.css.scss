@@ -355,10 +355,38 @@ a.desktop {
     -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
     box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
 
+    .close_tweet{
+      float: right;
+    }
+
     p{
       margin: 0em 0em 0.5em;
       padding: 0px;
     }
+
+    .image-marker-galllery-link{
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+
+    .link{
+      text-decoration: underline;
+    }
+
+    .image-marker-gallery-wrapper{
+      display: block;
+      height: 100px;
+      margin: 0px auto 1em;
+      text-align: center;
+      width: 100px;
+
+      .image-marker-gallery{
+        height: 100%;
+        width: 100%;
+      }
+    }
+
 
     .arrow-down{
       border-left: 10px solid transparent;
@@ -960,6 +988,26 @@ a.desktop {
       margin-bottom: 16px;
     }
 
+    .loader{
+      border-radius: 5px;
+      height: 60px;
+      margin: 16px;
+      position: relative;
+
+      span{
+        color: #A6A7AA;
+        display: block;
+        font-size: 10px;
+        margin-top: 8px;
+        text-align: center;
+      }
+
+      img{
+        display: block;
+        margin: 0px auto;
+      }
+    }
+
     #dashboard {
       background-color: white;
       border-radius: 5px;
@@ -977,6 +1025,7 @@ a.desktop {
           width: 30%;
         }
       }
+
 
       .dashboard-element {
         height: 75px;
@@ -1259,6 +1308,28 @@ a.desktop {
   img{
     max-width: 200px;
   }
+}
+
+.touchMarkerMessage{
+  color: white;
+  font-size: 0.8em;
+  padding: 0em 1em;
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  max-width: 450px;
+
+  background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
+  background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+  -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+  box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
 }
 
 @keyframes pulsate {

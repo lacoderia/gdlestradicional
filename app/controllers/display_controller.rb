@@ -39,11 +39,9 @@ class DisplayController < ApplicationController
   		render plain: params['hub.challenge']
       return
   	else
-  	  Instagram.process_subscription(params[:body]) do |handler|
-        Thread.new do
-          fetch_new_photos
-        end
-  	  end
+      Thread.new do
+        fetch_new_photos
+      end
   	end
     render plain: 'ok'
   end

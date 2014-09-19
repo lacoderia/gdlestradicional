@@ -176,14 +176,14 @@ function init() {
             tweet_guid++;
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
                 '<div class="pin icon-uniE600"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
-                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
+                    '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
                     '<div class="pin icon-uniE600"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
@@ -269,9 +269,9 @@ function init() {
                         var markerId = 'marker_' + i + '_' + j;
                         for (var l=0; l<tempRoute.length; l++) {
                             if (tempRoute[l].id == data.location_id) {
-                                $('#' + markerId + ' img').hide();
-                                $('#' + markerId + ' img').attr('src', data.url_thumb);
-                                $('#' + markerId + ' img').fadeIn(1000);
+                                $('#' + markerId + ' .image-marker-gallery-wrapper').hide();
+                                $('#' + markerId + ' .image-marker-gallery-wrapper').attr('src', data.url_thumb);
+                                $('#' + markerId + ' .image-marker-gallery-wrapper').fadeIn(1000);
                             }
 
                         }
@@ -337,11 +337,11 @@ function getLatestPictures() {
 		data: null,
 		dataType: "json",
 		success: function(response) {
-			latestPictures = response;	
+			latestPictures = response;
 		},
 		error: function(error) {
 		}
-	});	
+	});
 }
 
 function addLatestPicture(data) {
@@ -377,11 +377,11 @@ function showLatestPictures() {
 
 	createLatestPictureMarker(latestPictures[0].url_thumb, latestPictures[0].author_nickname);
 	setTimeout(function(){
-  	$('#latest-pic-mobile').fadeOut(1000, function(){    
+  	$('#latest-pic-mobile').fadeOut(1000, function(){
 			$('#latest-pic-mobile').remove();
 		});
 	}, 5000);
-	
+
 	var start = 1;
 	intervalTimeout = setInterval(function(){
 		try {
@@ -393,7 +393,7 @@ function showLatestPictures() {
 			createLatestPictureMarker(pic, latestPictures[start].author_nickname);
 		}
 		setTimeout(function(){
-			$('#latest-pic-mobile').fadeOut(1000, function(){    
+			$('#latest-pic-mobile').fadeOut(1000, function(){
 				$('#latest-pic-mobile').remove();
 			});
 		}, 5000);
@@ -481,8 +481,8 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
-                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img src="' + markerImageUrl + '"/>' +
+                                '<div class="marker_detail"><span class="close_tweet">x</span><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
+                                '<img class="image-marker-click" src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
@@ -512,8 +512,8 @@ function loadRoutes() {
                             routeIndex: i,
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="secondary-marker marker">' +
-                                '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img src="' + markerImageUrl + '"/>' +
+                                '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
+                                '<img class="image-marker-click" src="' + markerImageUrl + '"/>' +
                                 '</div>'
                         });
 
@@ -619,20 +619,24 @@ function paintOneMarker(routeIndex, markerIndex) {
         }, 250)
     } else {
         paintingRoutes = false;
+        $('.touchMarkerMessage').show();
 
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
 
             var routeCoordinate = new google.maps.LatLng(routes[routeIndex].locations[j].lat, routes[routeIndex].locations[j].long);
-            var markerId = 'image_marker_' + routeIndex + '_' + j;
+            var markerId = 'marker_' + routeIndex + '_' + j;
+
+            var src = '/assets/logo_cuervo.png';
+            var defaultPhoto = true;
 
             if (routes[routeIndex].locations[j].recent_photo) {
-                var src = routes[routeIndex].locations[j].recent_photo;
-            } else {
-                var src = '/assets/logo_cuervo.png';
+                src = routes[routeIndex].locations[j].recent_photo;
+                defaultPhoto = false;
             }
 
             var marker = new RichMarker({
                 index: j,
+                pictures: routes[routeIndex].locations[j].pictures,
                 position: routeCoordinate,
                 map: map,
                 flat: true,
@@ -640,52 +644,48 @@ function paintOneMarker(routeIndex, markerIndex) {
                 draggable: false,
                 id: routes[routeIndex].locations[j].id,
                 jqueryId : markerId,
-                content: '<div class="image-marker my-marker" id="' + markerId + '">' +
-                    '<img src="' + src + '"/>' +
-                    '</div>'
+                recent_photo: src,
+                default_photo: defaultPhoto
             });
 
             google.maps.event.addListener(marker, 'ready', function() {
+
                 var richMarker = this;
-                $('#' + this.jqueryId).hide();
-                var time = (this.index+1) * 250;
-                $('#' + this.jqueryId).fadeIn(time);
+                if(!richMarker.default_photo){
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').html('Ver más fotos');
+                    $('#' + richMarker.jqueryId).find('.image-marker-gallery').click(function(){
+                        showGalleryByMarker(richMarker);
+                    });
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').addClass('link');
+                }else{
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').html('Sube la primera foto de este lugar en Instagram usando el hashtag #GDLesTradicional');
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').removeClass('link');
+                }
 
-                $('#' + this.jqueryId).click(function(){
 
-                    for (var i=0; i<routes.length; i++) {
-                        for (var j=0; j<routes[i].markers.length; j++) {
-                            if (routes[i].locations[j].id == richMarker.id) {
-                                if (routes[i].locations[j].pictures != undefined) {
-                                    galleryPictures = routes[i].locations[j].pictures;
-                                    showPictureGallery(galleryPictures);
-                                    break;
-                                } else {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "/locations/" + richMarker.id + "/gallery.json",
-                                        data: null,
-                                        dataType: "json",
-                                        success: function(response) {
-                                            for (var i=0; i<routes.length; i++) {
-                                                for (var j = 0; j < routes[i].markers.length; j++) {
-                                                    if (routes[i].locations[j].id == richMarker.id) {
-                                                        routes[i].locations[j].pictures = sortGalleryPictures(response);
-                                                        galleryPictures = routes[i].locations[j].pictures;
-                                                        showPictureGallery(galleryPictures);
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        error: function(error) {
-                                        }
-                                    });
-                                }
-                            }
-                        }
+                $('#' + this.jqueryId + ' .image-marker-click').click(function(){
+
+                    if(!$('#' + richMarker.jqueryId).find('.marker_detail').is(':visible')){
+                        $('.marker_detail').hide();
+                        $('#' + richMarker.jqueryId).find('.image-marker-gallery').attr('src',richMarker.recent_photo);
+                        $('#' + richMarker.jqueryId).find('.marker_detail').show();
+
+                    }else{
+                        $('#' + richMarker.jqueryId).find('.marker_detail').hide();
                     }
 
                 });
+
+                $('#' + this.jqueryId + ' .close_tweet').click(function(){
+                    $('#' + richMarker.jqueryId).find('.marker_detail').hide();
+                });
+
+
+
+                $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').click(function(){
+                    showGalleryByMarker(richMarker);
+                });
+
             });
 
             tempRoute.push(marker);
@@ -714,6 +714,34 @@ function paintOneMarker(routeIndex, markerIndex) {
     }
 }
 
+function showGalleryByMarker(richMarker){
+    console.log('entre')
+    if(typeof richMarker.pictures != 'undefined'){
+        galleryPictures = richMarker.pictures;
+        showPictureGallery(galleryPictures);
+    }else{
+        $.ajax({
+            type: "GET",
+            url: "/locations/" + richMarker.id + "/gallery.json",
+            data: null,
+            dataType: "json",
+            success: function (response) {
+                for (var i = 0; i < routes.length; i++) {
+                    for (var j = 0; j < routes[i].markers.length; j++) {
+                        if (routes[i].locations[j].id == richMarker.id) {
+                            routes[i].locations[j].pictures = sortGalleryPictures(response);
+                            galleryPictures = routes[i].locations[j].pictures;
+                            showPictureGallery(galleryPictures);
+                        }
+                    }
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+}
+
 function paintOneLine(routeIndex, lineIndex) {
     if(lineIndex < routes[routeIndex].lines.length){
         routes[routeIndex].lines[lineIndex].setMap(map);
@@ -728,8 +756,9 @@ function showAllRoutes() {
     if(!paintingRoutes){
 
 	    //showLatestPictures();
-	
+
         $('#influencer-picture').hide();
+        $('.touchMarkerMessage').hide();
 
         for (var i=0; i<tempRoute.length; i++) {
             tempRoute[i].setMap(null);
@@ -759,8 +788,8 @@ function showAllRoutes() {
                         routeIndex: i,
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
-                            '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                            '<img src="/assets/marker_azul.png"/>' +
+                            '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
+                            '<img class="image-marker-click" src="/assets/marker_azul.png"/>' +
                             '<div class="route-name">' + routes[i].name + '</div>' +
                             '</div>'
                     });
@@ -775,8 +804,8 @@ function showAllRoutes() {
                         routeIndex: i,
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="secondary-marker marker">' +
-                            '<div class="marker_detail"><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                            '<img src="/assets/cuadrito_gris.png"/>' +
+                            '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
+                            '<img class="image-marker-click" src="/assets/cuadrito_gris.png"/>' +
                             '</div>'
                     });
 
@@ -830,6 +859,7 @@ function showRouteDetail(routeIndex){
         paintOneRoute(routeIndex);
 
         $('#news-feed').hide();
+        $('#influencer-video').hide();
 
         var influencerInfo = routes[routeIndex].influencer;
         if(influencerInfo.is_especial){
@@ -842,9 +872,12 @@ function showRouteDetail(routeIndex){
         $('.influencer-title').html(influencerInfo.name);
         $('.influencer-description').html(influencerInfo.description);
         $('.influencer-video').attr('src','');
-        if(influencerInfo.video_url != null){
-            $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
-            $('#influencer-video').show();
+
+        if(typeof influencerInfo.video_url != 'undefined'){
+            if(influencerInfo.video_url){
+                $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
+                $('#influencer-video').show();
+            }
         }
 
         $('#influencer-picture').fadeIn(1000);
@@ -858,6 +891,7 @@ function showRouteDetail(routeIndex){
 }
 
 function showHelpGallery() {
+    $('.touchMarkerMessage').hide();
     $('#help-gallery').show();
     $('#map_container').hide();
     $('#help-slick-carousel').unslick();
@@ -873,6 +907,7 @@ function showHelpGallery() {
 function hideHelpGallery() {
     $('#help-gallery').hide();
     $('#map_container').show();
+    $('.touchMarkerMessage').show();
 }
 
 function showPictureGallery(galleryPictures) {
@@ -968,6 +1003,8 @@ function influencerGalleryClick(e) {
 }
 
 function login() {
+    $('#login-btn').hide();
+    $('.instagram-loader').show();
     $.ajax({
         beforeSend: function( xhr ) {
             var token = $('meta[name="csrf-token"]').attr('content');
@@ -982,11 +1019,14 @@ function login() {
             if (response.success == true) {
                 user = response.user;
                 showDashboard();
+                $('.instagram-loader').hide();
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             if (textStatus == 'parsererror') {
                 window.location = '/relocated';
+                $('#login-btn').show();
+                $('.instagram-loader').hide();
             }
         }
     });

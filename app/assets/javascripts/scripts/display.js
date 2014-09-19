@@ -76,8 +76,11 @@ var mapOptions = {
 
 function init() {
 
+    if (document.URL.indexOf("www") != -1) {
+        window.location = "http://gdlestradicional.mx";
+    }
     if (screen.width < 768) {
-        window.location = "/mobile";
+        window.location = "http://gdlestradicional.mx/mobile";
     }
 
     $('.account-button').click(function(){
@@ -379,6 +382,7 @@ function init() {
 }
 
 function showHelpGallery() {
+    $('.touchMarkerMessage').hide();
     $('#help-gallery-container').show();
     $('#help-slick-carousel').slick({
         slidesToShow: 1,
@@ -392,6 +396,7 @@ function showHelpGallery() {
 
 function hideHelpGallery() {
     $('#help-gallery-container').hide();
+    $('.touchMarkerMessage').show();
 }
 
 function helpGalleryClick(e) {
@@ -702,6 +707,7 @@ function paintOneMarker(routeIndex, markerIndex) {
         paintingRoutes = false;
 
         $('#show-all-routes').show();
+        $('.touchMarkerMessage').show();
 
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
 
@@ -858,6 +864,7 @@ function showAllRoutes() {
         showLatestPictures();
 
         $('#show-all-routes').hide();
+        $('.touchMarkerMessage').hide();
         $('#influencer-picture').hide();
         $('.zoom-image').hide();
 
@@ -954,6 +961,7 @@ function showRouteDetail(routeIndex){
     if (!paintingRoutes) {
 
         stopLatestPictures();
+        $('#influencer-video').hide();
 
         var markers = routes[routeIndex].markers;
         var bounds = new google.maps.LatLngBounds();
@@ -972,10 +980,12 @@ function showRouteDetail(routeIndex){
         $('.influencer-title').html(influencerInfo.name);
         $('.influencer-description').html(influencerInfo.description);
         $('.influencer-video').attr('src','');
-        $('#influencer-video').hide();
-        if(influencerInfo.video_url != null){
-            $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
-            $('#influencer-video').show();
+
+        if(typeof influencerInfo.video_url != 'undefined'){
+            if(influencerInfo.video_url){
+                $('#influencer-video').attr('src','http://www.youtube.com/embed/' + influencerInfo.video_url);
+                $('#influencer-video').show();
+            }
         }
 
         map.fitBounds(bounds);
@@ -1223,6 +1233,9 @@ function influencerGalleryClick(e) {
 }
 
 function login() {
+    $('#login-btn').hide();
+    $('.instagram-loader').show();
+
     $.ajax({
         beforeSend: function( xhr ) {
             var token = $('meta[name="csrf-token"]').attr('content');
@@ -1242,12 +1255,15 @@ function login() {
                 if(!$('#user-div').css(':visible')){
                     $('#user-div').show('fast');
                     showDashboard();
+                    $('.instagram-loader').hide();
                 }
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             if (textStatus == 'parsererror') {
                 window.location = '/relocated';
+                $('#login-btn').show();
+                $('.instagram-loader').hide();
             }
         }
     });
