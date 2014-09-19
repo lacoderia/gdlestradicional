@@ -1313,7 +1313,7 @@ a.desktop {
 .touchMarkerMessage{
   color: white;
   font-size: 0.8em;
-  padding: 0em 1em;
+  padding: 0em 0em 1em;
   position: absolute;
   left: 10px;
   top: 20px;
@@ -1330,6 +1330,17 @@ a.desktop {
   -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
   -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
   box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
+
+  p{
+    margin: 0px 0.6em 0px 1em;
+  }
+
+  .close_marker_message{
+    color: #A6A7AA;
+    cursor: pointer;
+    float: right;
+    margin: 0.4em 0.8em 0;
+  }
 }
 
 @keyframes pulsate {

@@ -22,6 +22,7 @@ var latestPicturesPositions = [];
 var tweet_guid = 0;
 var mailSent = false;
 var intervalTimeout, latestPicturesTimeout;
+var markerMessageClosed = false;
 
 var styles = [
     {
@@ -396,7 +397,9 @@ function showHelpGallery() {
 
 function hideHelpGallery() {
     $('#help-gallery-container').hide();
-    $('.touchMarkerMessage').show();
+    if(!markerMessageClosed){
+        $('.touchMarkerMessage').show();
+    }
 }
 
 function helpGalleryClick(e) {
@@ -707,7 +710,9 @@ function paintOneMarker(routeIndex, markerIndex) {
         paintingRoutes = false;
 
         $('#show-all-routes').show();
-        $('.touchMarkerMessage').show();
+        if(!markerMessageClosed){
+            $('.touchMarkerMessage').show();
+        }
 
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
 
@@ -1391,10 +1396,9 @@ function userUpdatePictureDetails(post) {
     if (user) {
         $('#user-picture-gallery .post-like').css("display", "block");
         if (hasLiked(post.instagram_id)) {
-            $('#user-picture-gallery .post-like').html("<span>Ya te gusta esta foto</span>");
-        }
-        else {
-            $('#user-picture-gallery .post-like').html("<a href='#' onclick='userLikePhoto(" + post.id + ")'>Me gusta</a>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+        } else {
+            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-uniE60A'></span></a>");
         }
     }
 }
@@ -1502,6 +1506,11 @@ function showTermsPrivacity(){
 
 function hideTermsPrivacity(){
     $('#terms-privacity').hide();
+}
+
+function hideMarkerMessage(){
+    $('.touchMarkerMessage').hide();
+    markerMessageClosed = true;
 }
 
 function validateEmail(email) {

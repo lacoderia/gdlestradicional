@@ -22,6 +22,7 @@ var latestPicturesPositions = [];
 var tweet_guid = 0;
 var mailSent = false;
 var intervalTimeout;
+var markerMessageClosed = false;
 
 var styles = [
     {
@@ -287,9 +288,9 @@ function init() {
 
             if (user) {
                 if (hasLiked(data.instagram_id)) {
-                    post_like = "<span>Ya te gusta esta foto</span>";
+                    post_like = "<span title='Me gusta' class='icon liked icon-uniE60A'></span>";
                 } else {
-                    post_like = "<a href='#' onclick='likePhoto(" + data.id + ")'>Me gusta</a>";
+                    post_like = "<a title='Me gusta' onclick='likePhoto(" + data.id + ")'><span class='icon unliked icon-uniE60A'></span></a>";
                 }
             }
 
@@ -309,14 +310,14 @@ function init() {
             }
 
             if (user) {
-                $('.post-like').show();
+                $('.post-like').css('display','inline-block');
 
                 if (data.author_id == user.uid){
                     user.photos.push(data);
                     showDashboard();
                 }
             } else {
-                $('.post-like').hide();
+                $('.post-like').css('display','none');
             }
 
         });
@@ -619,7 +620,9 @@ function paintOneMarker(routeIndex, markerIndex) {
         }, 250)
     } else {
         paintingRoutes = false;
-        $('.touchMarkerMessage').show();
+        if(!markerMessageClosed){
+            $('.touchMarkerMessage').show();
+        }
 
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
 
@@ -664,7 +667,7 @@ function paintOneMarker(routeIndex, markerIndex) {
 
 
                 $('#' + this.jqueryId + ' .image-marker-click').click(function(){
-
+                    hideMarkerMessage();
                     if(!$('#' + richMarker.jqueryId).find('.marker_detail').is(':visible')){
                         $('.marker_detail').hide();
                         $('#' + richMarker.jqueryId).find('.image-marker-gallery').attr('src',richMarker.recent_photo);
@@ -678,6 +681,7 @@ function paintOneMarker(routeIndex, markerIndex) {
 
                 $('#' + this.jqueryId + ' .close_tweet').click(function(){
                     $('#' + richMarker.jqueryId).find('.marker_detail').hide();
+                    hideMarkerMessage();
                 });
 
 
@@ -715,7 +719,6 @@ function paintOneMarker(routeIndex, markerIndex) {
 }
 
 function showGalleryByMarker(richMarker){
-    console.log('entre')
     if(typeof richMarker.pictures != 'undefined'){
         galleryPictures = richMarker.pictures;
         showPictureGallery(galleryPictures);
@@ -726,6 +729,7 @@ function showGalleryByMarker(richMarker){
             data: null,
             dataType: "json",
             success: function (response) {
+                console.log(richMarker.id)
                 for (var i = 0; i < routes.length; i++) {
                     for (var j = 0; j < routes[i].markers.length; j++) {
                         if (routes[i].locations[j].id == richMarker.id) {
@@ -737,6 +741,7 @@ function showGalleryByMarker(richMarker){
                 }
             },
             error: function (error) {
+                console.log('ERROR' + ' ' + error)
             }
         });
     }
@@ -907,11 +912,13 @@ function showHelpGallery() {
 function hideHelpGallery() {
     $('#help-gallery').hide();
     $('#map_container').show();
-    $('.touchMarkerMessage').show();
+    if(!markerMessageClosed){
+        $('.touchMarkerMessage').show();
+    }
 }
 
 function showPictureGallery(galleryPictures) {
-
+    hideHelpGallery();
     if (galleryPictures.length) {
         $('#gallery').show();
         $('#map_container').hide();
@@ -929,14 +936,15 @@ function showPictureGallery(galleryPictures) {
 
             if (user) {
                 if (hasLiked(galleryPictures[itemIndex].instagram_id)) {
-                    post_like = "<span>Ya te gusta esta foto</span>";
+                    post_like = "<span title='Me gusta' class='icon liked icon-uniE60A'></span>";
                 } else {
-                    post_like = "<a href='#' onclick='likePhoto(" + galleryPictures[itemIndex].id + ")'>Me gusta</a>";
+                    post_like = "<a title='Me gusta' onclick='likePhoto(" + galleryPictures[itemIndex].id + ")'><span class='icon unliked icon-uniE60A'></span></a>";
                 }
             }
 
             content += "<div id='picture_" + galleryPictures[itemIndex].id + "'>" +
                 "<img src=\"" + imgURL + "\" alt=\"" + caption + "\">" +
+                "<div class=\"gallery-message\"><p>Desliza para ver más</p></div>" +
                 "<span class='post'>" +
                 "<div class='post-background'></div>" +
                 "<h3>" + author_nickname + "</h3>" +
@@ -948,9 +956,9 @@ function showPictureGallery(galleryPictures) {
             $('#slick-carousel').append(content);
 
             if (user) {
-                $('.post-like').show();
+                $('.post-like').css('display','inline-block');
             } else {
-                $('.post-like').hide();
+                $('.post-like').css('display','none');
             }
         }
 
@@ -1079,7 +1087,7 @@ function likePhoto(id) {
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
-            $('#picture_' + id + ' .post-like').html("<span>Ya te gusta esta foto</span>");
+            $('#picture_' + id + ' .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1148,6 +1156,11 @@ function showTermsPrivacity(){
 
 function hideTermsPrivacity(){
     $('#terms-privacity').hide();
+}
+
+function hideMarkerMessage(){
+    $('.touchMarkerMessage').hide();
+    markerMessageClosed = true;
 }
 
 function validateEmail(email) {
