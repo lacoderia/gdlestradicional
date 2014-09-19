@@ -69,4 +69,13 @@ class DisplayController < ApplicationController
     redirect_to '/users/auth/instagram'
   end
 
+	# Falta incluir logica para prender y apagar el mapa
+	def self.illuminate_map activate
+		if activate == "true"
+			logger.info "Activar"
+		elsif activate == "false"
+			logger.info "Desactivar"
+		end
+	end
+
 end
