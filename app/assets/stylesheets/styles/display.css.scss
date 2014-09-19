@@ -367,8 +367,11 @@ a.desktop {
     .image-marker-galllery-link{
       display: block;
       text-align: center;
-      text-decoration: underline;
       width: 100%;
+    }
+
+    .link{
+      text-decoration: underline;
     }
 
     .image-marker-gallery-wrapper{

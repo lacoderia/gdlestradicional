@@ -482,7 +482,7 @@ function loadRoutes() {
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
                                 '<div class="marker_detail"><span class="close_tweet">x</span><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                                '<img src="' + markerImageUrl + '"/>' +
+                                '<img class="image-marker-click" src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
@@ -513,7 +513,7 @@ function loadRoutes() {
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="secondary-marker marker">' +
                                 '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                                '<img src="' + markerImageUrl + '"/>' +
+                                '<img class="image-marker-click" src="' + markerImageUrl + '"/>' +
                                 '</div>'
                         });
 
@@ -652,12 +652,18 @@ function paintOneMarker(routeIndex, markerIndex) {
 
                 var richMarker = this;
                 if(!richMarker.default_photo){
-                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').show()
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').html('Ver más fotos');
+                    $('#' + richMarker.jqueryId).find('.image-marker-gallery').click(function(){
+                        showGalleryByMarker(richMarker);
+                    });
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').addClass('link');
                 }else{
-                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').hide();
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').html('Sube la primera foto de este lugar en Instagram usando el hashtag #GDLesTradicional');
+                    $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').removeClass('link');
                 }
 
-                $('#' + this.jqueryId).click(function(){
+
+                $('#' + this.jqueryId + ' .image-marker-click').click(function(){
 
                     if(!$('#' + richMarker.jqueryId).find('.marker_detail').is(':visible')){
                         $('.marker_detail').hide();
@@ -670,31 +676,14 @@ function paintOneMarker(routeIndex, markerIndex) {
 
                 });
 
+                $('#' + this.jqueryId + ' .close_tweet').click(function(){
+                    $('#' + richMarker.jqueryId).find('.marker_detail').hide();
+                });
+
+
+
                 $('#' + richMarker.jqueryId).find('.image-marker-galllery-link').click(function(){
-                    if(typeof richMarker.pictures != 'undefined'){
-                        galleryPictures = richMarker.pictures;
-                        showPictureGallery(galleryPictures);
-                    }else{
-                        $.ajax({
-                            type: "GET",
-                            url: "/locations/" + richMarker.id + "/gallery.json",
-                            data: null,
-                            dataType: "json",
-                            success: function (response) {
-                                for (var i = 0; i < routes.length; i++) {
-                                    for (var j = 0; j < routes[i].markers.length; j++) {
-                                        if (routes[i].locations[j].id == richMarker.id) {
-                                            routes[i].locations[j].pictures = sortGalleryPictures(response);
-                                            galleryPictures = routes[i].locations[j].pictures;
-                                            showPictureGallery(galleryPictures);
-                                        }
-                                    }
-                                }
-                            },
-                            error: function (error) {
-                            }
-                        });
-                    }
+                    showGalleryByMarker(richMarker);
                 });
 
             });
@@ -722,6 +711,34 @@ function paintOneMarker(routeIndex, markerIndex) {
         }
 
         map.setOptions(mapOptionsRouteDetail);
+    }
+}
+
+function showGalleryByMarker(richMarker){
+    console.log('entre')
+    if(typeof richMarker.pictures != 'undefined'){
+        galleryPictures = richMarker.pictures;
+        showPictureGallery(galleryPictures);
+    }else{
+        $.ajax({
+            type: "GET",
+            url: "/locations/" + richMarker.id + "/gallery.json",
+            data: null,
+            dataType: "json",
+            success: function (response) {
+                for (var i = 0; i < routes.length; i++) {
+                    for (var j = 0; j < routes[i].markers.length; j++) {
+                        if (routes[i].locations[j].id == richMarker.id) {
+                            routes[i].locations[j].pictures = sortGalleryPictures(response);
+                            galleryPictures = routes[i].locations[j].pictures;
+                            showPictureGallery(galleryPictures);
+                        }
+                    }
+                }
+            },
+            error: function (error) {
+            }
+        });
     }
 }
 
@@ -772,7 +789,7 @@ function showAllRoutes() {
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
                             '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                            '<img src="/assets/marker_azul.png"/>' +
+                            '<img class="image-marker-click" src="/assets/marker_azul.png"/>' +
                             '<div class="route-name">' + routes[i].name + '</div>' +
                             '</div>'
                     });
@@ -788,7 +805,7 @@ function showAllRoutes() {
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="secondary-marker marker">' +
                             '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                            '<img src="/assets/cuadrito_gris.png"/>' +
+                            '<img class="image-marker-click" src="/assets/cuadrito_gris.png"/>' +
                             '</div>'
                     });
 
