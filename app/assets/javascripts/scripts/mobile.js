@@ -986,6 +986,8 @@ function influencerGalleryClick(e) {
 }
 
 function login() {
+    $('#login-btn').hide();
+    $('.instagram-loader').show();
     $.ajax({
         beforeSend: function( xhr ) {
             var token = $('meta[name="csrf-token"]').attr('content');
@@ -1000,11 +1002,14 @@ function login() {
             if (response.success == true) {
                 user = response.user;
                 showDashboard();
+                $('.instagram-loader').hide();
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             if (textStatus == 'parsererror') {
                 window.location = '/relocated';
+                $('#login-btn').show();
+                $('.instagram-loader').hide();
             }
         }
     });
