@@ -54,8 +54,12 @@ class DisplayController < ApplicationController
     if results.size > 0
       results.each do |object|
         if object.location && object.type == 'image'
-          new_photo = Photo.create(instagram_id: object.id, caption: object.caption.text, author_id: object.user.id, author_nickname: object.user.username, lat: object.location.latitude, long: object.location.longitude, url_low: object.images.low_resolution.url, url_thumb: object.images.thumbnail.url, url_normal: object.images.standard_resolution.url)
-          WebsocketRails[:twitter_channel].trigger(:new_picture, new_photo.to_json)
+          begin
+            new_photo = Photo.create(instagram_id: object.id, caption: object.caption.text, author_id: object.user.id, author_nickname: object.user.username, lat: object.location.latitude, long: object.location.longitude, url_low: object.images.low_resolution.url, url_thumb: object.images.thumbnail.url, url_normal: object.images.standard_resolution.url)
+            WebsocketRails[:twitter_channel].trigger(:new_picture, new_photo.to_json)
+          rescue
+            logger.info "INSTAGRAM:DUPLICADO"
+          end
         end  
       end
       util.update_attribute(:next_min_id, results.pagination.min_tag_id)
