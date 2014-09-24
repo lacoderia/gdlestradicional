@@ -189,7 +189,8 @@ function init() {
 
 
         // Se agrega el mapa de calor al mapa y se declara el arreglo de puntos para alimentarlo
-        var tweetData = initHeatMap();
+        var tweetData = [];
+        //var tweetData = initHeatMap();
 
         var pointArray = new google.maps.MVCArray(tweetData);
         var gradient = [
@@ -246,7 +247,7 @@ function init() {
             });
 
 
-            pointArray.push(position);
+            //pointArray.push(position);
 
             google.maps.event.addListener(marker, 'click', function() {
                 var tweet_marker_element = $('.tweet_marker_' + this.tweet_guid);
