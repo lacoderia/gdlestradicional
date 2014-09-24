@@ -189,8 +189,8 @@ function init() {
 
 
         // Se agrega el mapa de calor al mapa y se declara el arreglo de puntos para alimentarlo
-        var tweetData = [];
         //var tweetData = initHeatMap();
+        var tweetData = [];
 
         var pointArray = new google.maps.MVCArray(tweetData);
         var gradient = [
@@ -903,16 +903,17 @@ function showAllRoutes() {
                 var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
 
                 var markerId = 'marker_' + i + '_' + j;
-                var markerImageUrl = '/assets/marker_azul.png';
-                var aditionalText = '';
 
-                if(routes[i].locations[j].especial){
-                    markerImageUrl = '/assets/marker_azul_amarillo.png';
-                    aditionalText = '<p>Enfoque Tradicional</p>'
-                }
 
                 if (j == 0) {
 
+                    var markerImageUrl = '/assets/marker_azul.png';
+                    var aditionalText = '';
+
+                    if(routes[i].locations[j].especial){
+                        markerImageUrl = '/assets/marker_azul_amarillo.png';
+                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    }
 
                     var marker = new RichMarker({
                         position: routeCoordinate,
@@ -946,6 +947,14 @@ function showAllRoutes() {
                         });
                     });
                 } else {
+
+                    var markerImageUrl = '/assets/cuadrito_gris.png';
+                    var aditionalText = '';
+
+                    if(routes[i].locations[j].especial){
+                        markerImageUrl = '/assets/cuadrito_amarillo.png';
+                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    }
 
                     var marker = new RichMarker({
                         position: routeCoordinate,
