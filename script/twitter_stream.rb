@@ -31,6 +31,7 @@ begin
         tweet.lat = positions[random][:lat]
         tweet.long = positions[random][:long]
       end
+      tweet.save
       WebsocketRails[:twitter_channel].trigger(:new_tweet, tweet)
     end
   end

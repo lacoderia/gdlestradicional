@@ -8,6 +8,7 @@ class DisplayController < ApplicationController
   end
 
   def index
+    @illumination = Illumination.first
     @user = current_user.get_info if current_user
     ip = request.remote_ip
     invite = params[:invite]
@@ -20,6 +21,7 @@ class DisplayController < ApplicationController
   end
 
   def mobile
+    @illumination = Illumination.first
     @user = current_user.get_info if current_user
     ip = request.remote_ip
     invite = params[:invite]
@@ -71,13 +73,22 @@ class DisplayController < ApplicationController
     redirect_to '/users/auth/instagram'
   end
 
+  def get_illumination
+    @tweets = Tweet.where('featured = ?', false)
+  end
+
+
 	# Falta incluir logica para prender y apagar el mapa
 	def self.illuminate_map activate
-		if activate == "true"
+    il = Illumination.last
+    il.update_attribute(:active, activate)
+		if activate == true
 			logger.info "Activar"
-		elsif activate == "false"
+		elsif activate == false
 			logger.info "Desactivar"
+      Tweet.where('featured = ?', false).destroy_all
 		end
+    WebsocketRails[:twitter_channel].trigger(:map_status, activate)
 	end
 
 end
