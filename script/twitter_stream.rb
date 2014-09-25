@@ -18,6 +18,8 @@ positions = [
   {:lat => 20.680939, :long => -103.372149}, {:lat => 20.648414, :long => -103.392834}, {:lat => 20.676562, :long => -103.346571}
 ]
 
+il = Illumination.first
+
 begin
   client.filter(:track => 'gdlestradicional') do |object|
   #client.filter(:locations => "-103.477892,20.615802,-103.257822,20.692261") do |object|
@@ -31,7 +33,7 @@ begin
         tweet.lat = positions[random][:lat]
         tweet.long = positions[random][:long]
       end
-      tweet.save
+      tweet.save if il.active == true
       WebsocketRails[:twitter_channel].trigger(:new_tweet, tweet)
     end
   end
