@@ -10,6 +10,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   cursor: default;
+  zoom: 0;
 }
 
 a.desktop {
@@ -1356,5 +1357,50 @@ a.desktop {
   100% {
     transform: scale(1.2, 1.2);
     opacity: 0;
+  }
+}
+
+.tweet_light-1{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: 1;
+  animation-delay: 0.2s;
+  opacity: 1;
+}
+
+.tweet_light-2{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: 1;
+  animation-delay: 0.4s;
+  opacity: 1;
+}
+
+.tweet_light-3{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: 1;
+  animation-delay: 0.6s;
+  opacity: 1;
+}
+
+.tweet_light-4{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: 1;
+  animation-delay: 0.8s;
+  opacity: 1;
+}
+
+.tweet_light-5{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: 1;
+  animation-delay: 1s;
+  opacity: 1;
+}
+
+@keyframes glowing{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+    opacity: 1;
   }
 }

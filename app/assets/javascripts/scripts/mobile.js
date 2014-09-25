@@ -23,6 +23,8 @@ var tweet_guid = 0;
 var mailSent = false;
 var intervalTimeout;
 var markerMessageClosed = false;
+var isIlluminationTweetActive = false;
+var lightTweetMarkers = [];
 
 var styles = [
     {
@@ -201,6 +203,20 @@ function init() {
                 content: content
             });
 
+            if(isIlluminationTweetActive){
+                var delay = Math.floor(Math.random() * 5) + 1;
+                var lightMarker = new RichMarker({
+                    tweet_guid: tweet_guid,
+                    position: position,
+                    map: map,
+                    flat: true,
+                    draggable: false,
+                    content: '<img class="tweet_light-' + delay + '" src="/assets/marca.png">'
+                });
+
+                lightTweetMarkers.push(lightMarker);
+            }
+
             google.maps.event.addListener(marker, 'click', function() {
 
                 clearInterval(timer);
@@ -327,6 +343,68 @@ function init() {
     }
 }
 
+function initTraceTweets() {
+    if(isIlluminationTweetActive){
+        showTweetIllumination();
+    }
+
+    channel.bind('map_status', function(event) {
+        var illuminationStatus = JSON.parse(event);
+        isIlluminationTweetActive = illuminationStatus;
+        if(isIlluminationTweetActive){
+            showTweetIllumination();
+        }else{
+            hideTweetIllumination();
+        }
+    });
+}
+
+function showTweetIllumination(){
+
+    try{
+        $.ajax({
+            type: "GET",
+            url: "/get_illumination.json",
+            data: null,
+            dataType: "json",
+            success: function(response) {
+
+                var initialTweets = response;
+
+                for(var tweetIndex=0; tweetIndex<initialTweets.length; tweetIndex++){
+                    var delay = Math.floor(Math.random() * 5) + 1;
+
+                    var position = new google.maps.LatLng(initialTweets[tweetIndex].lat, initialTweets[tweetIndex].long);
+                    var lightMarker = new RichMarker({
+                        tweet_guid: tweet_guid,
+                        position: position,
+                        map: map,
+                        flat: true,
+                        draggable: false,
+                        content: '<img class="tweet_light-' + delay + '" src="/assets/marca.png">',
+                    });
+                    lightTweetMarkers.push(lightMarker);
+
+                }
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+
+    }catch (e){
+        console.log('Error');
+    }
+
+}
+
+function hideTweetIllumination(){
+    for(var tweetIndex=0; tweetIndex<lightTweetMarkers.length; tweetIndex++){
+        lightTweetMarkers[tweetIndex].setMap(null);
+    }
+    lightTweetMarkers = [];
+}
+
 function devOrientHandler(event){
 
 }
@@ -435,6 +513,9 @@ function launchApp() {
                 window.localStorage.showHelp = false;
             }
         }
+
+        isIlluminationTweetActive = $("#ruby-values").data("illumination");
+        initTraceTweets();
     });
 }
 
