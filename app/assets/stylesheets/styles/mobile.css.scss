@@ -16,15 +16,6 @@ a.mobile{
 #terms-privacity{
   background-color: rgba(0,0,0,0.5);
 
-  .close_modal{
-    color: #A6A7AA;
-    cursor: pointer;
-    position: absolute;
-    right: 10%;
-    top: 7%;
-    z-index: 1;
-  }
-
   .message{
     border: 3px solid #A6A7AA;
     border-radius: 5px;
@@ -36,8 +27,19 @@ a.mobile{
     text-align: center;
     text-transform: uppercase;
     top: 5%;
-    overflow: scroll;
+    overflow: hidden;
     width: 78%;
+
+    .close_modal{
+      color: #A6A7AA;
+      display: block;
+      text-align: right;
+    }
+
+    .terms-privacity-content{
+      height: 100%;
+      overflow: scroll;
+    }
 
     p, ol, ul{
       font-size: 7px;
@@ -244,6 +246,12 @@ header{
 
 }
 
+#mobile-jc-gallery-thumbs .mobile-jc-gallery-thumbs-container{
+  height: 100%;
+  overflow: scroll;
+  width: 100%;
+}
+
 #mobile-jc-gallery-thumbs, #mobile-jc-gallery{
   display: block;
   position: fixed;
@@ -258,11 +266,8 @@ header{
 
   .close_modal{
     color: #A6A7AA;
-    cursor: pointer;
-    position: absolute;
-    top: 7%;
-    right: 10%;
-    z-index: 1;
+    display: block;
+    text-align: right;
   }
 
   .btn_regresar{
@@ -287,7 +292,7 @@ header{
     text-align: center;
     top: 5%;
     width: 78%;
-    overflow: scroll;
+    overflow: hidden;
 
     background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
