@@ -21,6 +21,16 @@
       </div>
     </div>
   </div>
+  <div id="jc-gallery-thumbs-container" onclick="jcGalleryThumbsClick(event)">
+    <div id="jc-gallery-thumbs">
+    </div>
+  </div>
+  <div id="jc-gallery-container" onclick="jcGalleryClick(event)">
+    <div id="jc-gallery">
+      <div class="btn_regresar" onclick="showJCGalleryThumbs()"><img src="/assets/boton_regresar.png"></div>
+      <div id="jc-slick-carousel"></div>
+    </div>
+  </div>
   <div id="picture-gallery-container" onclick="pictureGalleryClick(event)">
     <div id="picture-gallery">
       <input type="hidden" id="current-picture-id" value="0"/>
@@ -155,6 +165,7 @@
       <li><a href="https://twitter.com/jctradicional" title="Twitter" target="_blank"><span class="icon-uniE600"></span></a></li>
       <li><a href="https://www.facebook.com/jctradicional" title="Facebook" target="_blank"><span class="icon-uniE601"></span></a></li>
       <li><a href="http://www.cuervotradicional.com.mx" title="Cuervo Tradicional" target="_blank" class="cuervo"><span class="icon-uniE611"></span></a></li>
+      <li><a onclick="showJCGalleryThumbs()"><span class="icon-images"></span></a></li>
     </ul>
   </div>
   

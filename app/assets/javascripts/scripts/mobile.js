@@ -6,6 +6,138 @@ $(document).ready(
     init
 );
 
+/*
+Estructura JSON de fotos de galería:
+- id: ID de la foto (integer)
+- gallery_id: ID de la galería a la que pertenece (integer)
+- name: Nombre de la foto (string)
+- description: Descripción de la foto (string)
+- avatar: URL de la foto (string)
+*/
+
+var jcGallery = [
+    {
+        id: 1,
+        name: 'galeria 1',
+        photos: [
+            {
+                id: 1,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 2,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 3,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            }
+        ]
+    },
+    {
+        id: 2,
+        name: 'galeria 2',
+        photos: [
+            {
+                id: 4,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 5,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 6,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            }
+        ]
+    },
+    {
+        id: 3,
+        name: 'galeria 3',
+        photos: [
+            {
+                id: 7,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 8,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 9,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            }
+        ]
+    },
+    {
+        id: 4,
+        name: 'galeria 4',
+        photos: [
+            {
+                id: 10,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 11,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 12,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            }
+        ]
+    },
+    {
+        id: 5,
+        name: 'galeria 5',
+        photos: [
+            {
+                id: 13,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 14,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            },
+            {
+                id: 15,
+                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
+                name: 'Nombre de la fotografía',
+                description: 'Esta es la descripción de la fotografía de Guadalajara'
+            }
+        ]
+    }
+];
+
 var map = null;
 var rectangle = null;
 var mapCenter = new google.maps.LatLng(20.69, -103.37);
@@ -915,6 +1047,64 @@ function hideHelpGallery() {
     if(!markerMessageClosed){
         $('.touchMarkerMessage').show();
     }
+}
+
+/** JC Gallery **/
+
+function showJCGalleryThumbs() {
+    hideHelpGallery();
+    hideJCGallery();
+
+    $('#overlay').show();
+    $('#mobile-jc-gallery-thumbs').show();
+
+    $('#mobile-jc-gallery-thumbs .mobile-jc-gallery-thumbs-container').html('');
+
+    for (var i=0; i<jcGallery.length; i++) {
+        var galleryElement = '<div class="mobile-gallery-cell">' +
+            '<img src="' + jcGallery[i].photos[0].src + '" onclick="showJCGallery(' + i + ')">' +
+            '<div class="jc-gallery-name">' + jcGallery[i].name + '</div>' +
+            '</div>';
+
+        $('#mobile-jc-gallery-thumbs .mobile-jc-gallery-thumbs-container').append(galleryElement);
+    }
+}
+
+function hideJCGalleryThumbs() {
+    $('#overlay').hide();
+    $('#mobile-jc-gallery-thumbs').hide();
+}
+
+function showJCGallery(galleryIndex) {
+    hideJCGalleryThumbs();
+
+    $('#overlay').show();
+    $('#mobile-jc-gallery').show();
+
+    $('#jc-slick-carousel').unslick();
+    $('#jc-slick-carousel').html('');
+
+    for(var itemIndex in jcGallery[galleryIndex].photos){
+        var content = '<div class="jc-slick-carousel-slide">' +
+                        '<img src="' + jcGallery[galleryIndex].photos[itemIndex].src + '">' +
+                        '<div class="jc-photo-name">' + jcGallery[galleryIndex].photos[itemIndex].name + '</div>' +
+                        '<div class="jc-photo-description">' + jcGallery[galleryIndex].photos[itemIndex].description + '</div>' +
+                   '</div>';
+
+        $('#jc-slick-carousel').append(content);
+    }
+
+    $('#jc-slick-carousel').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        lazyLoad: 'ondemand'
+    });
+}
+
+function hideJCGallery() {
+    $('#overlay').hide();
+    $('#mobile-jc-gallery').hide();
 }
 
 function showPictureGallery(galleryPictures) {
