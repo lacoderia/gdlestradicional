@@ -8,7 +8,7 @@ $(document).ready(
 
 var map = null;
 var rectangle = null;
-var mapCenter = new google.maps.LatLng(20.69, -103.37);
+var mapCenter = new google.maps.LatLng(20.68, -103.37);
 var showElements = false;
 var showAllRoutesZoom = false;
 var paintingRoutes = true;

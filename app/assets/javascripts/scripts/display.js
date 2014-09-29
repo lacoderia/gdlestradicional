@@ -9,7 +9,7 @@ $(document).ready(
 var map = null;
 var rectangle = null;
 var pano, panoInterval, userPano, userPanoInterval = null;
-var mapCenter = new google.maps.LatLng(20.7, -103.39);
+var mapCenter = new google.maps.LatLng(20.68, -103.37);
 var showElements = false;
 var paintingRoutes = true;
 var routes = [];
@@ -453,7 +453,7 @@ function createLatestPictureMarker(pic, nickname){
 
 function showLatestPictures() {
     latestPictures.push({
-        instagram_id:'786286069276426306_4290975', caption:'Mykonos in Tlaquepaque #scouting #gdlestradicional #museum #brothers #lovemyjob #youbetterwork', author_id:'4290975', author_nickname:'paulorendain', lat:20.68734075, long:-103.264199421, url_low:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_a.jpg', url_thumb:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_s.jpg', url_normal:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_n.jpg'
+       instagram_id:'786286069276426306_4290975', caption:'Mykonos in Tlaquepaque #scouting #gdlestradicional #museum #brothers #lovemyjob #youbetterwork', author_id:'4290975', author_nickname:'paulorendain', lat:20.68734075, long:-103.264199421, url_low:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_a.jpg', url_thumb:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_s.jpg', url_normal:'http://scontent-b.cdninstagram.com/hphotos-xaf1/t51.2885-15/10616964_615864088534897_1350848748_n.jpg'
     })
     latestPicturesTimeout = setTimeout(function(){
 
@@ -462,7 +462,7 @@ function showLatestPictures() {
             $('#latest-pic').fadeOut(1000, function(){
                 $('#latest-pic').remove();
             });
-        }, 5000);
+        }, 1000);
 
         var start = 1;
         intervalTimeout = setInterval(function(){
@@ -478,11 +478,11 @@ function showLatestPictures() {
                 $('#latest-pic').fadeOut(1000, function(){
                     $('#latest-pic').remove();
                 });
-            }, 5000);
+            }, 500);
             start++;
-        }, 10000);
+        }, 1000);
 
-    }, 5000);
+    }, 1000);
 }
 
 function stopLatestPictures(){
