@@ -367,6 +367,19 @@ function initTraceTweets() {
     });
 }
 
+function changeLineColor(lineColorString){
+
+    for(var routeIndex=0; routeIndex<routes.length; routeIndex++){
+        for(var lineIndex=0; lineIndex<routes[routeIndex].lines.length; lineIndex++){
+
+            var line = routes[routeIndex].lines[lineIndex].icons[0].icon;
+            line.strokeColor = lineColorString;
+
+        }
+    }
+
+}
+
 function showTweetIllumination(){
 
     try{
@@ -378,6 +391,8 @@ function showTweetIllumination(){
             success: function(response) {
 
                 lineStrokeColor = '#ffffff';
+                changeLineColor(lineStrokeColor);
+
                 var opacity = 0.6;
                 rectangle.setOptions({
                     fillOpacity: 0.8,
@@ -429,6 +444,8 @@ function showTweetIllumination(){
 function hideTweetIllumination(){
 
     lineStrokeColor = '#000000';
+    changeLineColor(lineStrokeColor);
+
     rectangle.setOptions({
         fillOpacity: 0.6,
     });
