@@ -345,6 +345,19 @@ function initTraceTweets() {
     });
 }
 
+function changeLineColor(lineColorString){
+
+    for(var routeIndex=0; routeIndex<routes.length; routeIndex++){
+        for(var lineIndex=0; lineIndex<routes[routeIndex].lines.length; lineIndex++){
+
+            var line = routes[routeIndex].lines[lineIndex].icons[0].icon;
+            line.strokeColor = lineColorString;
+
+        }
+    }
+
+}
+
 function showTweetIllumination(){
 
     try{
@@ -360,8 +373,9 @@ function showTweetIllumination(){
                 rectangle.setOptions({
                     fillOpacity: 0.8,
                 });
-                console.log()
+
                 lineStrokeColor = '#ffffff';
+                changeLineColor(lineStrokeColor);
 
                 if($('.first-marker')){
                     var markerElements = $('.first-marker');
@@ -406,6 +420,8 @@ function showTweetIllumination(){
 function hideTweetIllumination(){
 
     lineStrokeColor = '#000000';
+    changeLineColor(lineStrokeColor);
+
     rectangle.setOptions({
         fillOpacity: 0.6,
     });
@@ -594,6 +610,7 @@ function loadRoutes() {
                     path: 'M 0,-0.5 0,0.5',
                     strokeOpacity: 1,
                     scale: 2.5,
+                    strokeColor: lineStrokeColor,
                 };
 
                 for(var j = 0; j < routes[i].locations.length; j++){
