@@ -25,6 +25,7 @@ var intervalTimeout;
 var markerMessageClosed = false;
 var isIlluminationTweetActive = false;
 var lightTweetMarkers = [];
+var lineStrokeColor = '#000000';
 
 var styles = [
     {
@@ -178,16 +179,21 @@ function init() {
 
             tweet_guid++;
 
+            var pinClass = 'pin';
+            if(isIlluminationTweetActive){
+                pinClass = 'pin-special';
+            }
+
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                 '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                '<div class="pin icon-uniE600"></div>' +
+                '<div class="' + pinClass + ' icon-uniE600"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                     '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="pin icon-uniE600"></div>' +
+                    '<div class="' + pinClass + ' icon-uniE600"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
             }
@@ -350,11 +356,13 @@ function initTraceTweets() {
 
     channel.bind('map_status', function(event) {
         var illuminationStatus = JSON.parse(event);
-        isIlluminationTweetActive = illuminationStatus;
-        if(isIlluminationTweetActive){
-            showTweetIllumination();
-        }else{
-            hideTweetIllumination();
+        if(illuminationStatus != isIlluminationTweetActive){
+            isIlluminationTweetActive = illuminationStatus;
+            if(isIlluminationTweetActive){
+                showTweetIllumination();
+            }else{
+                hideTweetIllumination();
+            }
         }
     });
 }
@@ -368,6 +376,26 @@ function showTweetIllumination(){
             data: null,
             dataType: "json",
             success: function(response) {
+
+                lineStrokeColor = '#ffffff';
+                var opacity = 0.6;
+                rectangle.setOptions({
+                    fillOpacity: 0.8,
+                });
+
+                $('.pin').removeClass('pin').addClass('pin-special');
+
+                if($('.first-marker')){
+                    var markerElements = $('.first-marker');
+                    for(var markerIndex=0; markerIndex<markerElements.length; markerIndex++){
+                        var markerImage = $(markerElements[markerIndex]).find('img');
+                        if(markerImage.hasClass('special')){
+                            markerImage.attr('src','/assets/marker_azul_amarillo_ilumina.png');
+                        }else{
+                            markerImage.attr('src','/assets/marker_azul_ilumina.png');
+                        }
+                    }
+                }
 
                 var initialTweets = response;
 
@@ -399,6 +427,26 @@ function showTweetIllumination(){
 }
 
 function hideTweetIllumination(){
+
+    lineStrokeColor = '#000000';
+    rectangle.setOptions({
+        fillOpacity: 0.6,
+    });
+
+    $('.pin').removeClass('pin-special').addClass('pin');
+
+    if($('.first-marker')){
+        var markerElements = $('.first-marker');
+        for(var markerIndex=0; markerIndex<markerElements.length; markerIndex++){
+            var markerImage = $(markerElements[markerIndex]).find('img');
+            if(markerImage.hasClass('special')){
+                markerImage.attr('src','/assets/marker_azul_amarillo.png');
+            }else{
+                markerImage.attr('src','/assets/marker_azul.png');
+            }
+        }
+    }
+
     for(var tweetIndex=0; tweetIndex<lightTweetMarkers.length; tweetIndex++){
         lightTweetMarkers[tweetIndex].setMap(null);
     }
@@ -485,8 +533,6 @@ function stopLatestPictures(){
 }
 
 function launchApp() {
-
-
     $('#intro').fadeOut(1000, function() {
 
         if(!mailSent){
@@ -537,7 +583,8 @@ function loadRoutes() {
                 var lineSymbol = {
                     path: 'M 0,-0.5 0,0.5',
                     strokeOpacity: 1,
-                    scale: 2.5
+                    scale: 2.5,
+                    strokeColor: lineStrokeColor
                 };
 
                 for(var j = 0; j < routes[i].locations.length; j++){
@@ -546,10 +593,21 @@ function loadRoutes() {
                     var markerId = 'marker_' + i + '_' + j;
                     var markerImageUrl = '/assets/marker_azul.png';
                     var aditionalText = '';
+                    var special = '';
 
-                    if(routes[i].locations[j].especial){
-                        markerImageUrl = '/assets/marker_azul_amarillo.png';
-                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    if(isIlluminationTweetActive){
+                        markerImageUrl = '/assets/marker_azul_ilumina.png';
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo_ilumina.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
+                    }else{
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
                     }
 
                     if (j == 0) {
@@ -863,35 +921,63 @@ function showAllRoutes() {
                 var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
 
                 var markerId = 'marker_' + i + '_' + j;
+                var special = '';
 
                 if (j == 0) {
+                    var markerImageUrl = '/assets/marker_azul.png';
+                    var aditionalText = '';
+
+                    if(isIlluminationTweetActive){
+                        markerImageUrl = '/assets/marker_azul_ilumina.png';
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo_ilumina.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
+                    }else{
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
+                    }
+
                     var marker = new RichMarker({
                         position: routeCoordinate,
                         map: map,
                         flat: true,
-                        anchor: new google.maps.Size(-15, -42),
+                        anchor: new google.maps.Size(-20, -70),
                         draggable: false,
                         routeIndex: i,
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
-                            '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                            '<img class="image-marker-click" src="/assets/marker_azul.png"/>' +
+                            '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                            '<img src="' + markerImageUrl + '"/>' +
                             '<div class="route-name">' + routes[i].name + '</div>' +
                             '</div>'
                     });
 
                 } else {
+
+                    var markerImageUrl = '/assets/cuadrito_gris.png';
+                    var aditionalText = '';
+
+                    if(routes[i].locations[j].especial){
+                        markerImageUrl = '/assets/cuadrito_amarillo.png';
+                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    }
+
                     var marker = new RichMarker({
                         position: routeCoordinate,
                         map: null,
                         flat: true,
-                        anchor: new google.maps.Size(-7, -7),
+                        anchor: new google.maps.Size(-8, -8),
                         draggable: false,
                         routeIndex: i,
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="secondary-marker marker">' +
-                            '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                            '<img class="image-marker-click" src="/assets/cuadrito_gris.png"/>' +
+                            '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                            '<img src="' + markerImageUrl + '"/>' +
                             '</div>'
                     });
 

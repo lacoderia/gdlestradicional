@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icomoon';
-    src:url('/assets/icomoon.eot?p8a66e');
-    src:url('/assets/icomoon.eot?#iefixp8a66e') format('embedded-opentype'),
-    url('/assets/icomoon.woff?p8a66e') format('woff'),
-    url('/assets/icomoon.ttf?p8a66e') format('truetype'),
-    url('/assets/icomoon.svg?p8a66e#icomoon') format('svg');
+    src:url('/assets/icomoon.eot?4dg82c');
+    src:url('/assets/icomoon.eot?#iefix4dg82c') format('embedded-opentype'),
+    url('/assets/icomoon.woff?4dg82c') format('woff'),
+    url('/assets/icomoon.ttf?4dg82c') format('truetype'),
+    url('/assets/icomoon.svg?4dg82c#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -23,6 +23,18 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-IGCONNECTpng:before {
+    content: "\e613";
+}
+.icon-uniE608:before {
+    content: "\e608";
+}
+.icon-uniE609:before {
+    content: "\e609";
+}
+.icon-images:before {
+    content: "\e612";
+}
 .icon-uniE611:before {
     content: "\e611";
 }
@@ -59,17 +71,8 @@
 .icon-uniE607:before {
     content: "\e607";
 }
-.icon-uniE608:before {
-    content: "\e608";
-}
-.icon-uniE609:before {
-    content: "\e609";
-}
 .icon-uniE606:before {
     content: "\e606";
-}
-.icon-uniE60E:before {
-    content: "\e60e";
 }
 .icon-uniE60D:before {
     content: "\e60d";

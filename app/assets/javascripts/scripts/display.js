@@ -25,6 +25,7 @@ var intervalTimeout, latestPicturesTimeout;
 var markerMessageClosed = false;
 var isIlluminationTweetActive = false;
 var lightTweetMarkers = [];
+var lineStrokeColor = '#000000';
 
 var styles = [
     {
@@ -176,7 +177,7 @@ function init() {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
         rectangle = new google.maps.Rectangle({
-            strokeColor: '#033060​',
+            strokeColor: '#002A63​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillColor: '#033060​',
@@ -197,16 +198,21 @@ function init() {
 
             tweet_guid++;
 
+            var pinClass = 'pin';
+            if(isIlluminationTweetActive){
+                pinClass = 'pin-special';
+            }
+
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                 '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                '<div class="pin icon-uniE600"></div>' +
+                '<div class="' + pinClass + ' icon-uniE600"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                     '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="pin icon-uniE600"></div>' +
+                    '<div class="' + pinClass + ' icon-uniE600"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
             }
@@ -328,11 +334,13 @@ function initTraceTweets() {
 
     channel.bind('map_status', function(event) {
         var illuminationStatus = JSON.parse(event);
-        isIlluminationTweetActive = illuminationStatus;
-        if(isIlluminationTweetActive){
-            showTweetIllumination();
-        }else{
-            hideTweetIllumination();
+        if(illuminationStatus != isIlluminationTweetActive){
+            isIlluminationTweetActive = illuminationStatus;
+            if(isIlluminationTweetActive){
+                showTweetIllumination();
+            }else{
+                hideTweetIllumination();
+            }
         }
     });
 }
@@ -346,6 +354,26 @@ function showTweetIllumination(){
             data: null,
             dataType: "json",
             success: function(response) {
+
+
+                var opacity = 0.6;
+                rectangle.setOptions({
+                    fillOpacity: 0.8,
+                });
+                console.log()
+                lineStrokeColor = '#ffffff';
+
+                if($('.first-marker')){
+                    var markerElements = $('.first-marker');
+                    for(var markerIndex=0; markerIndex<markerElements.length; markerIndex++){
+                        var markerImage = $(markerElements[markerIndex]).find('img');
+                        if(markerImage.hasClass('special')){
+                            markerImage.attr('src','/assets/marker_azul_amarillo_ilumina.png');
+                        }else{
+                            markerImage.attr('src','/assets/marker_azul_ilumina.png');
+                        }
+                    }
+                }
 
                 var initialTweets = response;
 
@@ -376,6 +404,24 @@ function showTweetIllumination(){
 }
 
 function hideTweetIllumination(){
+
+    lineStrokeColor = '#000000';
+    rectangle.setOptions({
+        fillOpacity: 0.6,
+    });
+
+    if($('.first-marker')){
+        var markerElements = $('.first-marker');
+        for(var markerIndex=0; markerIndex<markerElements.length; markerIndex++){
+            var markerImage = $(markerElements[markerIndex]).find('img');
+            if(markerImage.hasClass('special')){
+                markerImage.attr('src','/assets/marker_azul_amarillo.png');
+            }else{
+                markerImage.attr('src','/assets/marker_azul.png');
+            }
+        }
+    }
+
     for(var tweetIndex=0; tweetIndex<lightTweetMarkers.length; tweetIndex++){
         lightTweetMarkers[tweetIndex].setMap(null);
     }
@@ -492,7 +538,6 @@ function stopLatestPictures(){
 
 function launchApp() {
 
-
     $('#intro').fadeOut(1000, function() {
 
         if(!mailSent){
@@ -548,7 +593,7 @@ function loadRoutes() {
                 var lineSymbol = {
                     path: 'M 0,-0.5 0,0.5',
                     strokeOpacity: 1,
-                    scale: 2.5
+                    scale: 2.5,
                 };
 
                 for(var j = 0; j < routes[i].locations.length; j++){
@@ -556,11 +601,23 @@ function loadRoutes() {
                     var markerId = 'marker_' + i + '_' + j;
                     var markerImageUrl = '/assets/marker_azul.png';
                     var aditionalText = '';
+                    var special = '';
 
-                    if(routes[i].locations[j].especial){
-                        markerImageUrl = '/assets/marker_azul_amarillo.png';
-                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    if(isIlluminationTweetActive){
+                        markerImageUrl = '/assets/marker_azul_ilumina.png';
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo_ilumina.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
+                    }else{
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
                     }
+
 
                     if (j == 0) {
                         var marker = new RichMarker({
@@ -573,7 +630,7 @@ function loadRoutes() {
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
                                 '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img src="' + markerImageUrl + '"/>' +
+                                '<img class="' + special + '" src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name">' + routes[i].name + '</div>' +
                                 '</div>'
                         });
@@ -889,16 +946,26 @@ function showAllRoutes() {
                 var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
 
                 var markerId = 'marker_' + i + '_' + j;
-
+                var special = '';
 
                 if (j == 0) {
 
                     var markerImageUrl = '/assets/marker_azul.png';
                     var aditionalText = '';
 
-                    if(routes[i].locations[j].especial){
-                        markerImageUrl = '/assets/marker_azul_amarillo.png';
-                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    if(isIlluminationTweetActive){
+                        markerImageUrl = '/assets/marker_azul_ilumina.png';
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo_ilumina.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
+                    }else{
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
                     }
 
                     var marker = new RichMarker({

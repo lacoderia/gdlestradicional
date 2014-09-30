@@ -1194,6 +1194,15 @@ a.desktop {
 }
 
 .pin {
+  color: black;
+  cursor: pointer;
+  width: 30px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.pin-special{
+  color: #B3B3B3;
   cursor: pointer;
   width: 30px;
   height: 20px;
