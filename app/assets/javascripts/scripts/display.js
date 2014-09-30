@@ -1341,6 +1341,13 @@ function login() {
     $('#login-btn').hide();
     $('.instagram-loader').show();
 
+     ga('send', {
+      'hitType': 'event',          // Required.
+      'eventCategory': 'button',   // Required.
+      'eventAction': 'click',      // Required.
+      'eventLabel': 'JCTuser',
+     });
+
     $.ajax({
         beforeSend: function( xhr ) {
             var token = $('meta[name="csrf-token"]').attr('content');
@@ -1616,4 +1623,13 @@ function hideMarkerMessage(){
 function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+}
+
+function trackIG() {
+    ga('send', {
+      'hitType': 'event',          // Required.
+      'eventCategory': 'button',   // Required.
+      'eventAction': 'click',      // Required.
+      'eventLabel': 'JCT',
+    });
 }
