@@ -26,40 +26,61 @@ var markerMessageClosed = false;
 var isIlluminationTweetActive = false;
 var lightTweetMarkers = [];
 var lineStrokeColor = '#000000';
+var styles = [];
+var dayStyles = [
+    {
+        "featureType":"water","elementType":"geometry","stylers":[{"color":"#4A6361"}]
+    },
+    {
+        "featureType":"landscape","elementType":"geometry","stylers":[{"color":"#828785"},{"lightness": -20}]
+    },
+    {
+        "featureType":"road","elementType":"geometry","stylers":[{"color":"#AAAAAA"},{"lightness": -33}]
+    },
+    {   "featureType": "road","elementType": "labels", "stylers": [{ "visibility": "on" },{"lightness": -50}]
+    },
+    {
+        "featureType":"poi","elementType":"geometry","stylers":[{"color":"#455756"}, {"lightness": 5}, {"visibility": "on"}]
+    },
+    {
+        "featureType": "poi", "elementType": "labels", "stylers": [{ "visibility": "off" }]
+    },
+    {
+        "featureType":"transit","elementType":"geometry","stylers":[{"color":"#406d80"}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"color":"#AAAAAA"},{"weight":2},{"gamma":0.84}]},{"elementType":"labels.text.fill","stylers":[{"color":"#1A2222"}]
+    },
+    {
+        "featureType": "transit.station","elementType": "labels","stylers": [{ "color": "#808080" },{ "visibility": "off" }]
+    }
+];
 
-var styles = [
+var nightStyles = [
     {
-        stylers: [
-            { hue: "#00ffe6" },
-            { saturation: -20 }
-        ]
-    },{
-        featureType: "road",
-        elementType: "geometry",
-        stylers: [
-            { lightness: 100 },
-            { visibility: "simplified" }
-        ]
-    },{
-        featureType: "road",
-        elementType: "labels",
-        stylers: [
-            { visibility: "on" }
-        ]
+        "featureType":"water","elementType":"geometry","stylers":[{"color":"#4A6361"},{"lightness": -60}]
     },
     {
-        "featureType": "poi",
-        "elementType": "labels",
-        "stylers": [
-            { "visibility": "off" }
-        ]
+        "featureType":"landscape","elementType":"geometry","stylers":[{"color":"#828785"},{"lightness": -60}]
     },
     {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-            { "visibility": "simplified" }
-        ]
+        "featureType":"road","elementType":"geometry","stylers":[{"color":"#AAAAAA"},{"lightness": -65}]
+    },
+    {   "featureType": "road","elementType": "labels", "stylers": [{ "visibility": "on" },{"lightness": -70}]
+    },
+    {
+        "featureType":"poi","elementType":"geometry","stylers":[{"color":"#2F3B3B"}, {"lightness": -15}, {"visibility": "on"}]
+    },
+    {
+        "featureType": "poi", "elementType": "labels", "stylers": [{ "visibility": "off" }]
+    },
+    {
+        "featureType": "poi", "elementType": "labels", "stylers": [{ "visibility": "off" }]
+    },
+    {   "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "visibility": "off" }]
+    },
+    {
+        "featureType":"transit","elementType":"geometry","stylers":[{"color":"#406d80"}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"color":"#AAAAAA"},{"weight":2},{"gamma":0.84}]},{"elementType":"labels.text.fill","stylers":[{"color":"#1A2222"}]
+    },
+    {
+        "featureType": "transit.station","elementType": "labels","stylers": [{ "color": "#808080" },{ "visibility": "off" }]
     }
 ];
 
@@ -79,6 +100,17 @@ var mapOptions = {
 }
 
 function init() {
+
+    isIlluminationTweetActive = $("#ruby-values").data("illumination");
+    if(isIlluminationTweetActive){
+        lineStrokeColor = '#ffffff';
+        mapOptions.styles = nightStyles;
+        styles = nightStyles;
+    }else{
+        lineStrokeColor = '#000000';
+        mapOptions.styles = dayStyles;
+        styles = dayStyles;
+    }
 
     if (document.URL.indexOf("www") != -1) {
         window.location = "http://gdlestradicional.mx";
@@ -174,9 +206,16 @@ function init() {
     latestPicturesPositions.push(new google.maps.LatLng(20.692533,-103.394958));
 
     try {
+
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        rectangle = new google.maps.Rectangle({
+        if(isIlluminationTweetActive){
+            showTweetIllumination();
+        }else{
+            hideTweetIllumination();
+        }
+
+        /*rectangle = new google.maps.Rectangle({
             strokeColor: '#002A63​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
@@ -188,7 +227,8 @@ function init() {
                 new google.maps.LatLng(21.022869, -104.182047),
                 new google.maps.LatLng(20.274966, -102.450327)
             )
-        });
+        });*/
+
 
 
         dispatcher = new WebSocketRails('104.130.128.19:3001/websocket');
@@ -327,10 +367,7 @@ function init() {
     }
 }
 
-function initTraceTweets() {
-    if(isIlluminationTweetActive){
-        showTweetIllumination();
-    }
+/*function initTraceTweets() {
 
     channel.bind('map_status', function(event) {
         var illuminationStatus = JSON.parse(event);
@@ -343,20 +380,7 @@ function initTraceTweets() {
             }
         }
     });
-}
-
-function changeLineColor(lineColorString){
-
-    for(var routeIndex=0; routeIndex<routes.length; routeIndex++){
-        for(var lineIndex=0; lineIndex<routes[routeIndex].lines.length; lineIndex++){
-
-            var line = routes[routeIndex].lines[lineIndex].icons[0].icon;
-            line.strokeColor = lineColorString;
-
-        }
-    }
-
-}
+}*/
 
 function showTweetIllumination(){
 
@@ -368,27 +392,6 @@ function showTweetIllumination(){
             dataType: "json",
             success: function(response) {
 
-
-                var opacity = 0.6;
-                rectangle.setOptions({
-                    fillOpacity: 0.8,
-                });
-
-                lineStrokeColor = '#ffffff';
-                changeLineColor(lineStrokeColor);
-
-                if($('.first-marker')){
-                    var markerElements = $('.first-marker');
-                    for(var markerIndex=0; markerIndex<markerElements.length; markerIndex++){
-                        var markerImage = $(markerElements[markerIndex]).find('img');
-                        if(markerImage.hasClass('special')){
-                            markerImage.attr('src','/assets/marker_azul_amarillo_ilumina.png');
-                        }else{
-                            markerImage.attr('src','/assets/marker_azul_ilumina.png');
-                        }
-                    }
-                }
-
                 var initialTweets = response;
 
                 for(var tweetIndex=0; tweetIndex<initialTweets.length; tweetIndex++){
@@ -396,15 +399,15 @@ function showTweetIllumination(){
 
                     var position = new google.maps.LatLng(initialTweets[tweetIndex].lat, initialTweets[tweetIndex].long);
                     var lightMarker = new RichMarker({
-                        tweet_guid: tweet_guid,
                         position: position,
                         map: map,
                         flat: true,
                         draggable: false,
-                        content: '<img class="tweet_light-' + delay + '" src="/assets/marca.png">',
+                        content: '<img class="tweet_light-' + delay + '" src="/assets/marca.png">'
                     });
                     lightTweetMarkers.push(lightMarker);
                 }
+
             },
             error: function(error) {
                 console.log(error)
@@ -418,25 +421,6 @@ function showTweetIllumination(){
 }
 
 function hideTweetIllumination(){
-
-    lineStrokeColor = '#000000';
-    changeLineColor(lineStrokeColor);
-
-    rectangle.setOptions({
-        fillOpacity: 0.6,
-    });
-
-    if($('.first-marker')){
-        var markerElements = $('.first-marker');
-        for(var markerIndex=0; markerIndex<markerElements.length; markerIndex++){
-            var markerImage = $(markerElements[markerIndex]).find('img');
-            if(markerImage.hasClass('special')){
-                markerImage.attr('src','/assets/marker_azul_amarillo.png');
-            }else{
-                markerImage.attr('src','/assets/marker_azul.png');
-            }
-        }
-    }
 
     for(var tweetIndex=0; tweetIndex<lightTweetMarkers.length; tweetIndex++){
         lightTweetMarkers[tweetIndex].setMap(null);
@@ -587,8 +571,6 @@ function launchApp() {
                 window.localStorage.showHelp = false;
             }
         }
-        isIlluminationTweetActive = $("#ruby-values").data("illumination");
-        initTraceTweets();
 
     });
 }
@@ -610,7 +592,7 @@ function loadRoutes() {
                     path: 'M 0,-0.5 0,0.5',
                     strokeOpacity: 1,
                     scale: 2.5,
-                    strokeColor: lineStrokeColor,
+                    strokeColor: lineStrokeColor
                 };
 
                 for(var j = 0; j < routes[i].locations.length; j++){
@@ -907,6 +889,7 @@ function paintOneMarker(routeIndex, markerIndex) {
             });
         }
 
+
         var mapOptionsRouteDetail = {
             minZoom: 13,
             maxZoom: 19,
@@ -922,7 +905,7 @@ function paintOneMarker(routeIndex, markerIndex) {
         }
 
         map.setOptions(mapOptionsRouteDetail);
-        rectangle.setOptions({clickable: true});
+        //rectangle.setOptions({clickable: true});
         $('.zoom-image').show();
     }
 }
