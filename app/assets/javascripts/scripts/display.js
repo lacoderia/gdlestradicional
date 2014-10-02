@@ -188,8 +188,12 @@ function init() {
     $('#influencer-picture').draggable({
         containment: "document",
         stop: function(event, ui) {
-            $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
+            $('#influencer-picture').one('click', function(e){ e.stopImmediatePropagation(); } );
         }
+    });
+
+    $('#influencer-picture').click(function(){
+        showInfluencerGallery();
     });
 
     getLatestPictures();
@@ -786,7 +790,7 @@ function paintOneMarker(routeIndex, markerIndex) {
                 map: map,
                 flat: true,
                 anchor: RichMarkerPosition.TOP,
-                draggable: true,
+                draggable: false,
                 id: routes[routeIndex].locations[j].id,
                 jqueryId : markerId,
                 content: '<div class="image-marker my-marker" id="' + markerId + '">' +
@@ -799,12 +803,15 @@ function paintOneMarker(routeIndex, markerIndex) {
                 $('#' + this.jqueryId).hide();
                 var time = (this.index+1) * 250;
                 $('#' + this.jqueryId).fadeIn(time);
+                var markerId = this.jqueryId;
                 $('#' + this.jqueryId).parent().parent().draggable({
                     stop: function(event, ui) {
-                        $( event.toElement ).one('click', function(e){ e.stopImmediatePropagation(); } );
+                        $('#' + markerId).parent().parent().one('click', function(e){
+                            e.stopImmediatePropagation();
+                        } );
                     }
                 });
-                $('#' + this.jqueryId).click(function(){
+                $('#' + this.jqueryId).parent().parent().click(function(){
 
                     for (var i=0; i<routes.length; i++) {
                         for (var j=0; j<routes[i].markers.length; j++) {

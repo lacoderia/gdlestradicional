@@ -725,6 +725,7 @@ a.desktop {
   right: 3em;
   text-align: center;
   width: 150px;
+  height: 140px;
 
   .influencer-picture-title{
 
@@ -848,7 +849,7 @@ a.desktop {
   position: fixed;
   top: 16px;
   right: 70px;
-  width: 400px;
+  width: 250px;
   z-index: 90;
 
   .promo{
@@ -902,6 +903,9 @@ a.desktop {
   }
 
   .news-feed-header{
+    position: relative;
+    right: 150px;
+    width: 400px;
 
     img.logo-gdl-tradicional{
       max-width: 350px;
