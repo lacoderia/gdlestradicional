@@ -434,6 +434,7 @@ function hideTweetIllumination(){
 
 function showHelpGallery() {
     $('.touchMarkerMessage').hide();
+    $('.lightMessage').hide();
     $('#help-gallery-container').show();
     $('#help-slick-carousel').slick({
         slidesToShow: 1,
@@ -447,9 +448,6 @@ function showHelpGallery() {
 
 function hideHelpGallery() {
     $('#help-gallery-container').hide();
-    if(!markerMessageClosed){
-        $('.touchMarkerMessage').show();
-    }
 }
 
 function helpGalleryClick(e) {
@@ -564,6 +562,10 @@ function launchApp() {
             $('#bottle').fadeIn(1000);
             $('.footer').fadeIn(1000);
             showLatestPictures();
+        }
+
+        if(isIlluminationTweetActive){
+            $('.lightMessage').fadeIn(1000);
         }
 
         $('.account-button a').addClass('selected');
@@ -769,6 +771,7 @@ function paintOneMarker(routeIndex, markerIndex) {
         paintingRoutes = false;
 
         $('#show-all-routes').show();
+        $('.lightMessage').hide();
         if(!markerMessageClosed){
             $('.touchMarkerMessage').show();
         }
@@ -935,6 +938,9 @@ function showAllRoutes() {
         $('.touchMarkerMessage').hide();
         $('#influencer-picture').hide();
         $('.zoom-image').hide();
+        if(isIlluminationTweetActive){
+            $('.lightMessage').show();
+        }
 
         for (var i=0; i<tempRoute.length; i++) {
             tempRoute[i].setMap(null);

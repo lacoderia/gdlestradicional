@@ -1252,6 +1252,8 @@ a.desktop {
   transform: rotateX(55deg);
   z-index: -2;
 }
+
+
 .pulse:after {
   content: "";
   border-radius: 50%;
@@ -1322,6 +1324,13 @@ a.desktop {
   img{
     max-width: 200px;
   }
+}
+
+.lightMessage{
+  padding: 0em 0em 1em;
+  position: absolute;
+  left: 10px;
+  top: 20px;
 }
 
 .touchMarkerMessage{
