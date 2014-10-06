@@ -12,6 +12,8 @@ positions = [
   {:lat => 20.680939, :long => -103.372149}, {:lat => 20.648414, :long => -103.392834}, {:lat => 20.676562, :long => -103.346571}
 ]
 
+il = Illumination.first
+
 if featured.size > 0
   random1 = rand(0..featured.size-1)
   random2 = rand(0..14)
@@ -19,4 +21,7 @@ if featured.size > 0
   tweet.lat = positions[random2][:lat]
   tweet.long = positions[random2][:long]
   WebsocketRails[:twitter_channel].trigger(:new_tweet, tweet)
+  if il.active == true
+    Tweet.create(:featured => false, :author => tweet.author, :lat => tweet.lat, :long => tweet.long)
+  end
 end
