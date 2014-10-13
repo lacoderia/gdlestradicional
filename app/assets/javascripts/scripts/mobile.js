@@ -140,7 +140,7 @@ var jcGallery = [
 
 var map = null;
 var rectangle = null;
-var mapCenter = new google.maps.LatLng(20.69, -103.37);
+var mapCenter = new google.maps.LatLng(20.68, -103.37);
 var showElements = false;
 var showAllRoutesZoom = false;
 var paintingRoutes = true;
@@ -155,40 +155,64 @@ var tweet_guid = 0;
 var mailSent = false;
 var intervalTimeout;
 var markerMessageClosed = false;
+var isIlluminationTweetActive = false;
+var lightTweetMarkers = [];
+var lineStrokeColor = '#000000';
+var styles = [];
+var dayStyles = [
+    {
+        "featureType":"water","elementType":"geometry","stylers":[{"color":"#4A6361"}]
+    },
+    {
+        "featureType":"landscape","elementType":"geometry","stylers":[{"color":"#828785"},{"lightness": -20}]
+    },
+    {
+        "featureType":"road","elementType":"geometry","stylers":[{"color":"#AAAAAA"},{"lightness": -33}]
+    },
+    {   "featureType": "road","elementType": "labels", "stylers": [{ "visibility": "on" },{"lightness": -50}]
+    },
+    {
+        "featureType":"poi","elementType":"geometry","stylers":[{"color":"#455756"}, {"lightness": 5}, {"visibility": "on"}]
+    },
+    {
+        "featureType": "poi", "elementType": "labels", "stylers": [{ "visibility": "off" }]
+    },
+    {
+        "featureType":"transit","elementType":"geometry","stylers":[{"color":"#406d80"}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"color":"#AAAAAA"},{"weight":2},{"gamma":0.84}]},{"elementType":"labels.text.fill","stylers":[{"color":"#1A2222"}]
+    },
+    {
+        "featureType": "transit.station","elementType": "labels","stylers": [{ "color": "#808080" },{ "visibility": "off" }]
+    }
+];
 
-var styles = [
+var nightStyles = [
     {
-        stylers: [
-            { hue: "#00ffe6" },
-            { saturation: -20 }
-        ]
-    },{
-        featureType: "road",
-        elementType: "geometry",
-        stylers: [
-            { lightness: 100 },
-            { visibility: "simplified" }
-        ]
-    },{
-        featureType: "road",
-        elementType: "labels",
-        stylers: [
-            { visibility: "on" }
-        ]
+        "featureType":"water","elementType":"geometry","stylers":[{"color":"#4A6361"},{"lightness": -60}]
     },
     {
-        "featureType": "poi",
-        "elementType": "labels",
-        "stylers": [
-            { "visibility": "off" }
-        ]
+        "featureType":"landscape","elementType":"geometry","stylers":[{"color":"#828785"},{"lightness": -60}]
     },
     {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-            { "visibility": "simplified" }
-        ]
+        "featureType":"road","elementType":"geometry","stylers":[{"color":"#AAAAAA"},{"lightness": -65}]
+    },
+    {   "featureType": "road","elementType": "labels", "stylers": [{ "visibility": "on" },{"lightness": -70}]
+    },
+    {
+        "featureType":"poi","elementType":"geometry","stylers":[{"color":"#2F3B3B"}, {"lightness": -15}, {"visibility": "on"}]
+    },
+    {
+        "featureType": "poi", "elementType": "labels", "stylers": [{ "visibility": "off" }]
+    },
+    {
+        "featureType": "poi", "elementType": "labels", "stylers": [{ "visibility": "off" }]
+    },
+    {   "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "visibility": "off" }]
+    },
+    {
+        "featureType":"transit","elementType":"geometry","stylers":[{"color":"#406d80"}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"off"},{"color":"#AAAAAA"},{"weight":2},{"gamma":0.84}]},{"elementType":"labels.text.fill","stylers":[{"color":"#1A2222"}]
+    },
+    {
+        "featureType": "transit.station","elementType": "labels","stylers": [{ "color": "#808080" },{ "visibility": "off" }]
     }
 ];
 
@@ -208,6 +232,17 @@ var mapOptions = {
 function init() {
 
     var headerHeight = $('header').outerHeight();
+
+    isIlluminationTweetActive = $("#ruby-values").data("illumination");
+    if(isIlluminationTweetActive){
+        lineStrokeColor = '#ffffff';
+        mapOptions.styles = nightStyles;
+        styles = nightStyles;
+    }else{
+        lineStrokeColor = '#000000';
+        mapOptions.styles = dayStyles;
+        styles = dayStyles;
+    }
 
     var mapHeight = $(window).height() - headerHeight;
     $('#map_container').height(mapHeight);
@@ -280,7 +315,13 @@ function init() {
     try {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        rectangle = new google.maps.Rectangle({
+        if(isIlluminationTweetActive){
+            showTweetIllumination();
+        }else{
+            hideTweetIllumination();
+        }
+
+        /*rectangle = new google.maps.Rectangle({
             strokeColor: '#033060​',
             strokeOpacity: 0.8,
             strokeWeight: 2,
@@ -292,7 +333,7 @@ function init() {
                 new google.maps.LatLng(21.022869, -104.182047),
                 new google.maps.LatLng(20.274966, -102.450327)
             )
-        });
+        });*/
 
         google.maps.event.addListener(map, 'idle', function() {
             if (showAllRoutesZoom) {
@@ -308,16 +349,21 @@ function init() {
 
             tweet_guid++;
 
+            var pinClass = 'pin';
+            if(isIlluminationTweetActive){
+                pinClass = 'pin-special';
+            }
+
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                 '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                '<div class="pin icon-uniE600"></div>' +
+                '<div class="' + pinClass + ' icon-uniE600"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                     '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="pin icon-uniE600"></div>' +
+                    '<div class="' + pinClass + ' icon-uniE600"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
             }
@@ -332,6 +378,20 @@ function init() {
                 draggable: false,
                 content: content
             });
+
+            if(isIlluminationTweetActive){
+                var delay = Math.floor(Math.random() * 5) + 1;
+                var lightMarker = new RichMarker({
+                    tweet_guid: tweet_guid,
+                    position: position,
+                    map: map,
+                    flat: true,
+                    draggable: false,
+                    content: '<img class="tweet_light-' + delay + '" src="/assets/marca.png">'
+                });
+
+                lightTweetMarkers.push(lightMarker);
+            }
 
             google.maps.event.addListener(marker, 'click', function() {
 
@@ -459,6 +519,52 @@ function init() {
     }
 }
 
+function showTweetIllumination(){
+
+    try{
+        $.ajax({
+            type: "GET",
+            url: "/get_illumination.json",
+            data: null,
+            dataType: "json",
+            success: function(response) {
+
+                var initialTweets = response;
+
+                for(var tweetIndex=0; tweetIndex<initialTweets.length; tweetIndex++){
+                    var delay = Math.floor(Math.random() * 5) + 1;
+
+                    var position = new google.maps.LatLng(initialTweets[tweetIndex].lat, initialTweets[tweetIndex].long);
+                    var lightMarker = new RichMarker({
+                        position: position,
+                        map: map,
+                        flat: true,
+                        draggable: false,
+                        content: '<img class="tweet_light-' + delay + '" src="/assets/marca.png">'
+                    });
+                    lightTweetMarkers.push(lightMarker);
+                }
+
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+
+    }catch (e){
+        console.log('Error');
+    }
+
+}
+
+function hideTweetIllumination(){
+
+    for(var tweetIndex=0; tweetIndex<lightTweetMarkers.length; tweetIndex++){
+        lightTweetMarkers[tweetIndex].setMap(null);
+    }
+    lightTweetMarkers = [];
+}
+
 function devOrientHandler(event){
 
 }
@@ -539,8 +645,6 @@ function stopLatestPictures(){
 }
 
 function launchApp() {
-
-
     $('#intro').fadeOut(1000, function() {
 
         if(!mailSent){
@@ -567,6 +671,10 @@ function launchApp() {
                 window.localStorage.showHelp = false;
             }
         }
+
+        if(isIlluminationTweetActive){
+            $('.lightMessage').fadeIn(1000);
+        }
     });
 }
 
@@ -588,7 +696,8 @@ function loadRoutes() {
                 var lineSymbol = {
                     path: 'M 0,-0.5 0,0.5',
                     strokeOpacity: 1,
-                    scale: 2.5
+                    scale: 2.5,
+                    strokeColor: lineStrokeColor
                 };
 
                 for(var j = 0; j < routes[i].locations.length; j++){
@@ -597,10 +706,21 @@ function loadRoutes() {
                     var markerId = 'marker_' + i + '_' + j;
                     var markerImageUrl = '/assets/marker_azul.png';
                     var aditionalText = '';
+                    var special = '';
 
-                    if(routes[i].locations[j].especial){
-                        markerImageUrl = '/assets/marker_azul_amarillo.png';
-                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    if(isIlluminationTweetActive){
+                        markerImageUrl = '/assets/marker_azul_ilumina.png';
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo_ilumina.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
+                    }else{
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
                     }
 
                     if (j == 0) {
@@ -752,6 +872,7 @@ function paintOneMarker(routeIndex, markerIndex) {
         }, 250)
     } else {
         paintingRoutes = false;
+        $('.lightMessage').hide();
         if(!markerMessageClosed){
             $('.touchMarkerMessage').show();
         }
@@ -896,6 +1017,9 @@ function showAllRoutes() {
 
         $('#influencer-picture').hide();
         $('.touchMarkerMessage').hide();
+        if(isIlluminationTweetActive){
+            $('.lightMessage').show();
+        }
 
         for (var i=0; i<tempRoute.length; i++) {
             tempRoute[i].setMap(null);
@@ -914,35 +1038,63 @@ function showAllRoutes() {
                 var routeCoordinate = new google.maps.LatLng(routes[i].locations[j].lat, routes[i].locations[j].long);
 
                 var markerId = 'marker_' + i + '_' + j;
+                var special = '';
 
                 if (j == 0) {
+                    var markerImageUrl = '/assets/marker_azul.png';
+                    var aditionalText = '';
+
+                    if(isIlluminationTweetActive){
+                        markerImageUrl = '/assets/marker_azul_ilumina.png';
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo_ilumina.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
+                    }else{
+                        if(routes[i].locations[j].especial){
+                            markerImageUrl = '/assets/marker_azul_amarillo.png';
+                            aditionalText = '<p>Enfoque Tradicional</p>'
+                            special = 'special';
+                        }
+                    }
+
                     var marker = new RichMarker({
                         position: routeCoordinate,
                         map: map,
                         flat: true,
-                        anchor: new google.maps.Size(-15, -42),
+                        anchor: new google.maps.Size(-20, -70),
                         draggable: false,
                         routeIndex: i,
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
-                            '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                            '<img class="image-marker-click" src="/assets/marker_azul.png"/>' +
+                            '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                            '<img src="' + markerImageUrl + '"/>' +
                             '<div class="route-name">' + routes[i].name + '</div>' +
                             '</div>'
                     });
 
                 } else {
+
+                    var markerImageUrl = '/assets/cuadrito_gris.png';
+                    var aditionalText = '';
+
+                    if(routes[i].locations[j].especial){
+                        markerImageUrl = '/assets/cuadrito_amarillo.png';
+                        aditionalText = '<p>Enfoque Tradicional</p>'
+                    }
+
                     var marker = new RichMarker({
                         position: routeCoordinate,
                         map: null,
                         flat: true,
-                        anchor: new google.maps.Size(-7, -7),
+                        anchor: new google.maps.Size(-8, -8),
                         draggable: false,
                         routeIndex: i,
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="secondary-marker marker">' +
-                            '<div class="marker_detail"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                            '<img class="image-marker-click" src="/assets/cuadrito_gris.png"/>' +
+                            '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
+                            '<img src="' + markerImageUrl + '"/>' +
                             '</div>'
                     });
 
@@ -1029,6 +1181,7 @@ function showRouteDetail(routeIndex){
 
 function showHelpGallery() {
     $('.touchMarkerMessage').hide();
+    $('.lightMessage').hide();
     $('#help-gallery').show();
     $('#map_container').hide();
     $('#help-slick-carousel').unslick();
@@ -1203,6 +1356,14 @@ function influencerGalleryClick(e) {
 function login() {
     $('#login-btn').hide();
     $('.instagram-loader').show();
+
+     ga('send', {
+      'hitType': 'event',          // Required.
+      'eventCategory': 'button',   // Required.
+      'eventAction': 'click',      // Required.
+      'eventLabel': 'JCTuser',
+     });
+
     $.ajax({
         beforeSend: function( xhr ) {
             var token = $('meta[name="csrf-token"]').attr('content');
@@ -1356,4 +1517,13 @@ function hideMarkerMessage(){
 function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+}
+
+function trackIG() {
+    ga('send', {
+      'hitType': 'event',          // Required.
+      'eventCategory': 'button',   // Required.
+      'eventAction': 'click',      // Required.
+      'eventLabel': 'JCT',
+    });
 }

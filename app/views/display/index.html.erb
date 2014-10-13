@@ -67,7 +67,7 @@
       </div>
     </div>
   </div>
-  <div id="influencer-picture" onclick="showInfluencerGallery()" style="display: none;">
+  <div id="influencer-picture" style="display: none;">
     <div class="influencer-picture-title">
       <img src="/assets/btn_conoce.png" alt="Conoce más sobre esta ruta" class="influencer-message">
     </div>
@@ -104,7 +104,7 @@
     <div class="icon-list">
         <ul>
           <li class="newsfeed-button icon-list-item"><a title="Noticias"><span class="icon-uniE60D"></span></a></li>
-          <li class="account-button icon-list-item"><a title="Cuenta"><span class="icon-uniE610"></span></a></li>
+          <li class="account-button icon-list-item"><a title="Cuenta"><span class="icon-IGCONNECTpng"></span></a></li>
           <li class="help-button icon-list-item" onclick="showHelpGallery()"><a title="Ayuda"><span class="icon-uniE60E"></span></a></li>
         </ul>
         <div class="clearfix"></div>
@@ -161,7 +161,7 @@
 
   <div class="social-networks-icons" style="display: none;">
     <ul>
-      <li><a href="http://instagram.com/jctradicional" title="Instragram" target="_blank"><span class="icon-uniE602"></span></a></li>
+      <li><a href="http://instagram.com/jctradicional" title="Instragram" target="_blank" onclick="trackIG()"><span class="icon-uniE602"></span></a></li>
       <li><a href="https://twitter.com/jctradicional" title="Twitter" target="_blank"><span class="icon-uniE600"></span></a></li>
       <li><a href="https://www.facebook.com/jctradicional" title="Facebook" target="_blank"><span class="icon-uniE601"></span></a></li>
       <li><a href="http://www.cuervotradicional.com.mx" title="Cuervo Tradicional" target="_blank" class="cuervo"><span class="icon-uniE611"></span></a></li>
@@ -390,11 +390,15 @@
   <p>Toca los puntos sobre el mapa para ver más información y fotos. También puedes arrastrar las imágenes sobre el mapa.</p>
 </div>
 
+<div class="lightMessage" style="display: none;">
+  <img src="/assets/ILUMINAINSTRUCCION.png">
+</div>
+
 <footer class="footer" style="display:none;">
   <a onclick="showTermsPrivacity();" title="Términos y condiciones">TÉRMINOS Y CONDICIONES</a> - <a href="http://www.alcoholinformate.com.mx" title="www.alcoholinformate.com.mx" target="_blank">www.alcoholinformate.com.mx</a> - Conocer es no excederse
 </footer>
 
-<div id="ruby-values" data-user="<%= @user.to_json%>"></div>
+<div id="ruby-values" data-user="<%= @user.to_json%>" data-illumination="<%= @illumination ? @illumination.active : false %>"></div>
 <% if @user %>
   <iframe width="1" height="1" frameborder="0" src="http://tbl.tradedoubler.com/report?organization=1574207&event=256040&leadNumber=<%= current_user.uid%>"></iframe>
 <% end %>

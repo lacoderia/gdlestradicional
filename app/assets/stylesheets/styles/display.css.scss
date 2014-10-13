@@ -10,6 +10,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   cursor: default;
+  zoom: 0;
 }
 
 a.desktop {
@@ -840,6 +841,7 @@ a.desktop {
   right: 3em;
   text-align: center;
   width: 150px;
+  height: 140px;
 
   .influencer-picture-title{
 
@@ -964,7 +966,7 @@ a.desktop {
   position: fixed;
   top: 16px;
   right: 70px;
-  width: 400px;
+  width: 250px;
   z-index: 90;
 
   .promo{
@@ -1018,6 +1020,9 @@ a.desktop {
   }
 
   .news-feed-header{
+    position: relative;
+    right: 150px;
+    width: 400px;
 
     img.logo-gdl-tradicional{
       max-width: 350px;
@@ -1310,6 +1315,15 @@ a.desktop {
 }
 
 .pin {
+  color: black;
+  cursor: pointer;
+  width: 30px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.pin-special{
+  color: #B3B3B3;
   cursor: pointer;
   width: 30px;
   height: 20px;
@@ -1355,6 +1369,8 @@ a.desktop {
   transform: rotateX(55deg);
   z-index: -2;
 }
+
+
 .pulse:after {
   content: "";
   border-radius: 50%;
@@ -1427,6 +1443,13 @@ a.desktop {
   }
 }
 
+.lightMessage{
+  padding: 0em 0em 1em;
+  position: absolute;
+  left: 10px;
+  top: 20px;
+}
+
 .touchMarkerMessage{
   color: white;
   font-size: 0.8em;
@@ -1473,5 +1496,54 @@ a.desktop {
   100% {
     transform: scale(1.2, 1.2);
     opacity: 0;
+  }
+}
+
+.tweet_light-1{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: infinite;
+  animation-delay: 0.2s;
+  opacity: 1;
+}
+
+.tweet_light-2{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: infinite;
+  animation-delay: 0.4s;
+  opacity: 1;
+}
+
+.tweet_light-3{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: infinite;
+  animation-delay: 0.6s;
+  opacity: 1;
+}
+
+.tweet_light-4{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: infinite;
+  animation-delay: 0.8s;
+  opacity: 1;
+}
+
+.tweet_light-5{
+  animation: glowing 0.5s ease-out;
+  animation-iteration-count: infinite;
+  animation-delay: 1s;
+  opacity: 1;
+}
+
+@keyframes glowing{
+  0%{
+    opacity: 1;
+  }
+
+  50%{
+    opacity: 0.5;
+  }
+
+  100%{
+    opacity: 1;
   }
 }
