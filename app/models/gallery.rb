@@ -1,3 +1,3 @@
 class Gallery < ActiveRecord::Base
-	has_many :photos
+	has_many :cuervo_photos
 end
