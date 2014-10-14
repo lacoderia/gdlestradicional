@@ -6,9 +6,11 @@ $(document).ready(
     init
 );
 
+var jcGallery = [];
+
 var map = null;
 var rectangle = null;
-var pano, panoInterval, userPano, userPanoInterval = null;
+var pano, panoInterval, jcPano, jcPanoInterval, userPano, userPanoInterval = null;
 var mapCenter = new google.maps.LatLng(20.68, -103.37);
 var showElements = false;
 var paintingRoutes = true;
@@ -249,14 +251,14 @@ function init() {
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                 '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                '<div class="' + pinClass + ' icon-uniE600"></div>' +
+                '<div class="' + pinClass + ' icon-location"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                     '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="' + pinClass + ' icon-uniE600"></div>' +
+                    '<div class="' + pinClass + ' icon-location"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
             }
@@ -1200,9 +1202,9 @@ function updatePictureDetails(post) {
     if (user) {
         $('#picture-gallery .post-like').css('visibility','visible');
         if (hasLiked(post.instagram_id)) {
-            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-like'></span>");
         } else {
-            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-uniE60A'></span></a>");
+            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-no-like'></span></a>");
         }
     }
 }
@@ -1227,7 +1229,7 @@ function likePhoto(id) {
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
-            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-like'></span>");
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1244,13 +1246,181 @@ function userLikePhoto(id) {
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
-            $('#user-picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#user-picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-like'></span>");
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {
         }
     });
 }
+
+/** JC Gallery**/
+
+function showJCGalleryThumbs() {
+
+    if (jcGallery.length <= 0) {
+        $.ajax({
+            type: "GET",
+            url: "/galleries.json",
+            data: null,
+            dataType: "json",
+            success: function(response) {
+                jcGallery = response;
+                showJCGalleryThumbs();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    } else {
+        hideJCGallery();
+
+        $('#overlay').show();
+        $('#jc-gallery-thumbs-container').show();
+
+        $('#jc-gallery-thumbs-rows').html('');
+
+        var currentRow = $('<div class="gallery-row"></div>');
+        for (var i=0; i<jcGallery.length; i++) {
+            if (i%3 == 0) {
+                currentRow = $('<div class="gallery-row"></div>');
+            }
+
+            if(jcGallery[i].photos.length) {
+                var currentCell = '' +
+                    '<div class="gallery-cell">' +
+                    '<img src="' + jcGallery[i].photos[0].thumb + '" onclick="showJCGallery(' + i + ')">' +
+                    '<div class="jc-gallery-name">' + jcGallery[i].name + '</div>' +
+                    '</div>';
+            } else {
+                var currentCell = '' +
+                    '<div class="gallery-cell">' +
+                    '<img src="" onclick="showJCGallery(' + i + ')">' +
+                    '<div class="jc-gallery-name">' + jcGallery[i].name + '</div>' +
+                    '</div>';
+            }
+
+            currentRow.append(currentCell);
+
+            if (i % 3) {
+                $('#jc-gallery-thumbs-rows').append(currentRow);
+            }
+        }
+    }
+}
+
+function hideJCGalleryThumbs() {
+    $('#overlay').hide();
+    $('#jc-gallery-thumbs-container').hide();
+}
+
+function jcGalleryThumbsClick(e) {
+    if (!$(e.target).closest('#jc-gallery-thumbs').get(0)) {
+        hideJCGalleryThumbs();
+    }
+}
+
+function showJCGallery(galleryIndex) {
+    if (jcGallery[galleryIndex].photos.length) {
+        hideJCGalleryThumbs();
+
+        $('#overlay').show();
+        $('#jc-gallery-container').show();
+
+        var panoOptions = {
+            position: new google.maps.LatLng(20.6773648,-103.3479928),
+            pov: {
+                heading: 0,
+                pitch: 0
+            },
+            streetViewControl: false,
+            enableCloseButton: false,
+            linksControl: false,
+            panControl: false,
+            clickToGo: false,
+            scrollwheel: false,
+            addressControl: false,
+            disableDefaultUI: true,
+            disableDoubleClickZoom: false,
+            zoomControl: false
+        };
+
+        jcPano = new google.maps.StreetViewPanorama(
+            document.getElementById('jc-panorama'),
+            panoOptions);
+
+        jcPanoInterval = window.setInterval(function() {
+            try {
+                var pov = jcPano.getPov();
+                pov.heading += 0.1;
+                jcPano.setPov(pov);
+            } catch(e) {
+                clearInterval(jcPanoInterval);
+            }
+        }, 10);
+
+        $('#jc-current-gallery-index').val(galleryIndex);
+        $('#jc-current-gallery-name').val(jcGallery[galleryIndex].name);
+        updateJCGalleryPicture(jcGallery[galleryIndex].photos[0]);
+    }
+}
+
+function updateJCGalleryPicture(photo) {
+    $('#jc-gallery .post-author').html($('#jc-current-gallery-name').val());
+    $('#jc-gallery .post a').attr('href', photo.original);
+    $('#jc-picture').attr('src', "");
+    $('#jc-picture').attr('src', photo.thumb);
+    $('#jc-current-picture-id').val(photo.id);
+}
+
+function jcShowPreviousPicture() {
+    var galleryIndex = $('#jc-current-gallery-index').val();
+    var previousIndex = 0;
+    for (var i=0; i<jcGallery[galleryIndex].photos.length; i++) {
+        if (jcGallery[i].id == $('#jc-current-picture-id').val()) {
+            if (i-1 >= 0) {
+                previousIndex = i-1;
+            } else {
+                previousIndex = jcGallery[galleryIndex].photos.length - 1;
+            }
+            break;
+        }
+    }
+
+    updateJCGalleryPicture(jcGallery[galleryIndex].photos[previousIndex]);
+}
+
+function jcShowNextPicture() {
+    var galleryIndex = $('#jc-current-gallery-index').val();
+    var nextIndex = 0;
+    for (var i=0; i<jcGallery[galleryIndex].photos.length; i++) {
+        if (jcGallery[i].id == $('#jc-current-picture-id').val()) {
+            if (i+1 < jcGallery[galleryIndex].photos.length) {
+                nextIndex = i+1;
+            } else {
+                nextIndex = 0;
+            }
+        }
+    }
+
+    updateJCGalleryPicture(jcGallery[galleryIndex].photos[nextIndex]);
+}
+
+function hideJCGallery() {
+    $('#overlay').hide();
+    $('#jc-gallery-container').hide();
+
+    clearInterval(jcPanoInterval);
+    jcPano = null;
+}
+
+function jcGalleryClick(e) {
+    if (!$(e.target).closest('#jc-gallery').get(0)) {
+        hideJCGallery();
+    }
+}
+
+/** Picture Gallery **/
 
 function showPictureGallery() {
     if (galleryPictures.length) {
@@ -1499,9 +1669,9 @@ function userUpdatePictureDetails(post) {
     if (user) {
         $('#user-picture-gallery .post-like').css("display", "block");
         if (hasLiked(post.instagram_id)) {
-            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-like'></span>");
         } else {
-            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-uniE60A'></span></a>");
+            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-no-like'></span></a>");
         }
     }
 }
