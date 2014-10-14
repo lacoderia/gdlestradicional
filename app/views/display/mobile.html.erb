@@ -1,5 +1,5 @@
 <header>
-  <div class="header-mobile">
+  <div class="header-mobile" onclick="showHomenajeVideo()">
   </div>
   <nav>
     <ul class="routes">
@@ -10,9 +10,10 @@
       <li><a href="https://twitter.com/jctradicional" target="_blank"><span class="icon-twitter"></span></a></li>
       <li><a href="https://www.facebook.com/jctradicional" target="_blank"><span class="icon-facebook"></span></a></li>
       <li><a href="http://www.cuervotradicional.com.mx" title="Cuervo Tradicional" target="_blank" class="cuervo"><span class="icon-web"></span></a></li>
-      <li><a onclick="showJCGalleryThumbs()"><span class="icon-images"></span></a></li>
+      <li><a title="Galería Cuervo Tradicional" onclick="showJCGalleryThumbs()"><span class="icon-images"></span></a></li>
     </ul>
     <ul class="help-icon">
+      <li class="help-button icon-list-item" onclick="showHomenajeVideo()"><a title="Homenaje"><span class="icon-youtube"></span></a></li>
       <li class="help-button icon-list-item" onclick="showHelpGallery()"><a title="Ayuda"><span class="icon-help"></span></a></li>
     </ul>
   </nav>
@@ -325,6 +326,14 @@
 
 <div class="helpButton" style="display: none;">
   <img src="/assets/comienza_btn.png" alt="Comienza aquí" onclick="showHelpGallery()">
+</div>
+
+<div class="homenajeContainer" style="display: none;">
+  <div style="width:330px; height:230px; margin:auto;">
+    <span class="close_homenaje" onclick="hideHomenajeVideo()">x</span>
+    <iframe id="homenaje-video" width="300" height="230" src="" style="display: none;">
+    </iframe>
+  </div>
 </div>
 
 <div class="touchMarkerMessage" style="display: none;">

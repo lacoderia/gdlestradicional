@@ -117,7 +117,7 @@
       <img src="/assets/logo_cuervo.png" alt="Cuervo Tradicional" class="logo-cuervo"><img src="/assets/logo.png" alt="GDL es Tradicional" class="logo-gdl-tradicional">
     </div>
     <div class="promo">
-      <a class="button tribute" href="#" title="Únete al homenaje" onclick=""><span>Únete al homenaje</span></a>
+      <a class="button tribute" href="#" title="Únete al homenaje" onclick="showHomenajeVideo()"><span class="icon-youtube icono-video"></span><span>Únete al homenaje</span></a>
       <div class="clearfix"></div>
     </div>
     <div class="icon-list">
@@ -184,7 +184,7 @@
       <li><a href="https://twitter.com/jctradicional" title="Twitter" target="_blank"><span class="icon-twitter"></span></a></li>
       <li><a href="https://www.facebook.com/jctradicional" title="Facebook" target="_blank"><span class="icon-facebook"></span></a></li>
       <li><a href="http://www.cuervotradicional.com.mx" title="Cuervo Tradicional" target="_blank" class="cuervo"><span class="icon-web"></span></a></li>
-      <li><a onclick="showJCGalleryThumbs()"><span class="icon-images"></span></a></li>
+      <li><a title="Galería Cuervo Tradicional" onclick="showJCGalleryThumbs()"><span class="icon-images"></span></a></li>
     </ul>
   </div>
   
@@ -401,6 +401,14 @@
 
 <div class="helpButton" style="display: none;">
   <img src="/assets/comienza_btn.png" alt="Comienza aquí" onclick="showHelpGallery()">
+</div>
+
+<div class="homenajeContainer" style="display: none;">
+  <div style="width:670px; height:510px; margin:auto;">
+    <span class="close_homenaje" onclick="hideHomenajeVideo()">x</span>
+    <iframe id="homenaje-video" width="640" height="510" src="" style="display: none;">
+    </iframe>
+  </div>
 </div>
 
 <div class="touchMarkerMessage" style="display: none;">

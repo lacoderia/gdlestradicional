@@ -694,6 +694,27 @@ a.close-menu{
   }
 }
 
+.homenajeContainer {
+  display: none;
+  position: absolute;
+  padding-top: 130px;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  text-align: center;
+  z-index: 101;
+  background-color: rgba(0,0,0,0.5);
+
+  .close_homenaje {
+    color: #A6A7AA;
+    cursor: pointer;
+    float: right;
+    font-size: 22px;
+    margin-top: -7px;
+  }
+}
+
 .touchMarkerMessage{
   top: 100px;
   width: 94%;

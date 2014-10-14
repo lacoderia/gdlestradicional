@@ -576,11 +576,24 @@ function launchApp() {
         if(typeof(Storage)!=="undefined") {
             if (typeof window.localStorage.showHelp === "undefined") {
                 $('.helpButton').fadeIn(1000);
+                showHomenajeVideo();
                 window.localStorage.showHelp = false;
             }
         }
 
     });
+}
+
+function showHomenajeVideo() {
+    $('#homenaje-video').attr('src','http://www.youtube.com/embed/u2jE-Q7pD_s?autoplay=1');
+    $('.homenajeContainer').fadeIn(1000);
+    $('#homenaje-video').show();
+}
+
+function hideHomenajeVideo() {
+    $('#homenaje-video').hide();
+    $('#homenaje-video').attr('src','');
+    $('.homenajeContainer').fadeOut(1000);
 }
 
 function loadRoutes() {
