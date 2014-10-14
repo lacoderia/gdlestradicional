@@ -23,12 +23,31 @@
   </div>
   <div id="jc-gallery-thumbs-container" onclick="jcGalleryThumbsClick(event)">
     <div id="jc-gallery-thumbs">
+      <div class="jc-gallery-title">
+        GALERÍAS #GDLESTRADICIONAL
+      </div>
+      <div id="jc-gallery-thumbs-rows">
+      </div>
     </div>
   </div>
   <div id="jc-gallery-container" onclick="jcGalleryClick(event)">
     <div id="jc-gallery">
-      <div class="btn_regresar" onclick="showJCGalleryThumbs()"><img src="/assets/boton_regresar.png"></div>
-      <div id="jc-slick-carousel"></div>
+      <!--div class="btn_regresar" onclick="showJCGalleryThumbs()"><img src="/assets/boton_regresar.png"></div-->
+      <input type="hidden" id="jc-current-gallery-index" value="0"/>
+      <input type="hidden" id="jc-current-gallery-name" value=""/>
+      <input type="hidden" id="jc-current-picture-id" value="0"/>
+      <div id="jc-panorama-overlay"></div>
+      <div id="jc-panorama"></div>
+      <img id="jc-picture" src=""/>
+      <div class="post">
+        <div class="bkg-opacity"></div>
+        <span class="post-author"></span>
+        <p><a href="" download=""><span class="icon-download" /> Descargar foto</a></p>
+        <div class="navigation">
+          <div class="arrow arrow-left" onclick="jcShowPreviousPicture()"> < Anterior</div> |
+          <div class="arrow arrow-right" onclick="jcShowNextPicture()">Siguiente > </div>
+        </div>
+      </div>
     </div>
   </div>
   <div id="picture-gallery-container" onclick="pictureGalleryClick(event)">
@@ -103,9 +122,9 @@
     </div>
     <div class="icon-list">
         <ul>
-          <li class="newsfeed-button icon-list-item"><a title="Noticias"><span class="icon-uniE60D"></span></a></li>
-          <li class="account-button icon-list-item"><a title="Cuenta"><span class="icon-IGCONNECTpng"></span></a></li>
-          <li class="help-button icon-list-item" onclick="showHelpGallery()"><a title="Ayuda"><span class="icon-uniE60E"></span></a></li>
+          <li class="newsfeed-button icon-list-item"><a title="Noticias"><span class="icon-notification"></span></a></li>
+          <li class="account-button icon-list-item"><a title="Cuenta"><span class="icon-instagram-login"></span></a></li>
+          <li class="help-button icon-list-item" onclick="showHelpGallery()"><a title="Ayuda"><span class="icon-help"></span></a></li>
         </ul>
         <div class="clearfix"></div>
     </div>
@@ -128,17 +147,17 @@
             <tr>
               <td class="user-element" title="Puntos">
                 <div id="user-points"></div>
-                <div><span class="icon icon-uniE60A"></span></div>
+                <div><span class="icon icon-like"></span></div>
                 <div class="icon-name">Puntos</div>
               </td>
               <td class="user-element" onclick="showUserPictures()" title="Fotos">
                 <div id="user-photos"></div>
-                <div><span class="icon icon-uniE608"></span></div>
+                <div><span class="icon icon-picture"></span></div>
                 <div class="icon-name">Fotos</div>
               </td>
               <td class="user-element"onclick="showInviteModal()" title="Invitaciones">
                 <div id="user-invites"></div>
-                <div><span class="icon icon-uniE609"></span></div>
+                <div><span class="icon icon-mail"></span></div>
                 <div class="icon-name">Invitaciones</div>
               </td>
             </tr>
@@ -161,10 +180,10 @@
 
   <div class="social-networks-icons" style="display: none;">
     <ul>
-      <li><a href="http://instagram.com/jctradicional" title="Instragram" target="_blank" onclick="trackIG()"><span class="icon-uniE602"></span></a></li>
-      <li><a href="https://twitter.com/jctradicional" title="Twitter" target="_blank"><span class="icon-uniE600"></span></a></li>
-      <li><a href="https://www.facebook.com/jctradicional" title="Facebook" target="_blank"><span class="icon-uniE601"></span></a></li>
-      <li><a href="http://www.cuervotradicional.com.mx" title="Cuervo Tradicional" target="_blank" class="cuervo"><span class="icon-uniE611"></span></a></li>
+      <li><a href="http://instagram.com/jctradicional" title="Instragram" target="_blank" onclick="trackIG()"><span class="icon-instagram"></span></a></li>
+      <li><a href="https://twitter.com/jctradicional" title="Twitter" target="_blank"><span class="icon-twitter"></span></a></li>
+      <li><a href="https://www.facebook.com/jctradicional" title="Facebook" target="_blank"><span class="icon-facebook"></span></a></li>
+      <li><a href="http://www.cuervotradicional.com.mx" title="Cuervo Tradicional" target="_blank" class="cuervo"><span class="icon-web"></span></a></li>
       <li><a onclick="showJCGalleryThumbs()"><span class="icon-images"></span></a></li>
     </ul>
   </div>
@@ -184,8 +203,8 @@
       <span class="close_modal" onclick="hideInviteModal()">x</span>
       <h3>Invita a tus amigos</h3>
       <div class="share-buttons">
-          <a href="#" class="fb" onclick="shareFB()"><span class="icon-uniE601 icon"></span> Facebook</a>
-          <a href="#" class="tw" target="_blank"><span class="icon-uniE600 icon"></span> Twitter</a>
+          <a href="#" class="fb" onclick="shareFB()"><span class="icon-facebook icon"></span> Facebook</a>
+          <a href="#" class="tw" target="_blank"><span class="icon-twitter icon"></span> Twitter</a>
       </div>
     </div>
 </div>

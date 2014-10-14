@@ -6,132 +6,11 @@ $(document).ready(
     init
 );
 
-var jcGallery = [
-    {
-        id: 1,
-        name: 'galeria con nombre largo 1',
-        photos: [
-            {
-                id: 1,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara Esta es la descripción de la fotografía de Guadalajara Esta es la descripción de la fotografía de Guadalajara Esta es la descripción de la fotografía de Guadalajara Esta es la descripción de la fotografía de Guadalajara Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 2,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 3,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    },
-    {
-        id: 2,
-        name: 'galeria 2',
-        photos: [
-            {
-                id: 4,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 5,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 6,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    },
-    {
-        id: 3,
-        name: 'galeria 3',
-        photos: [
-            {
-                id: 7,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 8,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 9,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    },
-    {
-        id: 4,
-        name: 'galeria 4',
-        photos: [
-            {
-                id: 10,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 11,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 12,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    },
-    {
-        id: 5,
-        name: 'galeria 5',
-        photos: [
-            {
-                id: 13,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 14,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 15,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    }
-];
+var jcGallery = [];
 
 var map = null;
 var rectangle = null;
-var pano, panoInterval, userPano, userPanoInterval = null;
+var pano, panoInterval, jcPano, jcPanoInterval, userPano, userPanoInterval = null;
 var mapCenter = new google.maps.LatLng(20.68, -103.37);
 var showElements = false;
 var paintingRoutes = true;
@@ -372,14 +251,14 @@ function init() {
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                 '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                '<div class="' + pinClass + ' icon-uniE600"></div>' +
+                '<div class="' + pinClass + ' icon-location"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                     '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="' + pinClass + ' icon-uniE600"></div>' +
+                    '<div class="' + pinClass + ' icon-location"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
             }
@@ -1323,9 +1202,9 @@ function updatePictureDetails(post) {
     if (user) {
         $('#picture-gallery .post-like').css('visibility','visible');
         if (hasLiked(post.instagram_id)) {
-            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-like'></span>");
         } else {
-            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-uniE60A'></span></a>");
+            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-no-like'></span></a>");
         }
     }
 }
@@ -1350,7 +1229,7 @@ function likePhoto(id) {
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
-            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-like'></span>");
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1367,7 +1246,7 @@ function userLikePhoto(id) {
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
-            $('#user-picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#user-picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-like'></span>");
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1378,29 +1257,54 @@ function userLikePhoto(id) {
 /** JC Gallery**/
 
 function showJCGalleryThumbs() {
-    hideJCGallery();
 
-    $('#overlay').show();
-    $('#jc-gallery-thumbs-container').show();
+    if (jcGallery.length <= 0) {
+        $.ajax({
+            type: "GET",
+            url: "/galleries.json",
+            data: null,
+            dataType: "json",
+            success: function(response) {
+                jcGallery = response;
+                showJCGalleryThumbs();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    } else {
+        hideJCGallery();
 
-    $('#jc-gallery-thumbs').html('');
+        $('#overlay').show();
+        $('#jc-gallery-thumbs-container').show();
 
-    var currentRow = null;
-    for (var i=0; i<jcGallery.length; i++) {
-        if (i%3 == 0) {
-            currentRow = $('<div class="gallery-row"></div>');
-        }
+        $('#jc-gallery-thumbs-rows').html('');
 
-        var currentCell = '' +
-            '<div class="gallery-cell">' +
-                '<img src="' + jcGallery[i].photos[0].src + '" onclick="showJCGallery(' + i + ')">' +
-                '<div class="jc-gallery-name">' + jcGallery[i].name + '</div>' +
-            '</div>';
+        var currentRow = $('<div class="gallery-row"></div>');
+        for (var i=0; i<jcGallery.length; i++) {
+            if (i%3 == 0) {
+                currentRow = $('<div class="gallery-row"></div>');
+            }
 
-        currentRow.append(currentCell);
+            if(jcGallery[i].photos.length) {
+                var currentCell = '' +
+                    '<div class="gallery-cell">' +
+                    '<img src="' + jcGallery[i].photos[0].thumb + '" onclick="showJCGallery(' + i + ')">' +
+                    '<div class="jc-gallery-name">' + jcGallery[i].name + '</div>' +
+                    '</div>';
+            } else {
+                var currentCell = '' +
+                    '<div class="gallery-cell">' +
+                    '<img src="" onclick="showJCGallery(' + i + ')">' +
+                    '<div class="jc-gallery-name">' + jcGallery[i].name + '</div>' +
+                    '</div>';
+            }
 
-        if (i % 3) {
-            $('#jc-gallery-thumbs').append(currentRow);
+            currentRow.append(currentCell);
+
+            if (i % 3) {
+                $('#jc-gallery-thumbs-rows').append(currentRow);
+            }
         }
     }
 }
@@ -1417,35 +1321,97 @@ function jcGalleryThumbsClick(e) {
 }
 
 function showJCGallery(galleryIndex) {
-    hideJCGalleryThumbs();
+    if (jcGallery[galleryIndex].photos.length) {
+        hideJCGalleryThumbs();
 
-    $('#overlay').show();
-    $('#jc-gallery-container').show();
+        $('#overlay').show();
+        $('#jc-gallery-container').show();
 
-    $('#jc-slick-carousel').unslick();
-    $('#jc-slick-carousel').html('');
+        var panoOptions = {
+            position: new google.maps.LatLng(20.6773648,-103.3479928),
+            pov: {
+                heading: 0,
+                pitch: 0
+            },
+            streetViewControl: false,
+            enableCloseButton: false,
+            linksControl: false,
+            panControl: false,
+            clickToGo: false,
+            scrollwheel: false,
+            addressControl: false,
+            disableDefaultUI: true,
+            disableDoubleClickZoom: false,
+            zoomControl: false
+        };
 
-    for(var itemIndex in jcGallery[galleryIndex].photos){
-        var content = '<div class="jc-slick-carousel-slide">' +
-                        '<img src="' + jcGallery[galleryIndex].photos[itemIndex].src + '">' +
-                        '<div class="jc-photo-name">' + jcGallery[galleryIndex].photos[itemIndex].name + '</div>' +
-                        '<div class="jc-photo-description">' + jcGallery[galleryIndex].photos[itemIndex].description + '</div>' +
-                   '</div>';
+        jcPano = new google.maps.StreetViewPanorama(
+            document.getElementById('jc-panorama'),
+            panoOptions);
 
-        $('#jc-slick-carousel').append(content);
+        jcPanoInterval = window.setInterval(function() {
+            try {
+                var pov = jcPano.getPov();
+                pov.heading += 0.1;
+                jcPano.setPov(pov);
+            } catch(e) {
+                clearInterval(jcPanoInterval);
+            }
+        }, 10);
+
+        $('#jc-current-gallery-index').val(galleryIndex);
+        $('#jc-current-gallery-name').val(jcGallery[galleryIndex].name);
+        updateJCGalleryPicture(jcGallery[galleryIndex].photos[0]);
+    }
+}
+
+function updateJCGalleryPicture(photo) {
+    $('#jc-gallery .post-author').html($('#jc-current-gallery-name').val());
+    $('#jc-gallery .post a').attr('href', photo.original);
+    $('#jc-picture').attr('src', "");
+    $('#jc-picture').attr('src', photo.thumb);
+    $('#jc-current-picture-id').val(photo.id);
+}
+
+function jcShowPreviousPicture() {
+    var galleryIndex = $('#jc-current-gallery-index').val();
+    var previousIndex = 0;
+    for (var i=0; i<jcGallery[galleryIndex].photos.length; i++) {
+        if (jcGallery[i].id == $('#jc-current-picture-id').val()) {
+            if (i-1 >= 0) {
+                previousIndex = i-1;
+            } else {
+                previousIndex = jcGallery[galleryIndex].photos.length - 1;
+            }
+            break;
+        }
     }
 
-    $('#jc-slick-carousel').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true,
-        lazyLoad: 'ondemand'
-    });
+    updateJCGalleryPicture(jcGallery[galleryIndex].photos[previousIndex]);
+}
+
+function jcShowNextPicture() {
+    var galleryIndex = $('#jc-current-gallery-index').val();
+    var nextIndex = 0;
+    for (var i=0; i<jcGallery[galleryIndex].photos.length; i++) {
+        if (jcGallery[i].id == $('#jc-current-picture-id').val()) {
+            if (i+1 < jcGallery[galleryIndex].photos.length) {
+                nextIndex = i+1;
+            } else {
+                nextIndex = 0;
+            }
+        }
+    }
+
+    updateJCGalleryPicture(jcGallery[galleryIndex].photos[nextIndex]);
 }
 
 function hideJCGallery() {
     $('#overlay').hide();
     $('#jc-gallery-container').hide();
+
+    clearInterval(jcPanoInterval);
+    jcPano = null;
 }
 
 function jcGalleryClick(e) {
@@ -1703,9 +1669,9 @@ function userUpdatePictureDetails(post) {
     if (user) {
         $('#user-picture-gallery .post-like').css("display", "block");
         if (hasLiked(post.instagram_id)) {
-            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#picture-gallery .post-like').html("<span title='Me gusta' class='icon liked icon-like'></span>");
         } else {
-            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-uniE60A'></span></a>");
+            $('#picture-gallery .post-like').html("<a title='Me gusta' onclick='likePhoto(" + post.id + ")'><span class='icon unliked icon-no-like'></span></a>");
         }
     }
 }

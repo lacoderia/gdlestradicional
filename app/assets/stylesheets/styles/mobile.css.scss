@@ -302,9 +302,14 @@ header{
     background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
+    .jc-gallery-title {
+      font-size: 15px;
+    }
+
     #jc-slick-carousel{
       height: 100%;
       width: 100%;
+      margin-top: 20px;
 
       .jc-slick-carousel-slide{
         display: inline-block;
@@ -317,9 +322,14 @@ header{
           text-align: left;
         }
 
+        .jc-photo-name {
+          margin-top: 10px;
+          text-align: center;
+        }
+
         img{
-          border: 5px solid #002131;
-          border-radius: 5px;
+          border: 3px solid #A6A7AA;
+          border-radius: 3px;
           display: block;
           margin: 1em auto 0px;
           max-width: 75%;
@@ -328,11 +338,21 @@ header{
           -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
           box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
         }
+
+        .jc-photo-download {
+          margin-top: 10px;
+          text-align: center;
+
+          a, a:hover, a.selected{
+            font-size: 14px;
+            color: white;
+          }
+        }
       }
 
       .slick-prev, .slick-prev:before {
         position: absolute;
-        top: 25%;
+        top: 20%;
         left: 0px;
         height: 25px;
         width: 25px;
@@ -340,7 +360,7 @@ header{
 
       .slick-next, .slick-next:before {
         position: absolute;
-        top: 25%;
+        top: 20%;
         right: 0px;
         height: 25px;
         width: 25px;
@@ -358,6 +378,8 @@ header{
         width: 90%;
         text-align: center;
         border: 0px;
+        border: 3px solid #A6A7AA;
+        border-radius: 3px;
       }
     }
   }

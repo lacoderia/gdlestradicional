@@ -15,128 +15,7 @@ Estructura JSON de fotos de galería:
 - avatar: URL de la foto (string)
 */
 
-var jcGallery = [
-    {
-        id: 1,
-        name: 'galeria 1',
-        photos: [
-            {
-                id: 1,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 2,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 3,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    },
-    {
-        id: 2,
-        name: 'galeria 2',
-        photos: [
-            {
-                id: 4,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 5,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 6,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    },
-    {
-        id: 3,
-        name: 'galeria 3',
-        photos: [
-            {
-                id: 7,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 8,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 9,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    },
-    {
-        id: 4,
-        name: 'galeria 4',
-        photos: [
-            {
-                id: 10,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 11,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 12,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    },
-    {
-        id: 5,
-        name: 'galeria 5',
-        photos: [
-            {
-                id: 13,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 14,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            },
-            {
-                id: 15,
-                src: 'http://allaboutguadalajara.com/wp-content/uploads/Guad_Main.jpg',
-                name: 'Nombre de la fotografía',
-                description: 'Esta es la descripción de la fotografía de Guadalajara'
-            }
-        ]
-    }
-];
+var jcGallery = [];
 
 var map = null;
 var rectangle = null;
@@ -356,14 +235,14 @@ function init() {
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                 '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                '<div class="' + pinClass + ' icon-uniE600"></div>' +
+                '<div class="' + pinClass + ' icon-twitter"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                     '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="clearfix"></div><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="' + pinClass + ' icon-uniE600"></div>' +
+                    '<div class="' + pinClass + ' icon-twitter"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
             }
@@ -480,9 +359,9 @@ function init() {
 
             if (user) {
                 if (hasLiked(data.instagram_id)) {
-                    post_like = "<span title='Me gusta' class='icon liked icon-uniE60A'></span>";
+                    post_like = "<span title='Me gusta' class='icon liked icon-like'></span>";
                 } else {
-                    post_like = "<a title='Me gusta' onclick='likePhoto(" + data.id + ")'><span class='icon unliked icon-uniE60A'></span></a>";
+                    post_like = "<a title='Me gusta' onclick='likePhoto(" + data.id + ")'><span class='icon unliked icon-no-like'></span></a>";
                 }
             }
 
@@ -688,7 +567,7 @@ function loadRoutes() {
             routes = response;
             for (var i=0; i < routes.length; i++) {
 
-                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-uniE605"></span> ' + routes[i].name + '</a></li>')
+                $('#sidr ul').append('<li><a data-route-index="' + i + '" title="' + routes[i].name + '"><span class="icon-location"></span> ' + routes[i].name + '</a></li>')
 
                 routes[i].markers = new Array();
                 routes[i].lines = new Array();
@@ -982,7 +861,7 @@ function showGalleryByMarker(richMarker){
             data: null,
             dataType: "json",
             success: function (response) {
-                console.log(richMarker.id)
+                //console.log(richMarker.id)
                 for (var i = 0; i < routes.length; i++) {
                     for (var j = 0; j < routes[i].markers.length; j++) {
                         if (routes[i].locations[j].id == richMarker.id) {
@@ -1205,21 +1084,39 @@ function hideHelpGallery() {
 /** JC Gallery **/
 
 function showJCGalleryThumbs() {
-    hideHelpGallery();
-    hideJCGallery();
+    if (jcGallery.length <= 0) {
+        $.ajax({
+            type: "GET",
+            url: "/galleries.json",
+            data: null,
+            dataType: "json",
+            success: function(response) {
+                jcGallery = response;
+                showJCGalleryThumbs();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    } else {
+        hideHelpGallery();
+        hideJCGallery();
 
-    $('#overlay').show();
-    $('#mobile-jc-gallery-thumbs').show();
+        $('#overlay').show();
+        $('#mobile-jc-gallery-thumbs').show();
 
-    $('#mobile-jc-gallery-thumbs .mobile-jc-gallery-thumbs-container').html('');
+        $('#mobile-jc-gallery-thumbs .mobile-jc-gallery-thumbs-container').html('');
 
-    for (var i=0; i<jcGallery.length; i++) {
-        var galleryElement = '<div class="mobile-gallery-cell">' +
-            '<img src="' + jcGallery[i].photos[0].src + '" onclick="showJCGallery(' + i + ')">' +
-            '<div class="jc-gallery-name">' + jcGallery[i].name + '</div>' +
-            '</div>';
+        for (var i=0; i<jcGallery.length; i++) {
+            if (jcGallery[i].photos.length) {
+                var galleryElement = '<div class="mobile-gallery-cell">' +
+                    '<img src="' + jcGallery[i].photos[0].thumb + '" onclick="showJCGallery(' + i + ')">' +
+                    '<div class="jc-gallery-name">' + jcGallery[i].name + '</div>' +
+                    '</div>';
 
-        $('#mobile-jc-gallery-thumbs .mobile-jc-gallery-thumbs-container').append(galleryElement);
+                $('#mobile-jc-gallery-thumbs .mobile-jc-gallery-thumbs-container').append(galleryElement);
+            }
+        }
     }
 }
 
@@ -1239,9 +1136,10 @@ function showJCGallery(galleryIndex) {
 
     for(var itemIndex in jcGallery[galleryIndex].photos){
         var content = '<div class="jc-slick-carousel-slide">' +
-                        '<img src="' + jcGallery[galleryIndex].photos[itemIndex].src + '">' +
-                        '<div class="jc-photo-name">' + jcGallery[galleryIndex].photos[itemIndex].name + '</div>' +
-                        '<div class="jc-photo-description">' + jcGallery[galleryIndex].photos[itemIndex].description + '</div>' +
+                        '<img src="' + jcGallery[galleryIndex].photos[itemIndex].thumb + '">' +
+                        '<div class="jc-photo-name">' + jcGallery[galleryIndex].name + '</div>' +
+                        '<div class="jc-photo-download"><a href="' + jcGallery[galleryIndex].photos[itemIndex].original + '" download="" target="_blank"><span class="icon-download"></span> Descargar foto</a></div>' +
+                        //'<div class="jc-photo-description">' + jcGallery[galleryIndex].photos[itemIndex].description + '</div>' +
                    '</div>';
 
         $('#jc-slick-carousel').append(content);
@@ -1279,9 +1177,9 @@ function showPictureGallery(galleryPictures) {
 
             if (user) {
                 if (hasLiked(galleryPictures[itemIndex].instagram_id)) {
-                    post_like = "<span title='Me gusta' class='icon liked icon-uniE60A'></span>";
+                    post_like = "<span title='Me gusta' class='icon liked icon-like'></span>";
                 } else {
-                    post_like = "<a title='Me gusta' onclick='likePhoto(" + galleryPictures[itemIndex].id + ")'><span class='icon unliked icon-uniE60A'></span></a>";
+                    post_like = "<a title='Me gusta' onclick='likePhoto(" + galleryPictures[itemIndex].id + ")'><span class='icon unliked icon-no-like'></span></a>";
                 }
             }
 
@@ -1438,7 +1336,7 @@ function likePhoto(id) {
         type: "POST",
         url: "/photos/" + id + "/like",
         success: function(response) {
-            $('#picture_' + id + ' .post-like').html("<span title='Me gusta' class='icon liked icon-uniE60A'></span>");
+            $('#picture_' + id + ' .post-like').html("<span title='Me gusta' class='icon liked icon-no-like'></span>");
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {

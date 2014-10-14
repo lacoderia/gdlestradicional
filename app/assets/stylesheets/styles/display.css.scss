@@ -559,7 +559,7 @@ a.desktop {
   background-color: red;
 }
 
-#picture-gallery, #user-picture-gallery {
+#jc-gallery, #picture-gallery, #user-picture-gallery {
   display: inline-block;
   position:relative;
   background-color: #FFF;
@@ -667,10 +667,14 @@ a.desktop {
       overflow: hidden;
       padding: 0em 1em 6px;
       margin: 0px;
+
+      a, a:hover, a.selected{
+        color: white;
+      }
     }
   }
 
-  #panorama-overlay, #user-panorama-overlay {
+  #jc-panorama-overlay, #panorama-overlay, #user-panorama-overlay {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -681,7 +685,7 @@ a.desktop {
     z-index: 1;
   }
 
-  #panorama, #user-panorama {
+  #jc-panorama, #panorama, #user-panorama {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -690,6 +694,19 @@ a.desktop {
     height: 100%;
     width: 100%;
     z-index: 0;
+  }
+}
+
+#jc-gallery {
+  .post {
+    .post-author{
+      color: #A6A7AA;
+      font-size: 20px;
+    }
+
+    .bkg-opacity {
+      height: 218px;
+    }
   }
 }
 
@@ -716,119 +733,60 @@ a.desktop {
   }
 }
 
-#jc-gallery-thumbs {
-  display: inline-block;
-  position: relative;
-  color: #FFF;
-  border: 6px solid #033060;
-  border-radius: 5px;
-  height: 450px;
-  width: 598px;
-  vertical-align: middle;
-  text-align: left;
-  overflow: scroll;
-
-  background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
-  background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-  .gallery-row {
+#jc-gallery-thumbs-container {
+  .jc-gallery-title {
     display: inline-block;
     width: 100%;
-
-    .gallery-cell {
-      display: inline-block;
-      float: left;
-      padding-top: 22px;
-      padding-left: 22px;
-      width: 170px;
-
-      img {
-        display: block;
-        width: 170px;
-        cursor: pointer;
-      }
-    }
-  }
-}
-
-#jc-gallery {
-  display: inline-block;
-  position: relative;
-  color: #FFF;
-  border: 6px solid #033060;
-  border-radius: 5px;
-  height: 450px;
-  width: 598px;
-  vertical-align: middle;
-  text-align: left;
-  overflow: scroll;
-
-  background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
-  background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-  .btn_regresar{
-    width: 100%;
-    text-align: right;
-    cursor: pointer;
-
-    img {
-      display: inline-block;
-      width: 102px;
-    }
+    text-align: center;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
   }
 
-  #jc-slick-carousel{
-    height: 100%;
-    width: 100%;
+  #jc-gallery-thumbs {
+    display: inline-block;
+    position: relative;
+    color: #FFF;
+    border: 6px solid #A6A7AA;
+    border-radius: 5px;
+    height: 450px;
+    width: 598px;
+    vertical-align: middle;
+    text-align: left;
+    overflow: scroll;
 
-    .jc-slick-carousel-slide{
+    background: -moz-linear-gradient(-45deg,  #031c3c 1%, #002d61 34%, #022c5e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#031c3c), color-stop(34%,#002d61), color-stop(100%,#022c5e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #031c3c 1%,#002d61 34%,#022c5e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#031c3c', endColorstr='#022c5e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    .gallery-row {
       display: inline-block;
-      width: 80%;
-      text-align: center;
+      width: 100%;
 
-      div {
+      .gallery-cell {
         display: inline-block;
-        width: 80%;
-        text-align: left;
+        float: left;
+        padding-top: 22px;
+        padding-left: 22px;
+        width: 170px;
+
+        .jc-gallery-name {
+          text-align: center;
+        }
+
+        img {
+          display: block;
+          width: 170px;
+          height: 127px;
+          cursor: pointer;
+          border: 3px solid #A6A7AA;
+          border-radius: 3px;
+        }
       }
-
-      img{
-        border: 5px solid #002131;
-        border-radius: 5px;
-        display: block;
-        margin: 1em auto 0px;
-        max-width: 75%;
-
-        -webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.8);
-        -moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.8);
-        box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.8);
-      }
-    }
-
-    .slick-prev, .slick-prev:before {
-      position: absolute;
-      top: 100px;
-      left: 0px;
-      height: 25px;
-      width: 25px;
-    }
-
-    .slick-next, .slick-next:before {
-      position: absolute;
-      top: 100px;
-      right: 0px;
-      height: 25px;
-      width: 25px;
     }
   }
 }

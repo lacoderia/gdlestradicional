@@ -3,23 +3,26 @@
   </div>
   <nav>
     <ul class="routes">
-      <li><a id="simple-menu" href="#sidr" style="visibility: hidden;"><span class="icon-uniE604"></span></a></li>
+      <li><a id="simple-menu" href="#sidr" style="visibility: hidden;"><span class="icon-menu"></span></a></li>
     </ul>
     <ul>
-      <li><a href="http://instagram.com/jctradicional" target="_blank" onclick="trackIG()"><span class="icon-uniE602"></span></a></li>
-      <li><a href="https://twitter.com/jctradicional" target="_blank"><span class="icon-uniE600"></span></a></li>
-      <li><a href="https://www.facebook.com/jctradicional" target="_blank"><span class="icon-uniE601"></span></a></li>
-      <li><a href="http://www.cuervotradicional.com.mx" title="Cuervo Tradicional" target="_blank" class="cuervo"><span class="icon-uniE611"></span></a></li>
+      <li><a href="http://instagram.com/jctradicional" target="_blank" onclick="trackIG()"><span class="icon-instagram"></span></a></li>
+      <li><a href="https://twitter.com/jctradicional" target="_blank"><span class="icon-twitter"></span></a></li>
+      <li><a href="https://www.facebook.com/jctradicional" target="_blank"><span class="icon-facebook"></span></a></li>
+      <li><a href="http://www.cuervotradicional.com.mx" title="Cuervo Tradicional" target="_blank" class="cuervo"><span class="icon-web"></span></a></li>
       <li><a onclick="showJCGalleryThumbs()"><span class="icon-images"></span></a></li>
     </ul>
     <ul class="help-icon">
-      <li class="help-button icon-list-item" onclick="showHelpGallery()"><a title="Ayuda"><span class="icon-uniE60E"></span></a></li>
+      <li class="help-button icon-list-item" onclick="showHelpGallery()"><a title="Ayuda"><span class="icon-help"></span></a></li>
     </ul>
   </nav>
 </header>
 <div id="mobile-jc-gallery-thumbs" style="display: none;">
   <div class="message">
     <span class="close_modal" onclick="hideJCGalleryThumbs()">x</span>
+    <div class="jc-gallery-title">
+      GALERÍAS #GDLESTRADICIONAL
+    </div>
     <div class="mobile-jc-gallery-thumbs-container"></div>
   </div>
 </div>
@@ -30,7 +33,7 @@
   </div>
 </div>
 <div id="gallery" style="display: none;">
-  <span class="close-gallery" onclick="hidePictureGallery()"><span class="icon-uniE603"></span></span>
+  <span class="close-gallery" onclick="hidePictureGallery()"><span class="icon-back"></span></span>
   <div id="slick-carousel"></div>
 </div>
 <div id="help-gallery" style="display: none;">
@@ -73,7 +76,7 @@
 
 <div id="sidr">
   <!-- Your content -->
-  <a href="#" class="close-menu">Cerrar <span class="icon-uniE603"></span></a>
+  <a href="#" class="close-menu">Cerrar <span class="icon-back"></span></a>
   <div style="clear:both"></div>
   <ul>
     <li>
@@ -126,8 +129,8 @@
     <span class="close_modal" onclick="hideInviteModal()">x</span>
     <h3>Invita a tus amigos</h3>
     <div class="share-buttons">
-      <a href="#" class="fb" onclick="shareFB()"><span class="icon-uniE601 icon"></span> Facebook</a>
-      <a href="#" class="tw" target="_blank"><span class="icon-uniE600 icon"></span> Twitter</a>
+      <a href="#" class="fb" onclick="shareFB()"><span class="icon-facebook icon"></span> Facebook</a>
+      <a href="#" class="tw" target="_blank"><span class="icon-twitter icon"></span> Twitter</a>
     </div>
   </div>
 </div>
@@ -338,7 +341,7 @@
   <a onclick="showTermsPrivacity();" title="Términos y condiciones">TÉRMINOS Y CONDICIONES</a> - <a href="http://www.alcoholinformate.com.mx" title="www.alcoholinformate.com" target="_blank">www.alcoholinformate.com.mx</a> - <br> Conocer es no excederse
 </footer>
 
-<div id="ruby-values" data-user="<%= @user.to_json%>" data-illumination="<%= @illumination.active %>"></div>
+<div id="ruby-values" data-user="<%= @user.to_json%>" data-illumination="<%= @illumination ? @illumination.active : false %>"></div>
 <% if @user %>
   <iframe width="1" height="1" frameborder="0" src="http://tbl.tradedoubler.com/report?organization=1574207&event=256040&leadNumber=<%= current_user.uid%>"></iframe>
 <% end %>
