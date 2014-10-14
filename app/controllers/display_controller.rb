@@ -18,6 +18,9 @@ class DisplayController < ApplicationController
       user = User.find_by_uid(invite)
       user.add_invite(ip) if user
     end
+    if params[:fotos]
+      @galeria = true
+    end 
   end
 
   def mobile
@@ -31,6 +34,9 @@ class DisplayController < ApplicationController
       user = User.find_by_uid(invite)
       user.add_invite(ip) if user
     end
+    if params[:fotos]
+      @galeria = true
+    end 
     render :layout => 'mobile'
   end
 

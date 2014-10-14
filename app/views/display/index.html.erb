@@ -425,7 +425,7 @@
   <a onclick="showTermsPrivacity();" title="Términos y condiciones">TÉRMINOS Y CONDICIONES</a> - <a href="http://www.alcoholinformate.com.mx" title="www.alcoholinformate.com.mx" target="_blank">www.alcoholinformate.com.mx</a> - Conocer es no excederse
 </footer>
 
-<div id="ruby-values" data-user="<%= @user.to_json%>" data-illumination="<%= @illumination ? @illumination.active : false %>"></div>
+<div id="ruby-values" data-user="<%= @user.to_json%>" data-illumination="<%= @illumination ? @illumination.active : false %>" data-galeria="<%= @galeria ? true : false %>"></div>
 <% if @user %>
   <iframe width="1" height="1" frameborder="0" src="http://tbl.tradedoubler.com/report?organization=1574207&event=256040&leadNumber=<%= current_user.uid%>"></iframe>
 <% end %>

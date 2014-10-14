@@ -542,6 +542,10 @@ function launchApp() {
             //showLatestPictures();
         }
 
+        if ($("#ruby-values").data("galeria")) {
+            showJCGalleryThumbs();
+        }
+
         $('.account-button a').addClass('selected');
         $('#user-div').slideToggle('fast');
         if(typeof(Storage)!=="undefined") {

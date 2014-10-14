@@ -115,10 +115,15 @@ function init() {
     }
 
     if (document.URL.indexOf("www") != -1) {
-        window.location = "http://gdlestradicional.mx";
+        var params = document.URL.split("?");
+        var extra = '';
+        if (params.length > 1) {
+            extra = '?' + params[1];
+        }
+        window.location = "http://gdlestradicional.mx" + extra;
     }
     if (screen.width < 768) {
-        window.location = "http://gdlestradicional.mx/mobile";
+        window.location = "http://gdlestradicional.mx/mobile" + extra;
     }
 
     $('.account-button').click(function(){
@@ -568,6 +573,10 @@ function launchApp() {
 
         if(isIlluminationTweetActive){
             $('.lightMessage').fadeIn(1000);
+        }
+
+        if ($("#ruby-values").data("galeria")) {
+            showJCGalleryThumbs();
         }
 
         $('.account-button a').addClass('selected');
