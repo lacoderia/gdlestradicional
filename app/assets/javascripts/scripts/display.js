@@ -280,7 +280,7 @@ function init() {
                 content: content
             });
 
-            if(isIlluminationTweetActive){
+            if(isIlluminationTweetActive && !data.featured){
                 var delay = Math.floor(Math.random() * 5) + 1;
                 var lightMarker = new RichMarker({
                     tweet_guid: tweet_guid,
@@ -1077,7 +1077,7 @@ function showAllRoutes() {
         map.setOptions(mapOptions);
         map.setZoom(13);
         map.setCenter(mapCenter);
-        rectangle.setOptions({clickable: false});
+        //rectangle.setOptions({clickable: false});
 
     }
 }

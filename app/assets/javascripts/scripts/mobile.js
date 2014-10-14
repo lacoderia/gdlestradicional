@@ -258,7 +258,7 @@ function init() {
                 content: content
             });
 
-            if(isIlluminationTweetActive){
+            if(isIlluminationTweetActive  && !data.featured){
                 var delay = Math.floor(Math.random() * 5) + 1;
                 var lightMarker = new RichMarker({
                     tweet_guid: tweet_guid,
