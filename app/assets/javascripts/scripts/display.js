@@ -108,18 +108,18 @@ function init() {
         lineStrokeColor = '#ffffff';
         mapOptions.styles = nightStyles;
         styles = nightStyles;
-    }else{
+    } else {
         lineStrokeColor = '#000000';
         mapOptions.styles = dayStyles;
         styles = dayStyles;
     }
 
-    if (document.URL.indexOf("www") != -1) {
-        var params = document.URL.split("?");
-        var extra = '';
-        if (params.length > 1) {
-            extra = '?' + params[1];
-        }
+    var params = document.URL.split("?");
+    var extra = '';
+    if (params.length > 1) {
+        extra = '?' + params[1];
+    }
+    if (document.URL.indexOf("www") != -1) {    
         window.location = "http://gdlestradicional.mx" + extra;
     }
     if (screen.width < 768) {
