@@ -256,14 +256,14 @@ function init() {
 
             var content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                 '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                '<div class="' + pinClass + ' icon-location"></div>' +
+                '<div class="' + pinClass + ' icon-twitter"></div>' +
                 '<div class="pulse"></div>'+
                 '</div>';
 
             if(data.featured){
                 content = '<div class="tweet_marker tweet_marker_' + this.tweet_guid +'">' +
                     '<div class="tweet_marker_detail" style="display: none;"><span class="close_tweet">x</span><div class="arrow-down"></div><p class="author">@' + data.author + '</p><p>' + data.text + '</p></div>' +
-                    '<div class="' + pinClass + ' icon-location"></div>' +
+                    '<div class="' + pinClass + ' icon-twitter"></div>' +
                     '<div class="pulse-featured"></div>'+
                     '</div>';
             }
