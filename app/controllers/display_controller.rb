@@ -90,7 +90,7 @@ class DisplayController < ApplicationController
     il.update_attribute(:active, activate)
 		if activate == true
 			logger.info "Activar"
-		elsif activate == false
+		else
 			logger.info "Desactivar"
       Tweet.where('featured = ?', false).destroy_all
 		end
