@@ -21,7 +21,4 @@ if featured.size > 0
   tweet.lat = positions[random2][:lat]
   tweet.long = positions[random2][:long]
   WebsocketRails[:twitter_channel].trigger(:new_tweet, tweet)
-  if il.active == true
-    Tweet.create(:featured => false, :author => tweet.author, :lat => tweet.lat, :long => tweet.long)
-  end
 end
