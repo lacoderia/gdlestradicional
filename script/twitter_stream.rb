@@ -18,11 +18,10 @@ positions = [
   {:lat => 20.680939, :long => -103.372149}, {:lat => 20.648414, :long => -103.392834}, {:lat => 20.676562, :long => -103.346571}
 ]
 
-il = Illumination.first
-
 begin
   client.filter(:track => 'gdlestradicional') do |object|
   #client.filter(:locations => "-103.477892,20.615802,-103.257822,20.692261") do |object|
+    il = Illumination.first
   	if object.is_a?(Twitter::Tweet)
       tweet = Tweet.new(:featured => false, :author => object.attrs[:user][:screen_name], :text => object.text)
       if object.attrs[:geo]
