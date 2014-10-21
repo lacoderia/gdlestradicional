@@ -563,6 +563,12 @@ function launchApp() {
 }
 
 function showHomenajeVideo() {
+    ga('send', {
+        'hitType': 'event',          // Required.
+        'eventCategory': 'button',   // Required.
+        'eventAction': 'click',      // Required.
+        'eventLabel': 'video',
+    });
     $('#homenaje-video').attr('src','http://www.youtube.com/embed/u2jE-Q7pD_s?autoplay=1');
     $('.homenajeContainer').fadeIn(1000);
     $('#homenaje-video').show();
@@ -1101,6 +1107,12 @@ function hideHelpGallery() {
 /** JC Gallery **/
 
 function showJCGalleryThumbs() {
+    ga('send', {
+        'hitType': 'event',          // Required.
+        'eventCategory': 'button',   // Required.
+        'eventAction': 'click',      // Required.
+        'eventLabel': 'galeria',
+    });
     if (jcGallery.length <= 0) {
         $.ajax({
             type: "GET",

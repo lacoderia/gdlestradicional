@@ -96,7 +96,7 @@ class DisplayController < ApplicationController
       Tweet.create(:featured => false, :lat => 20.655719,  :long => -103.369503)
 		else
 			logger.info "Desactivar"
-      Tweet.where('featured = ?', false).destroy_all
+      #Tweet.where('featured = ?', false).destroy_all
 		end
     WebsocketRails[:twitter_channel].trigger(:map_status, activate)
 	end
