@@ -539,7 +539,7 @@ a.desktop {
   }
 }
 
-#jc-gallery-thumbs-container, #jc-gallery-container, #picture-gallery-container, #user-picture-gallery-container, #help-gallery-container {
+#jc-gallery-thumbs-container, #jc-gallery-container, #picture-gallery-container, #user-picture-gallery-container, #help-gallery-container, #vote-message-container {
   display: none;
   position: absolute;
   top:0;
@@ -551,7 +551,7 @@ a.desktop {
   background-color: rgba(0,0,0,0.5);
 }
 
-#jc-gallery-thumbs-container:before, #jc-gallery-container:before, #picture-gallery-container:before, #user-picture-gallery-container:before, #help-gallery-container:before {
+#jc-gallery-thumbs-container:before, #jc-gallery-container:before, #picture-gallery-container:before, #user-picture-gallery-container:before, #help-gallery-container:before, #vote-message-container:before {
   content: '';
   display: inline-block;
   height: 100%;
@@ -559,7 +559,7 @@ a.desktop {
   background-color: red;
 }
 
-#jc-gallery, #picture-gallery, #user-picture-gallery {
+#jc-gallery, #picture-gallery, #user-picture-gallery, #vote-message {
   display: inline-block;
   position:relative;
   background-color: #FFF;
@@ -1427,11 +1427,52 @@ a.desktop {
   }
 }
 
-.lightMessage{
+.lightMessage {
   padding: 0em 0em 1em;
   position: absolute;
   left: 10px;
   top: 20px;
+}
+
+.vote-message-button {
+  cursor: pointer;
+  padding: 0em 0em 1em;
+  position: absolute;
+  left: 10px;
+  top: 20px;
+}
+
+#vote-message {
+  background-color: #022c5e;
+  border: none;
+  border-radius: 0px;
+  color: #FFF;
+  display: inline-block;
+  height: 330px;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  text-align: left;
+  text-transform: uppercase;
+  vertical-align: middle;
+  width: 600px;
+
+  .gray-color {
+    color: #969A9B;
+  }
+
+  #vote-step-1 {
+    .btn-votar {
+      color: #022c5e;
+      background-color: #FFF;
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0 auto;
+      text-align: center;
+      width: 200px;
+    }
+  }
+
 }
 
 .touchMarkerMessage{

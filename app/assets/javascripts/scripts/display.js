@@ -575,6 +575,8 @@ function launchApp() {
             $('.lightMessage').fadeIn(1000);
         }
 
+        $('.vote-message-button').fadeIn(1000);
+
         if ($("#ruby-values").data("galeria")) {
             showJCGalleryThumbs();
         }
@@ -1753,6 +1755,24 @@ function showDashboard() {
     $("#user-photos").click(function(){
         showUserPictures();
     });
+}
+
+/** Votes **/
+
+function showVoteWindow() {
+    $('#overlay').show();
+    $('#vote-message-container').show();
+}
+
+function hideVoteWindow() {
+    $('#overlay').hide();
+    $('#vote-message-container').hide();
+}
+
+function voteWindowClick(e) {
+    if (!$(e.target).closest('#vote-message').get(0)) {
+        hideVoteWindow();
+    }
 }
 
 function showInviteModal(){
