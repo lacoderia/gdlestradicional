@@ -422,24 +422,29 @@
 </div>
 
 <div class="vote-message-button" onclick="showVoteWindow(1)" style="display: none;">
-  <img src="/assets/ILUMINAINSTRUCCION.png">
+  <img src="/assets/votes/btn-votar.png">
 </div>
 
 <div id="vote-message-container" onclick="voteWindowClick(event)">
   <div id="vote-message">
-    <div id="vote-step-1">
+    <div id="vote-step-1" class="vote-step">
       <h1>COMO TIPS:</h1>
-      <p>
+      <div class="left">
+        <br/>
         <div>* EXPLORA LAS RUTAS Y SUS PUNTOS.</div>
         <div class="gray-color">* PREPARA UNA RESPUESTA DE ¿POR QUÉ CREES QUE GUADALAJARA ES TRADICIONAL?</div>
-      </p>
-      <p>
+        <br/>
         <div>LAS RESPUESTAS MÁS ORIGINALES Y QUE TENGAN RELACIÓN A LAS RUTAS Y A SUS PUNTOS, OBTENDRÁN LOS PREMIOS DIGITALES.</div>
         <div class="gray-color">CONSULTA TÉRMINOS Y CONDICIONES ABAJO EN EL MAPA.</div>
-      </p>
+      </div>
+      <div class="right">
+        <div class="heart">
+          <span class="icon-like gray-color"/>
+        </div>
+      </div>
       <div class="btn-votar" onclick="activateVotes()">IR A VOTAR</div>
     </div>
-    <div id="vote-step-2">
+    <div id="vote-step-2" class="vote-step">
       <p>¡ELEGISTE UNA RUTA COMO LA MEJOR!</p>
       <hr/>
       <div>
@@ -456,7 +461,7 @@
         </div>
       </div>
     </div>
-    <div id="vote-step-3">
+    <div id="vote-step-3" class="vote-step">
       <p>GRACIAS POR TU VOTO</p>
       <hr/>
       <p>#GDLESTRADICIONAL®</p>

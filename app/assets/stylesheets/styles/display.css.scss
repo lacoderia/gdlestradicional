@@ -452,6 +452,20 @@ a.desktop {
     text-transform: uppercase;
     width: 200px;
   }
+
+  .vote {
+    box-sizing: border-box;
+    left: 10px;
+    position: absolute;
+    top: -25px;
+    width: 26px;
+    height: 26px;
+
+    img {
+      width: 100%;
+    }
+
+  }
 }
 
 .secondary-marker {
@@ -1436,7 +1450,6 @@ a.desktop {
 
 .vote-message-button {
   cursor: pointer;
-  padding: 0em 0em 1em;
   position: absolute;
   left: 10px;
   top: 20px;
@@ -1446,30 +1459,65 @@ a.desktop {
   background-color: #022c5e;
   border: none;
   border-radius: 0px;
+  box-sizing: border-box;
   color: #FFF;
   display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
   height: 330px;
   overflow: hidden;
-  padding: 10px;
+  padding: 40px;
   position: relative;
   text-align: left;
   text-transform: uppercase;
   vertical-align: middle;
   width: 600px;
 
+  h1 {
+    font-size: 30px;
+    margin: 0;
+  }
+
   .gray-color {
     color: #969A9B;
   }
 
   #vote-step-1 {
+
+    .left {
+      display: inline-block;
+      vertical-align: top;
+      width: 370px;
+    }
+
+    .right {
+      display: inline-block;
+      vertical-align: top;
+      width: 100px;
+
+      .heart {
+        border: 8px solid #FFFFFF;
+        border-radius: 70px;
+        box-sizing: border-box;
+        font-size: 94px;
+        height: 140px;
+        padding-left: 16px;
+        padding-top: 20px;
+        width: 140px;
+      }
+    }
+
     .btn-votar {
       color: #022c5e;
       background-color: #FFF;
-      font-size: 20px;
-      font-weight: 500;
+      cursor: pointer;
+      font-size: 32px;
+      font-weight: 700;
       margin: 0 auto;
+      margin-top: 10px;
+      padding: 5px;
       text-align: center;
-      width: 200px;
+      width: 260px;
     }
   }
 

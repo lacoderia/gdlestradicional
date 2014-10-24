@@ -559,6 +559,8 @@ function launchApp() {
         if(isIlluminationTweetActive){
             $('.lightMessage').fadeIn(1000);
         }
+
+        $('.vote-message-button').fadeIn(1000);
     });
 }
 
@@ -1369,6 +1371,57 @@ function likePhoto(id) {
             user.likes.push(response.instagram_id);
         },
         error: function(jqXHR, textStatus, errorThrown) {
+        }
+    });
+}
+
+/** Votes **/
+
+function showVoteWindow(step, routeId) {
+    $('.vote-step').hide();
+    $('#vote-step-' + step).show();
+
+    if (step == 2) {
+        $('#vote-step-2 #routeId').val(routeId);
+        $('#vote-step-2 #votar').click(sendVote);
+    }
+
+    $('#overlay').show();
+    $('#mobile-vote-message').show();
+}
+
+function hideVoteWindow() {
+    $('#overlay').hide();
+    $('#mobile-vote-message').hide();
+}
+
+function activateVotes() {
+    isVoteActive = true;
+    hideVoteWindow();
+    $('.vote-message-button').hide();
+    $('.vote').show();
+}
+
+function sendVote() {
+    var serviceURL = '/votes.json';
+    var data = {
+        "name":  $('#vote-step-2 #name').val(),
+        "email": $('#vote-step-2 #email').val(),
+        "answer": $('#vote-step-2 #answer').val(),
+        "route_id": $('#vote-step-2 #routeId').val(),
+        "subscribe": $('#vote-step-2 #subscribe').is(':checked')
+    }
+    $.ajax({
+        type: "POST",
+        url:  serviceURL,
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType: 'application/json',
+        success: function(response) {
+            showVoteWindow(3);
+        },
+        error: function(error) {
+            console.log(error)
         }
     });
 }

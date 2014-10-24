@@ -25,6 +25,7 @@ var tweet_guid = 0;
 var mailSent = false;
 var intervalTimeout, latestPicturesTimeout;
 var markerMessageClosed = false;
+var isVoteActive = false;
 var isIlluminationTweetActive = false;
 var lightTweetMarkers = [];
 var lineStrokeColor = '#000000';
@@ -667,8 +668,9 @@ function loadRoutes() {
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
                                 '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img class="' + special + '" src="' + markerImageUrl + '"/>' +
-                                '<div class="route-name">' + routes[i].name + '</div>' +
+                                '<img class="cuervo" onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
+                                '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
+                                '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
                                 '</div>'
                         });
 
@@ -687,6 +689,10 @@ function loadRoutes() {
                                 marker_element.find('.route-name').hide();
                                 marker_element.parent().parent().css('z-index','auto');
                             });
+
+                            if (isVoteActive) {
+                                $('#' + this.jqueryId + ' .vote').show();
+                            }
                         });
 
                     } else {
@@ -720,12 +726,6 @@ function loadRoutes() {
                             $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
                         });
                     }
-
-                    google.maps.event.clearListeners(marker, 'click');
-
-                    google.maps.event.addListener(marker, 'click', function() {
-                        showRouteDetail(this.routeIndex);
-                    });
 
                     routes[i].markers.push(marker);
 
@@ -796,10 +796,17 @@ function paintOneMarker(routeIndex, markerIndex) {
     if(markerIndex < routes[routeIndex].locations.length){
         routes[routeIndex].markers[markerIndex].setMap(map);
 
+        if (markerIndex == 1) {
+            $('.vote').hide();
+        }
+
         setTimeout(function(){
             paintOneMarker(routeIndex, markerIndex+1);
         }, 250)
     } else {
+
+        $('.vote').hide();
+
         paintingRoutes = false;
 
         $('#show-all-routes').show();
@@ -890,6 +897,9 @@ function paintOneMarker(routeIndex, markerIndex) {
         for (var j=0; j<routes[routeIndex].markers.length; j++) {
             google.maps.event.clearListeners(routes[routeIndex].markers[j], 'click');
 
+            $('#' + routes[routeIndex].markers[j].jqueryId + ' .route-name').unbind('click');
+            $('#' + routes[routeIndex].markers[j].jqueryId + ' img').unbind('click');
+
             $('#' + routes[routeIndex].markers[j].jqueryId).mouseout();
             $('#' + routes[routeIndex].markers[j].jqueryId).unbind('mouseover mouseout');
 
@@ -966,6 +976,10 @@ function showAllRoutes() {
 
         showLatestPictures();
 
+        if(!isVoteActive) {
+            $('.vote-message-button').show();
+        }
+
         $('#show-all-routes').hide();
         $('.touchMarkerMessage').hide();
         $('#influencer-picture').hide();
@@ -1023,8 +1037,9 @@ function showAllRoutes() {
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
                             '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                            '<img src="' + markerImageUrl + '"/>' +
-                            '<div class="route-name">' + routes[i].name + '</div>' +
+                            '<img class="cuervo" onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
+                            '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
+                            '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
                             '</div>'
                     });
 
@@ -1043,6 +1058,10 @@ function showAllRoutes() {
                             marker_element.find('.route-name').hide();
                             marker_element.parent().parent().css('z-index','auto');
                         });
+
+                        if (isVoteActive) {
+                            $('#' + this.jqueryId + ' .vote').show();
+                        }
                     });
                 } else {
 
@@ -1074,10 +1093,6 @@ function showAllRoutes() {
                     });
                 }
 
-                google.maps.event.addListener(marker, 'click', function() {
-                    showRouteDetail(this.routeIndex);
-                });
-
                 routes[i].markers[j] = marker;
             }
         }
@@ -1095,6 +1110,8 @@ function showRouteDetail(routeIndex){
 
         stopLatestPictures();
         $('#influencer-video').hide();
+
+        $('.vote-message-button').hide();
 
         var markers = routes[routeIndex].markers;
         var bounds = new google.maps.LatLngBounds();
@@ -1760,25 +1777,14 @@ function showDashboard() {
 /** Votes **/
 
 function showVoteWindow(step, routeId) {
-    switch(step) {
-        case 1:
-            $('#vote-step-2').hide();
-            $('#vote-step-3').hide();
-            $('#vote-step-1').show();
-            break;
-        case 2:
-            $('#vote-step-1').hide();
-            $('#vote-step-3').hide();
-            $('#vote-step-2').show();
-            $('#vote-step-2 #routeId').val(routeId);
-            $('#vote-step-2 #votar').click(sendVote);
-            break;
-        case 3:
-            $('#vote-step-1').hide();
-            $('#vote-step-2').hide();
-            $('#vote-step-3').show();
-            break;
+    $('.vote-step').hide();
+    $('#vote-step-' + step).show();
+
+    if (step == 2) {
+        $('#vote-step-2 #routeId').val(routeId);
+        $('#vote-step-2 #votar').click(sendVote);
     }
+
     $('#overlay').show();
     $('#vote-message-container').show();
 }
@@ -1792,6 +1798,13 @@ function voteWindowClick(e) {
     if (!$(e.target).closest('#vote-message').get(0)) {
         hideVoteWindow();
     }
+}
+
+function activateVotes() {
+    isVoteActive = true;
+    hideVoteWindow();
+    $('.vote-message-button').hide();
+    $('.vote').show();
 }
 
 function sendVote() {

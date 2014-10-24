@@ -346,6 +346,70 @@
   <img src="/assets/ILUMINAINSTRUCCION.png">
 </div>
 
+<div class="vote-message-button" onclick="showVoteWindow(1)" style="display: none;">
+  <img src="/assets/votes/btn-votar.png">
+</div>
+
+<div id="terms-privacity" style="display: none;">
+  <div class="message">
+    <span class="close_modal" onclick="hideTermsPrivacity()">x</span>
+    <div class="terms-privacity-content">
+      <h3>
+        BASES DINÁMICA <br>
+        CUERVO TRADICIONAL® #GDLESTRADICIONAL
+      </h3>
+
+    </div>
+  </div>
+</div>
+
+<div id="mobile-vote-message" style="display: none;">
+  <div class="message">
+    <span class="close_modal" onclick="hideVoteWindow()">x</span>
+    <div class="vote-message-container">
+      <div id="vote-step-1" class="vote-step">
+        <h1>COMO TIPS:</h1>
+        <div class="left">
+          <br/>
+          <div>* EXPLORA LAS RUTAS Y SUS PUNTOS.</div>
+          <div class="gray-color">* PREPARA UNA RESPUESTA DE ¿POR QUÉ CREES QUE GUADALAJARA ES TRADICIONAL?</div>
+          <br/>
+          <div>LAS RESPUESTAS MÁS ORIGINALES Y QUE TENGAN RELACIÓN A LAS RUTAS Y A SUS PUNTOS, OBTENDRÁN LOS PREMIOS DIGITALES.</div>
+          <div class="gray-color">CONSULTA TÉRMINOS Y CONDICIONES ABAJO EN EL MAPA.</div>
+        </div>
+        <div class="right">
+          <div class="heart">
+            <span class="icon-like gray-color"/>
+          </div>
+        </div>
+        <div class="btn-votar" onclick="activateVotes()">IR A VOTAR</div>
+      </div>
+      <div id="vote-step-2" class="vote-step">
+        <p>¡ELEGISTE UNA RUTA COMO LA MEJOR!</p>
+        <hr/>
+        <div>
+          <%= label_tag :name, 'NOMBRE:', :class => 'rosasclase'%><%= text_field_tag :name, '', size: 55, :class => 'rosasclase' %><br/>
+          <%= label_tag :email, 'CORREO ELECTRÓNICO:', :class => 'rosasclase'%><%= text_field_tag :email, '', size: 30, :class => 'rosasclase' %><br/>
+          <%= label_tag :answer, '¿POR QUÉ CREES QUE GUADALAJARA ES TRADICIONAL?', :class => 'rosasclase' %><br/>
+          <%= text_area_tag :answer, '', size: '50x5', :class => 'rosasclase' %><br/>
+          <%= hidden_field_tag 'routeId' %><br/>
+          <div>
+            <%= check_box_tag :subscribe, '', true, :class => 'rosasclase' %><%= label_tag :subscribe, 'ACEPTO RECIBIR POR CORREO ELECTRÓNICO PRÓXIMAS PROMOCIONES DE CUERVO TRADICIONAL®', :class => 'rosasclase' %>
+          </div>
+          <div>
+            <%= button_tag 'ENVÍA TU VOTO', :id => "votar", :onclick => 'sendVote()', :class => 'rosasclase' %><br/>
+          </div>
+        </div>
+      </div>
+      <div id="vote-step-3" class="vote-step">
+        <p>GRACIAS POR TU VOTO</p>
+        <hr/>
+        <p>#GDLESTRADICIONAL®</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer class="footer" style="display:none;">
   <a onclick="showTermsPrivacity();" title="Términos y condiciones">TÉRMINOS Y CONDICIONES</a> - <a href="http://www.alcoholinformate.com.mx" title="www.alcoholinformate.com" target="_blank">www.alcoholinformate.com.mx</a> - <br> Conocer es no excederse
 </footer>
