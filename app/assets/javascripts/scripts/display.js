@@ -1759,7 +1759,26 @@ function showDashboard() {
 
 /** Votes **/
 
-function showVoteWindow() {
+function showVoteWindow(step, routeId) {
+    switch(step) {
+        case 1:
+            $('#vote-step-2').hide();
+            $('#vote-step-3').hide();
+            $('#vote-step-1').show();
+            break;
+        case 2:
+            $('#vote-step-1').hide();
+            $('#vote-step-3').hide();
+            $('#vote-step-2').show();
+            $('#vote-step-2 #routeId').val(routeId);
+            $('#vote-step-2 #votar').click(sendVote);
+            break;
+        case 3:
+            $('#vote-step-1').hide();
+            $('#vote-step-2').hide();
+            $('#vote-step-3').show();
+            break;
+    }
     $('#overlay').show();
     $('#vote-message-container').show();
 }
@@ -1773,6 +1792,30 @@ function voteWindowClick(e) {
     if (!$(e.target).closest('#vote-message').get(0)) {
         hideVoteWindow();
     }
+}
+
+function sendVote() {
+    var serviceURL = '/votes.json';
+    var data = {
+        "name":  $('#vote-step-2 #name').val(), 
+        "email": $('#vote-step-2 #email').val(), 
+        "answer": $('#vote-step-2 #answer').val(), 
+        "route_id": $('#vote-step-2 #routeId').val(), 
+        "subscribe": $('#vote-step-2 #subscribe').is(':checked')
+    }
+    $.ajax({
+        type: "POST",
+        url:  serviceURL,
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType: 'application/json',
+        success: function(response) {
+            showVoteWindow(3);
+        },
+        error: function(error) {
+            console.log(error)
+        }
+    }); 
 }
 
 function showInviteModal(){

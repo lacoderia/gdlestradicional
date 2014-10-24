@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :votes
+
   resources :influencers do
 		member do
 			post 'especial'

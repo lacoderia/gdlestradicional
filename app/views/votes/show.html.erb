@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @vote.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @vote.email %>
+</p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @vote.answer %>
+</p>
+
+<p>
+  <strong>Route:</strong>
+  <%= @vote.route_id %>
+</p>
+
+<p>
+  <strong>Subscribe:</strong>
+  <%= @vote.subscribe %>
+</p>
+
+<p>
+  <strong>Isuser:</strong>
+  <%= @vote.isUser %>
+</p>
+
+<%= link_to 'Edit', edit_vote_path(@vote) %> |
+<%= link_to 'Back', votes_path %>
