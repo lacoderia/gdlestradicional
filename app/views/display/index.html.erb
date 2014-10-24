@@ -443,16 +443,16 @@
       <p>¡ELEGISTE UNA RUTA COMO LA MEJOR!</p>
       <hr/>
       <div>
-        <%= label_tag :name, 'NOMBRE:' %><%= text_field_tag :name, '', size: 55 %><br/>
-        <%= label_tag :email, 'CORREO ELECTRÓNICO:' %><%= text_field_tag :email, '', size: 30 %><br/>
-        <%= label_tag :answer, '¿POR QUÉ CREES QUE GUADALAJARA ES TRADICIONAL?' %><br/>
-        <%= text_area_tag :answer, '', size: '50x5' %><br/>
+        <%= label_tag :name, 'NOMBRE:', :class => 'rosasclase'%><%= text_field_tag :name, '', size: 55, :class => 'rosasclase' %><br/>
+        <%= label_tag :email, 'CORREO ELECTRÓNICO:', :class => 'rosasclase'%><%= text_field_tag :email, '', size: 30, :class => 'rosasclase' %><br/>
+        <%= label_tag :answer, '¿POR QUÉ CREES QUE GUADALAJARA ES TRADICIONAL?', :class => 'rosasclase' %><br/>
+        <%= text_area_tag :answer, '', size: '50x5', :class => 'rosasclase' %><br/>
         <%= hidden_field_tag 'routeId' %><br/>
         <div>
-          <%= check_box_tag :subscribe, '', true %><%= label_tag :subscribe, 'ACEPTO RECIBIR POR CORREO ELECTRÓNICO PRÓXIMAS PROMOCIONES DE CUERVO TRADICIONAL®' %>
+          <%= check_box_tag :subscribe, '', true, :class => 'rosasclase' %><%= label_tag :subscribe, 'ACEPTO RECIBIR POR CORREO ELECTRÓNICO PRÓXIMAS PROMOCIONES DE CUERVO TRADICIONAL®', :class => 'rosasclase' %>
         </div>
         <div>
-          <%= button_tag 'ENVÍA TU VOTO', :id => "votar" %><br/>
+          <%= button_tag 'ENVÍA TU VOTO', :id => "votar", :onclick => 'sendVote()', :class => 'rosasclase' %><br/>
         </div>
       </div>
     </div>
