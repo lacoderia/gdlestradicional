@@ -34,6 +34,7 @@ var tweet_guid = 0;
 var mailSent = false;
 var intervalTimeout;
 var markerMessageClosed = false;
+var isVoteActive = false;
 var isIlluminationTweetActive = false;
 var lightTweetMarkers = [];
 var lineStrokeColor = '#000000';
@@ -639,8 +640,9 @@ function loadRoutes() {
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
                                 '<div class="marker_detail"><span class="close_tweet">x</span><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
-                                '<img class="image-marker-click" src="' + markerImageUrl + '"/>' +
-                                '<div class="route-name">' + routes[i].name + '</div>' +
+                                '<img class="image-marker-click" onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
+                                '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
+                                '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
                                 '</div>'
                         });
 
@@ -677,13 +679,12 @@ function loadRoutes() {
                         google.maps.event.addListener(marker, 'ready', function() {
                             $('#' + this.jqueryId).hide();
                             $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
+
+                            if (isVoteActive) {
+                                $('#' + this.jqueryId + ' .vote').show();
+                            }
                         });
                     }
-
-
-                    google.maps.event.addListener(marker, 'click', function() {
-                        showRouteDetail(this.routeIndex);
-                    });
 
                     routes[i].markers.push(marker);
 
@@ -771,6 +772,11 @@ function paintOneRoute(routeIndex) {
 function paintOneMarker(routeIndex, markerIndex) {
     if(markerIndex < routes[routeIndex].locations.length){
         routes[routeIndex].markers[markerIndex].setMap(map);
+
+        if (markerIndex == 1) {
+            $('.vote').hide();
+        }
+
         setTimeout(function(){
             paintOneMarker(routeIndex, markerIndex+1);
         }, 250)
@@ -919,6 +925,10 @@ function showAllRoutes() {
 
 	    //showLatestPictures();
 
+        if(!isVoteActive) {
+            $('.vote-message-button').show();
+        }
+
         $('#influencer-picture').hide();
         $('.touchMarkerMessage').hide();
         if(isIlluminationTweetActive){
@@ -973,8 +983,9 @@ function showAllRoutes() {
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
                             '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                            '<img src="' + markerImageUrl + '"/>' +
-                            '<div class="route-name">' + routes[i].name + '</div>' +
+                            '<img src="' + markerImageUrl + '" onclick="showRouteDetail(' + i + ')"/>' +
+                            '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
+                            '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
                             '</div>'
                     });
 
@@ -1007,10 +1018,10 @@ function showAllRoutes() {
                 google.maps.event.addListener(marker, 'ready', function() {
                     $('#' + this.jqueryId).hide();
                     $('#' + this.jqueryId).toggle( 'drop', { direction: 'up' } );
-                });
 
-                google.maps.event.addListener(marker, 'click', function() {
-                    showRouteDetail(this.routeIndex);
+                    if (isVoteActive) {
+                        $('#' + this.jqueryId + ' .vote').show();
+                    }
                 });
 
                 routes[i].markers[j] = marker;
@@ -1028,6 +1039,8 @@ function showAllRoutes() {
 function showRouteDetail(routeIndex){
     if (!paintingRoutes){
         stopLatestPictures();
+
+        $('.vote-message-button').hide();
 
         var markers = routes[routeIndex].markers;
         var bounds = new google.maps.LatLngBounds();

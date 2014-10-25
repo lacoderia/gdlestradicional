@@ -546,6 +546,20 @@ header{
     width: 30px;
     height: 46px;
   }
+
+  .vote {
+    box-sizing: border-box;
+    left: 3px;
+    position: absolute;
+    top: -30px;
+    width: 26px;
+    height: 26px;
+
+    img {
+      width: 100%;
+    }
+
+  }
 }
 
 .secondary-marker {
@@ -733,14 +747,13 @@ a.close-menu{
 .vote-message-button {
   display: inline-block;
   left: 0px;
-  bottom: 313px;
+  bottom: 50px;
   text-align: center;
-  top: auto;
   width: 100%;
 
   img {
     display: inline-block;
-    width: 70%;
+    width: 60%;
   }
 
 }
@@ -758,28 +771,129 @@ a.close-menu{
   background-color:rgba(0,0,0,0.3); /*dim the background*/
 
   .message{
-    border: 3px solid #A6A7AA;
-    border-radius: 5px;
+    background-color: #093E6B;
     color: white;
-    height: 80%;
     left: 5%;
     padding: 1em;
     position: relative;
-    text-align: center;
     text-transform: uppercase;
-    top: 5%;
+    top: 10%;
     overflow: hidden;
-    width: 78%;
+    width: 80%;
 
     .close_modal{
       color: #A6A7AA;
       display: block;
+      float: right;
       text-align: right;
     }
 
-    .vote-message-content{
+    .vote-message-container{
+      font-size: 8px;
       height: 100%;
       overflow: scroll;
+
+      .gray-color {
+        color: #969A9B;
+      }
+
+      #vote-step-1 {
+
+        .left {
+          display: inline-block;
+          vertical-align: top;
+          width: 75%;
+        }
+
+        .right {
+          display: inline-block;
+          vertical-align: top;
+          width: 20%;
+
+          .heart {
+            border: 4px solid #FFFFFF;
+            border-radius: 70px;
+            box-sizing: border-box;
+            font-size: 32px;
+            height: 55px;
+            margin-top: 20px;
+            padding-left: 8px;
+            padding-top: 9px;
+            width: 55px;
+          }
+        }
+
+        .btn-votar {
+          color: #022c5e;
+          background-color: #FFF;
+          cursor: pointer;
+          font-size: 200%;
+          font-weight: 700;
+          margin: 0 auto;
+          margin-top: 10px;
+          padding: 5px;
+          text-align: center;
+          width: 50%;
+        }
+      }
+
+      #vote-step-2 {
+        line-height: 25px;
+        font-size: 9px;
+
+        .titulo {
+          font-size: 12px;
+          text-align: center;
+          line-height: 0px;
+        }
+
+        .textfield {
+          margin-left: 5px;
+        }
+
+        .left {
+          display: inline-block;
+          vertical-align: middle;
+          width: 65%;
+          font-size: 11px;
+          line-height: 18px;
+        }
+
+        .right {
+          display: inline-block;
+          vertical-align: middle;
+          width: 20%;
+        }
+
+        #name {
+          width: 100%;
+        }
+
+        #email {
+          width: 100%;
+        }
+
+        #answer {
+          width: 100%;
+          height: auto;
+        }
+
+        #subscribe {
+          margin-right: 5px;
+          vertical-align: middle;
+        }
+      }
+
+      #vote-step-3 {
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        p {
+          text-align: center;
+          font-size: 14px;
+          font-weight: 700;
+        }
+      }
     }
 
     p, ol, ul{

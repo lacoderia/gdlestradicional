@@ -668,7 +668,7 @@ function loadRoutes() {
                             jqueryId: markerId,
                             content: '<div id="' + markerId + '" class="first-marker marker">' +
                                 '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                                '<img class="cuervo" onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
+                                '<img onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
                                 '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
                                 '</div>'
@@ -1037,7 +1037,7 @@ function showAllRoutes() {
                         jqueryId: markerId,
                         content: '<div id="' + markerId + '" class="first-marker marker">' +
                             '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
-                            '<img class="cuervo" onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
+                            '<img onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
                             '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
                             '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
                             '</div>'
@@ -1107,7 +1107,6 @@ function showAllRoutes() {
 
 function showRouteDetail(routeIndex){
     if (!paintingRoutes) {
-
         stopLatestPictures();
         $('#influencer-video').hide();
 
