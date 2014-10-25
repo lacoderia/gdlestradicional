@@ -1521,6 +1521,53 @@ a.desktop {
     }
   }
 
+  #vote-step-2 {
+    line-height: 25px;
+    font-size: 13px;
+
+    .titulo {
+      font-size: 20px;
+      text-align: center;
+      line-height: 0px;
+    }
+
+    .textfield {
+      margin-left: 5px;
+    }
+
+    .left {
+      display: inline-block;
+      vertical-align: middle; 
+      width: 65%;
+      font-size: 11px;
+      line-height: 18px;
+    }
+
+    .right {
+      display: inline-block;
+      vertical-align: middle; 
+      width: 20%;
+    }
+
+    #name {
+      width: 33em;
+    }
+
+    #email {
+      width: 26em;
+    }
+
+    #answer {
+      width: 38em;
+      height: 5em;
+    }
+
+    #subscribe {
+      margin-right: 5px;
+      vertical-align: top;
+    }
+  }
+
 }
 
 .touchMarkerMessage{

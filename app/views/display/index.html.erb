@@ -445,18 +445,17 @@
       <div class="btn-votar" onclick="activateVotes()">IR A VOTAR</div>
     </div>
     <div id="vote-step-2" class="vote-step">
-      <p>¡ELEGISTE UNA RUTA COMO LA MEJOR!</p>
-      <hr/>
+      <p class="titulo">¡ELEGISTE UNA RUTA COMO LA MEJOR!<hr/></p>      
       <div>
-        <%= label_tag :name, 'NOMBRE:', :class => 'rosasclase'%><%= text_field_tag :name, '', size: 55, :class => 'rosasclase' %><br/>
-        <%= label_tag :email, 'CORREO ELECTRÓNICO:', :class => 'rosasclase'%><%= text_field_tag :email, '', size: 30, :class => 'rosasclase' %><br/>
-        <%= label_tag :answer, '¿POR QUÉ CREES QUE GUADALAJARA ES TRADICIONAL?', :class => 'rosasclase' %><br/>
-        <%= text_area_tag :answer, '', size: '50x5', :class => 'rosasclase' %><br/>
+        <%= label_tag :name, 'NOMBRE:'%><%= text_field_tag :name, '', :class => 'textfield' %><br/>
+        <%= label_tag :email, 'CORREO ELECTRÓNICO:'%><%= text_field_tag :email, '', :class => 'textfield' %><br/>
+        <%= label_tag :answer, '¿POR QUÉ CREES QUE GUADALAJARA ES TRADICIONAL?' %><br/>
+        <%= text_area_tag :answer, '' %><br/>
         <%= hidden_field_tag 'routeId' %><br/>
-        <div>
-          <%= check_box_tag :subscribe, '', true, :class => 'rosasclase' %><%= label_tag :subscribe, 'ACEPTO RECIBIR POR CORREO ELECTRÓNICO PRÓXIMAS PROMOCIONES DE CUERVO TRADICIONAL®', :class => 'rosasclase' %>
+        <div class="left">
+          <%= check_box_tag :subscribe, '', true %><%= label_tag :subscribe, 'ACEPTO RECIBIR POR CORREO ELECTRÓNICO PRÓXIMAS PROMOCIONES DE CUERVO TRADICIONAL®' %>
         </div>
-        <div>
+        <div class="right">
           <%= button_tag 'ENVÍA TU VOTO', :id => "votar", :onclick => 'sendVote()', :class => 'rosasclase' %><br/>
         </div>
       </div>
