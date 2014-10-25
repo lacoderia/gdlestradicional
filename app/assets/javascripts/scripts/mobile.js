@@ -642,7 +642,7 @@ function loadRoutes() {
                                 '<div class="marker_detail"><span class="close_tweet">x</span><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p><div class="image-marker-gallery-wrapper"><img src="" class="image-marker-gallery"></div><a class="image-marker-galllery-link">Ver más fotos</a></div>' +
                                 '<img class="image-marker-click" onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
-                                '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
+                                '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ (i+1) +')" style="display: none"' +
                                 '</div>'
                         });
 
@@ -1431,6 +1431,11 @@ function sendVote() {
         dataType: "json",
         contentType: 'application/json',
         success: function(response) {
+            $("#name").val('');
+            $("#email").val('');
+            $("#answer").val('');
+            $('#vote-step-2 #routeId').val(''),
+            $("#subscribe").prop('checked', true);
             showVoteWindow(3);
         },
         error: function(error) {

@@ -658,6 +658,7 @@ function loadRoutes() {
 
 
                     if (j == 0) {
+                        console.log("pito: " + i);
                         var marker = new RichMarker({
                             position: routeCoordinate,
                             map: map,
@@ -670,7 +671,7 @@ function loadRoutes() {
                                 '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
                                 '<img onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
                                 '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
-                                '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
+                                '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ (i+1) +')" style="display: none"' +
                                 '</div>'
                         });
 
@@ -1822,6 +1823,11 @@ function sendVote() {
         dataType: "json",
         contentType: 'application/json',
         success: function(response) {
+            $("#name").val('');
+            $("#email").val('');
+            $("#answer").val('');
+            $('#vote-step-2 #routeId').val(''),
+            $("#subscribe").prop('checked', true);
             showVoteWindow(3);
         },
         error: function(error) {
