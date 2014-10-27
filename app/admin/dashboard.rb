@@ -10,6 +10,7 @@ ActiveAdmin.register_page "Dashboard" do
                     div do	label_tag "Usuarios totales: #{User.count}" end
                     div do	label_tag "Fotos totales: #{Photo.count}" end
                     div do  label_tag "Fotos inactivas: #{Photo.where('active =?', false).count}" end
+                    div do  label_tag "Votos totales: #{Vote.all.count}" end
 				end
                 panel "Iluminación" do
                     div do  label_tag "20 octubre: 0"   end
