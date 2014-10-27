@@ -325,7 +325,6 @@ function init() {
         });
 
         channel.bind('new_picture', function(data) {
-			//console.log('new picture event received: ' + data);
 
             data = JSON.parse(data);
 			addLatestPicture(data);
@@ -477,7 +476,6 @@ function addLatestPicture(data) {
 function createLatestPictureMarker(pic, nickname){
 
 		position = Math.floor((Math.random() * 10) + 1)-1;
-		//console.log("position " + position);
 		var marker = new RichMarker({
 				position: latestPicturesPositions[position],
 				map: map,
@@ -892,7 +890,6 @@ function showGalleryByMarker(richMarker){
             data: null,
             dataType: "json",
             success: function (response) {
-                //console.log(richMarker.id)
                 for (var i = 0; i < routes.length; i++) {
                     for (var j = 0; j < routes[i].markers.length; j++) {
                         if (routes[i].locations[j].id == richMarker.id) {
@@ -985,7 +982,7 @@ function showAllRoutes() {
                             '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
                             '<img src="' + markerImageUrl + '" onclick="showRouteDetail(' + i + ')"/>' +
                             '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
-                            '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
+                            '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ (i+1) +')" style="display: none"' +
                             '</div>'
                     });
 

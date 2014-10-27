@@ -492,7 +492,6 @@ function addLatestPicture(data) {
 function createLatestPictureMarker(pic, nickname){
 
     position = Math.floor((Math.random() * 10) + 1)-1;
-    //console.log("position " + position);
     var marker = new RichMarker({
         position: latestPicturesPositions[position],
         map: map,
@@ -658,7 +657,6 @@ function loadRoutes() {
 
 
                     if (j == 0) {
-                        console.log("pito: " + i);
                         var marker = new RichMarker({
                             position: routeCoordinate,
                             map: map,
@@ -1040,7 +1038,7 @@ function showAllRoutes() {
                             '<div class="marker_detail"><div class="arrow-down"></div>' + aditionalText + '<p>' + routes[i].locations[j].name + '</p><p>' + routes[i].locations[j].description + '</p></div>' +
                             '<img onclick="showRouteDetail(' + i + ')" src="' + markerImageUrl + '"/>' +
                             '<div class="route-name" onclick="showRouteDetail(' + i + ')">' + routes[i].name + '</div>' +
-                            '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ i +')" style="display: none"' +
+                            '<img class="vote" src="/assets/votes/corazon.png" onclick="showVoteWindow(2, '+ (i+1) +')" style="display: none"' +
                             '</div>'
                     });
 
