@@ -791,7 +791,7 @@ a.close-menu{
     .vote-message-container{
       font-size: 8px;
       height: 100%;
-      overflow: scroll;
+      overflow: hidden;
 
       .gray-color {
         color: #969A9B;
@@ -838,11 +838,11 @@ a.close-menu{
       }
 
       #vote-step-2 {
-        line-height: 25px;
-        font-size: 9px;
+        line-height: 18px;
+        font-size: 10px;
 
         .titulo {
-          font-size: 12px;
+          font-size: 13px;
           text-align: center;
           line-height: 0px;
         }
@@ -851,18 +851,34 @@ a.close-menu{
           margin-left: 5px;
         }
 
-        .left {
-          display: inline-block;
-          vertical-align: middle;
-          width: 65%;
-          font-size: 11px;
-          line-height: 18px;
+        .subscribe-div {
+          line-height: 15px;
+          margin-top: 10px;
         }
 
-        .right {
+        .envia-div {
+          margin-top: 8px;
+        }
+
+        .heart {
+          border: 3px solid #FFFFFF;
+          border-radius: 15px;
+          box-sizing: border-box;
+          font-size: 19px;
+          height: 30px;
+          padding-top: 4px;
+          padding-left: 2px;
+          width: 30px;
           display: inline-block;
           vertical-align: middle;
-          width: 20%;
+        }
+
+        .btn-votar {
+          color: #ffffff;
+          font-size: 13px;
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 5px;
         }
 
         #name {
