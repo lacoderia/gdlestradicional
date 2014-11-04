@@ -1,23 +1,39 @@
 ActiveAdmin.register User do
 
+  
+  #[:all].each do |sym|
+    #scope(sym, :default => (sym == :all) ) do |users|
+      #users.each do |user|
+        #user.attributes[:visited] = "hola"
+      #end
+    #end
+  #end
+
 	actions :all, :except => [:new, :edit, :destroy] 
 
-  permit_params :active
+        permit_params :active
 
 	controller do
-		def update
+	  def update
 	    update! do |format|
-  	    format.html { redirect_to admin_users_path }
-    	end
+  	      format.html { redirect_to admin_users_path }
+    	    end
 	  end
-  end
+
+          def scoped_collection
+            User.full_users
+          end
+        end
 
 	index do
 		column :uid
 		column :name
 		column :nickname
 		column :email
-		column "" do |user|
+                column :points
+                column :photo_count
+
+                column "" do |user|
 				link_to "View", admin_user_path(user)
 		end
 		#column "" do |user|
@@ -61,5 +77,9 @@ ActiveAdmin.register User do
 			end
 		end
 	end	
+
+        filter :nickname
+        filter :name
+        filter :email
 
 end
