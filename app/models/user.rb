@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
               temp.nickname = photo.author_nickname
             end
           end
-        return users.sort_by{|u| -u.points}
+        return users
       end
 
       def photo_count

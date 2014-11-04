@@ -21,7 +21,7 @@ ActiveAdmin.register User do
 	  end
 
           def scoped_collection
-            User.full_users
+            User.full_users.sort_by{|u| -u.points}
           end
         end
 
