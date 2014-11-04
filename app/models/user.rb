@@ -69,17 +69,18 @@ class User < ActiveRecord::Base
           if photos[0]
             temp.uid = photos[0].author_id
             temp.nickname = photos[0].author_nickname 
+            temp.attributes[:points] = temp.points
             temp.attributes[:photo_count] = temp.photo_count
           end
 
           photos.each do | photo |
             if temp.uid != photo.author_id
-              temp.attributes[:points] = temp.points
-              temp.attributes[:photo_count] = temp.photo_count
               users.push(temp)
               temp = User.new
               temp.uid = photo.author_id
               temp.nickname = photo.author_nickname
+              temp.attributes[:points] = temp.points
+              temp.attributes[:photo_count] = temp.photo_count
             end
           end
         return users
