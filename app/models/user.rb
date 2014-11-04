@@ -57,4 +57,21 @@ class User < ActiveRecord::Base
 			return
 		end
 	end
+
+	def self.full_users
+		users = User.all.order(:id)
+    photos = Photo.find_by_sql("SELECT * from photos p WHERE author_id NOT IN (select uid from users) ORDER BY author_id")
+    temp = User.new
+    temp.uid = photos[0].author_id
+    temp.nickname = photos[0].author_nickname
+    photos.each do | photo |
+      if temp.uid != photo.author_id
+        users.push(temp)
+        temp = User.new
+        temp.uid = photo.author_id
+        temp.nickname = photo.author_nickname
+      end
+    end
+    return users
+	end
 end
