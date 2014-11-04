@@ -30,8 +30,12 @@ ActiveAdmin.register User do
 		column :name
 		column :nickname
 		column :email
-                column :points
-                column :photo_count
+                column "Points" do |user|
+                  user.points
+                end
+                column "Photos" do |user|
+                  user.photo_count
+                end
 
                 column "" do |user|
 				link_to "View", admin_user_path(user)
