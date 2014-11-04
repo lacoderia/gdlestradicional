@@ -57,6 +57,7 @@ ActiveAdmin.register Photo do
 	end
 
   filter :location
-	filter :active, :as => :select
+  filter :author_nickname
+  filter :active, :as => :select
 
 end
