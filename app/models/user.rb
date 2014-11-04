@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
 
           photos.each do | photo |
             if temp.uid != photo.author_id
-              temp.attributes[:points] = user.points
+              temp.attributes[:points] = temp.points
               temp.attributes[:photo_count] = temp.photo_count
               users.push(temp)
               temp = User.new
