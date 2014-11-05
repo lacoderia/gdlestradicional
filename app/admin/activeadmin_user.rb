@@ -1,14 +1,5 @@
 ActiveAdmin.register User do
 
-  
-  #[:all].each do |sym|
-    #scope(sym, :default => (sym == :all) ) do |users|
-      #users.each do |user|
-        #user.attributes[:visited] = "hola"
-      #end
-    #end
-  #end
-
 	actions :all, :except => [:new, :edit, :destroy] 
 
         permit_params :active
@@ -30,12 +21,8 @@ ActiveAdmin.register User do
 		column :name
 		column :nickname
 		column :email
-                column "Points" do |user|
-                  user.points
-                end
-                column "Photos" do |user|
-                  user.photo_count
-                end
+                column :points
+                column :picture_count
 
                 column "" do |user|
 				link_to "View", admin_user_path(user)
@@ -85,5 +72,7 @@ ActiveAdmin.register User do
         filter :nickname
         filter :name
         filter :email
+        filter :points
+        filter :picture_count
 
 end

@@ -61,53 +61,58 @@ class User < ActiveRecord::Base
 	def self.full_users
 	  users = User.all.order(:id)
           users.each do |user|
-            user.attributes[:points] = user.points
-            user.attributes[:photo_count] = user.photo_count
+            user.calculate_points_and_picture_count
           end
           photos = Photo.find_by_sql("SELECT * from photos p WHERE author_id NOT IN (select uid from users) ORDER BY author_id")
-          temp = User.new
+          temp = nil
           if photos[0]
-            temp.uid = photos[0].author_id
-            temp.nickname = photos[0].author_nickname 
-            temp.attributes[:points] = temp.points
-            temp.attributes[:photo_count] = temp.photo_count
+            temp = User.find_by_nickname(photos[0].author_nickname)
+            if not temp
+              temp = User.new
+              temp.uid = photos[0].author_id
+              temp.nickname = photos[0].author_nickname 
+              temp.password = "password"
+              temp.access_token = "t"
+            else
+              temp.calculate_points_and_picture_count
+            end
+
           end
 
           photos.each do | photo |
             if temp.uid != photo.author_id
-              users.push(temp)
+              temp.save
+              temp.calculate_points_and_picture_count
+              #users.push(temp)
               temp = User.new
               temp.uid = photo.author_id
               temp.nickname = photo.author_nickname
-              temp.attributes[:points] = temp.points
-              temp.attributes[:photo_count] = temp.photo_count
+              temp.password = "password"
+              temp.access_token = "t"
             end
           end
-        return users
+          return User.all.order(:id)
       end
 
-      def photo_count
-        return self.photos.count
-      end
-
-        def points
-          points = 0
-	  photos = self.photos.where("active = ?", true)
-	  photos.each do | photo |
-	    points += photo.points
-	  end
-
-          if self.id
-            num_invites = 0
-	    invites = self.invites
-	    invites.each do | invite |
-	      num_invites +=1
-	      if num_invites == 5
-		points += 1
-		num_invites = 0
-	      end
-	    end
-          end
-          return points
+      def calculate_points_and_picture_count
+        points = 0
+        photos = self.photos.where("active = ?", true)
+        photos.each do | photo |
+          points += photo.points
         end
+
+        if self.access_token.length > 1
+          num_invites = 0
+          invites = self.invites
+          invites.each do | invite |
+            num_invites +=1
+            if num_invites == 5
+              points += 1
+              num_invites = 0
+            end
+          end
+        end
+        self.update_attribute(:points, points)
+        self.update_attribute(:picture_count, self.photos.count)
+      end
 end
